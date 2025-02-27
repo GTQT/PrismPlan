@@ -3,6 +3,7 @@ package keqing.gtqt.prismplan.common.register;
 import appeng.bootstrap.IModelRegistry;
 import appeng.bootstrap.components.*;
 import keqing.gtqt.prismplan.common.block.AE2Blocks;
+import keqing.gtqt.prismplan.common.item.AE2Items;
 import keqing.gtqt.prismplan.common.register.registry.AE2Registry;
 import net.minecraft.block.Block;
 import net.minecraft.client.renderer.ItemMeshDefinition;
@@ -25,7 +26,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 public class AE2RegisterManager {
 
     private final AE2Registry registry;
-    //private final AE2Items item;
+    private final AE2Items item;
     //private final AE2Materials material;
     private final AE2Blocks block;
     //private final AE2Parts part;
@@ -34,7 +35,7 @@ public class AE2RegisterManager {
     public AE2RegisterManager() {
         MinecraftForge.EVENT_BUS.register(this);
         this.registry = new AE2Registry();
-        //this.item = new AE2Items(this.registry);
+        this.item = new AE2Items(this.registry);
         //this.material = new AE2Materials(this.registry);
         this.block = new AE2Blocks(this.registry);
         //this.part = new AE2Parts(this.registry);

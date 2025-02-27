@@ -151,6 +151,7 @@ dependencies {
         testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
     }
 
+    implementation rfg.deobf("curse.maven:mixin-booter-419286:4835295")
     // Code Chicken Lib 3.2.3.358
     implementation rfg.deobf("curse.maven:codechicken-lib-1-8-242818:2779848")
     // Modular UI 2.4.3

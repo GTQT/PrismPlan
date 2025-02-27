@@ -1,0 +1,100 @@
+public class MetaTileEntityMultiblockCPU extends MultiblockWithDisplayBase implements ICraftingCPU {
+
+    private final HashMap<IMEMonitorHandlerReceiver<IAEItemStack>, Object> listeners = new HashMap<>();
+    private long bytes;
+    private int coProcessors;
+    private final MachineSource machineSrc = null;
+
+    public MetaTileEntityMultiblockCPU(ResourceLocation metaTileEntityId) {
+        super(metaTileEntityId);
+    }
+
+    @Override
+    protected void formStructure(PatternMatchContext context) {
+        super.formStructure(context);
+        // 统计结构中的存储元件和协处理器数量
+        this.bytes = context.getOrDefault("StorageComponentCount", 0) * 1024L;
+        this.coProcessors = context.getOrDefault("CoProcessorCount", 0);
+    }
+
+
+    @Override
+    protected void updateFormedValid() {
+        if (isStructureFormed()) {
+            this.bytes = 0;
+            this.coProcessors = 0;
+        }
+    }
+
+    protected BlockPattern createStructurePattern() {
+        return FactoryBlockPattern.start()
+                .aisle("XXX", "XXX", "XXX")
+                .aisle("XXX", "XXX", "XXX")
+                .aisle("XXX", "XXX", "XXX")
+                .where('S', this.selfPredicate())
+                .where('X', states(this.getCasingState()))
+                .build();
+    }
+
+    private IBlockState getCasingState() {
+        return MetaBlocks.METAL_CASING.getState(BlockMetalCasing.MetalCasingType.STEEL_SOLID);
+    }
+
+    @Override
+    public ICubeRenderer getBaseTexture(IMultiblockPart iMultiblockPart) {
+        return Textures.SOLID_STEEL_CASING;
+    }
+
+    @Override
+    public MetaTileEntity createMetaTileEntity(IGregTechTileEntity iGregTechTileEntity) {
+        return new MetaTileEntityMultiblockCPU(metaTileEntityId);
+    }
+
+    @Override
+    public boolean hasMaintenanceMechanics() {
+        return false;
+    }
+
+    @Override
+    public boolean hasMufflerMechanics() {
+        return false;
+    }
+
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+    @Override
+    public long getAvailableStorage() {
+        return bytes;
+    }
+
+    @Override
+    public int getCoProcessors() {
+        return coProcessors;
+    }
+
+    @Override
+    public boolean isBusy() {
+        return isActive();
+    }
+
+
+    @Override
+    public IActionSource getActionSource() {
+        return this.machineSrc;
+    }
+
+    @Override
+    public String getName() {
+        return "MultiblockCPU";
+    }
+
+    @Override
+    public void addListener(final IMEMonitorHandlerReceiver<IAEItemStack> l, final Object verificationToken) {
+        this.listeners.put(l, verificationToken);
+    }
+
+    @Override
+    public void removeListener(final IMEMonitorHandlerReceiver<IAEItemStack> l) {
+        this.listeners.remove(l);
+    }
+}
