@@ -41,4 +41,4 @@
 
 * 一些代码来自 [GTLite Core](https://gitlab.com/gregtech-lite/gregtech-lite-core)，采用 [MIT](https://gitlab.com/gregtech-lite/gregtech-lite-core/-/blob/test-magic-sweepy/LICENSE) 协议.
 * 一些代码来自 [NAE2](https://github.com/AE2-UEL/NAE2)，采用 [GNU GPL-3.0](https://github.com/AE2-UEL/NAE2/blob/master/LICENSE) 协议.
-* * 一些代码来自 [NovaEngineering-ECOAEExtension](https://github.com/sddsd2332/NovaEngineering-ECOAEExtension)，采用 [GNU GPL-3.0](https://github.com/sddsd2332/NovaEngineering-ECOAEExtension/blob/main/LICENSE) 协议.
+* 一些代码来自 [NovaEngineering-ECOAEExtension](https://github.com/sddsd2332/NovaEngineering-ECOAEExtension)，采用 [GNU GPL-3.0](https://github.com/sddsd2332/NovaEngineering-ECOAEExtension/blob/main/LICENSE) 协议.
