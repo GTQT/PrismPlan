@@ -1,20 +1,43 @@
-## TemplateDevEnv
-_For Kotlin see [TemplateDevEnvKt](https://github.com/CleanroomMC/TemplateDevEnvKt)_
+## 欢迎来到 Prism Plan 的仓库
 
-Template workspace for modding Minecraft 1.12.2. Licensed under MIT, it is made for public use.
+### 这是什么？
 
-This template runs on Java 21! Currently utilizies **Gradle 8.12** + **[RetroFuturaGradle](https://github.com/GTNewHorizons/RetroFuturaGradle) 1.4.1** + **Forge 14.23.5.2847**.
+<u>GTQTCore</u>整合包 __[GTQT](https://www.mcmod.cn/modpack/590.html)__ 的拓展模组之一。
 
-With **coremod and mixin support** that is easy to configure.
+### 导言
 
-### Instructions:
+你想要nova的大分子吗？我有。
 
-1. Click `use this template` at the top.
-2. Clone the repository that you have created with this template to your local machine.
-3. Make sure IDEA is using Java 21 for Gradle before you sync the project. Verify this by going to IDEA's `Settings > Build, Execution, Deployment > Build Tools > Gradle > Gradle JVM`.
-4. Open the project folder in IDEA. When prompted, click "Load Gradle Project" as it detects the `build.gradle`, if you weren't prompted, right-click the project's `build.gradle` in IDEA, select `Link Gradle Project`, after completion, hit `Refresh All` in the gradle tab on the right.
-5. Run gradle tasks such as `runClient` and `runServer` in the IDEA gradle tab, or use the auto-imported run configurations like `1. Run Client`.
+#### 特性
 
-### Mixins:
+你猜
 
-- When writing Mixins on IntelliJ, it is advisable to use latest [MinecraftDev Fork for RetroFuturaGradle](https://github.com/eigenraven/MinecraftDev/releases).
+#### 联动
+
+你猜
+
+### 项目目标
+
+实现AE的功能拓展与GT联动
+
+### 协议
+
+* PrismPlan 的原始模板 ([TemplateDevEnv](https://github.com/CleanroomMC/TemplateDevEnv))
+    - Copyright (c) CleanroomMC
+    - [![License](https://img.shields.io/badge/License-MIT-red.svg?style=flat-square)](http://opensource.org/licenses/MIT)
+
+* PrismPlan 模组本体
+    - Copyright (c) KeQingSoCute520
+    - [![License](https://img.shields.io/badge/License-GPLv3-blue.svg?style=flat-square)](https://github.com/GTQT/GTQTcore/blob/main/LICENSE)
+
+* 文本，翻译与任务书文本
+    - Copyright (c) 越人不歌 KeQingSoCute520 
+    - [![License](https://img.shields.io/badge/License-CC%20BY--NC--SA%203.0-yellow.svg?style=flat-square)](https://creativecommons.org/licenses/by-nc-sa/3.0/)
+
+* 材质与模型
+    - Copyright (c) KeQingSoCute520
+    - [![License](https://img.shields.io/badge/License-CC%20BY--NC--SA%203.0-yellow.svg?style=flat-square)](https://creativecommons.org/licenses/by-nc-sa/3.0/)
+### 致谢
+
+* 一些代码来自 [GTLite Core](https://gitlab.com/gregtech-lite/gregtech-lite-core)，采用 [MIT](https://gitlab.com/gregtech-lite/gregtech-lite-core/-/blob/test-magic-sweepy/LICENSE) 协议.
+* * 一些代码来自 [NAE2](https://github.com/AE2-UEL/NAE2)，采用 [GNU GPL-3.0](https://github.com/AE2-UEL/NAE2/blob/master/LICENSE) 协议.
