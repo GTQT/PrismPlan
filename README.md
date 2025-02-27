@@ -2,7 +2,7 @@
 
 ### 这是什么？
 
-<u>GTQTCore</u>整合包 __[GTQT](https://www.mcmod.cn/modpack/590.html)__ 的拓展模组之一。
+<u>Prism Plan 是</u>整合包 __[GTQT](https://www.mcmod.cn/modpack/590.html)__ 的拓展模组之一。
 
 ### 导言
 
