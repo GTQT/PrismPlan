@@ -1,0 +1,7 @@
+{
+  "variants": {
+    "normal": {
+      "model": "prismplan:crafting/storage_crafting_262144k"
+    }
+  }
+}

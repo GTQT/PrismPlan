@@ -1,0 +1,6 @@
+{
+  "parent": "block/cube_all",
+  "textures": {
+    "all": "prismplan:blocks/crafting/coprocessor_1024x"
+  }
+}

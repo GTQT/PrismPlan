@@ -52,17 +52,23 @@ tasks.decompressDecompiledSources.enabled !propertyBool('change_minecraft_source
 
 java {
     toolchain {
-        languageVersion.set(JavaLanguageVersion.of(propertyBool('use_modern_java_syntax') ? 16 : 8))
-        // Azul covers the most platforms for Java 8 toolchains, crucially including MacOS arm64
+        // 修改为与代码特性匹配的版本（至少 16）
+        languageVersion.set(JavaLanguageVersion.of(16))
         vendor.set(JvmVendorSpec.AZUL)
     }
-    if (propertyBool('generate_sources_jar')) {
-        withSourcesJar()
-    }
-    if (propertyBool('generate_javadocs_jar')) {
-        withJavadocJar()
-    }
 }
+
+tasks.withType(JavaCompile).configureEach {
+    options.encoding = 'UTF-8'
+    if (it.name in ['compileMcLauncherJava', 'compilePatchedMcJava']) {
+        return
+    }
+    // 启用现代 Java 语法支持
+    sourceCompatibility = 17
+    options.release.set(16) // 修改为与代码特性匹配的版本
+}
+
+use_modern_java_syntax=true
 
 configurations {
     embed
@@ -144,6 +150,28 @@ dependencies {
         testImplementation 'org.junit.jupiter:junit-jupiter:5.7.1'
         testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
     }
+
+    // Code Chicken Lib 3.2.3.358
+    implementation rfg.deobf("curse.maven:codechicken-lib-1-8-242818:2779848")
+    // Modular UI 2.4.3
+    implementation rfg.deobf("curse.maven:modularui-624243:5153413")
+    // GregTech 2.8.10-beta
+    implementation rfg.deobf("curse.maven:gregtech-ce-unofficial-557242:5519022")
+    // AE2 Unofficial Extended Life 0.56.6
+    implementation rfg.deobf("curse.maven:ae2-extended-life-570458:5411078")
+    // AE2 Fluid Crafting Rework 2.6.3r
+    implementation rfg.deobf("curse.maven:ae2-fluid-crafting-rework-623955:5504001")
+    // Neeve's AE2 Additions 1.6.4
+    implementation rfg.deobf("curse.maven:nae2-884359:5380800")
+    // Had Enough Items 4.25.5
+    implementation rfg.deobf("curse.maven:had-enough-items-557549:5471944")
+    // The One Probe 1.4.28
+    implementation rfg.deobf("curse.maven:top-245211:2667280")
+
+    // Connected Textures Mod 1.0.2.31
+    compileOnly rfg.deobf("curse.maven:ctm-267602:2915363")
+    // Groovy Script 1.2.0-hotfix-1
+    compileOnly rfg.deobf("curse.maven:groovyscript-687577:5789690")
 }
 
 apply from: 'gradle/scripts/dependencies.gradle'

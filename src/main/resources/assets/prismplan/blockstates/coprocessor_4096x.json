@@ -1,0 +1,7 @@
+{
+  "variants": {
+    "normal": {
+      "model": "prismplan:crafting/coprocessor_4096x"
+    }
+  }
+}
