@@ -3,6 +3,7 @@ package keqing.gtqt.prismplan;
 import keqing.gtqt.prismplan.api.utils.PrismPlanLog;
 import keqing.gtqt.prismplan.client.ClientProxy;
 import keqing.gtqt.prismplan.common.CommonProxy;
+import keqing.gtqt.prismplan.common.metatileentities.multi.PrismPlanMetaTileEntities;
 import keqing.gtqt.prismplan.common.register.AE2RegisterManager;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.SidedProxy;
@@ -41,6 +42,7 @@ public class PrismPlan {
         PrismPlanLog.init(event.getModLog());
         registerManager = new AE2RegisterManager();
         registerManager.onPreInit(event);
+        PrismPlanMetaTileEntities.initialization();
     }
 
     @Mod.EventHandler
