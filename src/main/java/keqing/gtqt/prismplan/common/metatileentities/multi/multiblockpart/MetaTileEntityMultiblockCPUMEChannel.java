@@ -50,7 +50,6 @@ public class MetaTileEntityMultiblockCPUMEChannel extends MetaTileEntityMultiblo
     protected boolean meStatusChanged = false;
     private boolean wasActive = false;
     private boolean onRemoval = false;
-    private final List<CraftingCPUCluster> cpuClusters = new ArrayList<CraftingCPUCluster>();
 
     public MetaTileEntityMultiblockCPUMEChannel(ResourceLocation metaTileEntityId) {
         super(metaTileEntityId, GTValues.EV);
