@@ -1,0 +1,30 @@
+# AE
+item.large_portable_cell_2048.name=Large portable components（2048）
+item.large_portable_cell_8192.name=Large portable components（8192）
+item.large_portable_cell_32768.name=Large portable components（32768）
+# 物品类
+item.prismplan.quantum_cell.name=Quantum Cell
+item.prismplan.quantum_cell_fluid.name=Quantum Fluid Cell
+item.prismplan.singularity_cell.name=Singularity Cell
+item.prismplan.singularity_cell_fluid.name=Singularity Fluid Cell
+item.prismplan.universe_cell.name=Universe Cell
+item.prismplan.universe_cell_fluid.name=Universe Fluid Cell
+# 方块类
+tile.prismplan.storage_crafting_65536k.name=Crafting Storage（65536k）
+tile.prismplan.storage_crafting_262144k.name=Crafting Storage（262144k）
+tile.prismplan.storage_crafting_1048576k.name=Crafting Storage（1048576k）
+tile.prismplan.coprocessor_256x.name=Coprocessor（256x）
+tile.prismplan.coprocessor_1024x.name=Coprocessor（1024x）
+tile.prismplan.coprocessor_4096x.name=Coprocessor（4096x）
+
+prismplan.monitor.current_amount=当前存储：%s
+prismplan.monitor.consumption_rate=消耗速率：%s
+prismplan.monitor.estimated_time=预计耗空：%s
+prismplan.monitor.no_data=无数据
+prismplan.monitor.infinite=无限
+prismplan.monitor.soon=即将耗尽
+prismplan.unit.hour=小时
+prismplan.unit.minute=分钟
+prismplan.monitor.growth_amount=Hours Growth: %s
+prismplan.monitor.growth_rate=Hours Growth Rate: %s
+prismplan.monitor.no_change=No Change
