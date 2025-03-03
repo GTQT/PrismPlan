@@ -5,26 +5,19 @@ import appeng.api.implementations.tiles.IChestOrDrive;
 import appeng.api.networking.GridFlags;
 import appeng.api.networking.IGridNode;
 import appeng.api.networking.events.MENetworkCellArrayUpdate;
-import appeng.api.networking.security.IActionHost;
 import appeng.api.networking.security.IActionSource;
 import appeng.api.networking.storage.IStorageGrid;
 import appeng.api.storage.*;
-import appeng.api.storage.channels.IItemStorageChannel;
 import appeng.api.storage.data.IAEItemStack;
 import appeng.api.storage.data.IAEStack;
-import appeng.api.storage.data.IItemList;
 import appeng.api.util.AECableType;
 import appeng.api.util.AEPartLocation;
-import appeng.api.util.DimensionalCoord;
-import appeng.core.AELog;
 import appeng.hooks.TickHandler;
 import appeng.me.GridAccessException;
 import appeng.me.helpers.AENetworkProxy;
 import appeng.me.helpers.IGridProxyable;
 import appeng.me.helpers.MachineSource;
-import appeng.me.storage.DriveWatcher;
 import appeng.tile.inventory.AppEngCellInventory;
-import appeng.tile.storage.TileDrive;
 import appeng.util.Platform;
 import appeng.util.inv.IAEAppEngInventory;
 import appeng.util.inv.InvOperation;
@@ -32,8 +25,6 @@ import appeng.util.inv.filter.IAEItemFilter;
 import gregtech.api.capability.GregtechDataCodes;
 import gregtech.api.gui.GuiTextures;
 import gregtech.api.gui.ModularUI;
-import gregtech.api.gui.widgets.AdvancedTextWidget;
-import gregtech.api.gui.widgets.ClickButtonWidget;
 import gregtech.api.gui.widgets.SlotWidget;
 import gregtech.api.metatileentity.MetaTileEntity;
 import gregtech.api.metatileentity.interfaces.IGregTechTileEntity;
@@ -47,10 +38,9 @@ import gregtech.client.renderer.texture.Textures;
 import gregtech.common.ConfigHolder;
 import gregtech.common.blocks.BlockMetalCasing;
 import gregtech.common.blocks.MetaBlocks;
-import groovyjarjarantlr4.v4.runtime.misc.NotNull;
-import it.unimi.dsi.fastutil.objects.Reference2ObjectOpenHashMap;
+import keqing.gtqt.prismplan.api.capability.INetWorkProxy;
+import keqing.gtqt.prismplan.api.multiblock.PrismPlanMultiblockAbility;
 import keqing.gtqt.prismplan.api.utils.PrismPlanLog;
-import keqing.gtqt.prismplan.common.item.ae2.estorage.EStorageCell;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
@@ -59,43 +49,26 @@ import net.minecraft.network.PacketBuffer;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
-import net.minecraftforge.common.capabilities.Capability;
-import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
-import net.minecraftforge.items.wrapper.EmptyHandler;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.io.IOException;
 import java.util.*;
-import java.util.stream.Collectors;
 
-public class estoreTEST extends MultiblockWithDisplayBase implements IChestOrDrive,IAEAppEngInventory,ICellProvider  {
+public class estoreTEST extends MultiblockWithDisplayBase implements IChestOrDrive, IAEAppEngInventory, ICellProvider {
+
 
     private final AppEngCellInventory inv = new AppEngCellInventory(this, 10);
     private final ICellHandler[] handlersBySlot = new ICellHandler[10];
     private final ECellDriveWatcher<IAEItemStack>[] invBySlot = new ECellDriveWatcher[10];
-    private final IActionSource mySrc = new MachineSource(this);
-    private boolean isCached = false;
     private final Map<IStorageChannel<? extends IAEStack<?>>, List<IMEInventoryHandler>> inventoryHandlers;
+
+    private boolean isCached = false;
     private int priority = 0;
-    private boolean wasActive = false;
-    private int cellState = 0;
-    private boolean powered;
+    private final int cellState = 0;
     private int blinking;
-    private int meUpdateTick = 0;
-    protected boolean isOnline;
-
-    protected final IActionSource source = new MachineSource(this);
-    public IActionSource getSource() {
-        return source;
-    }
-
-    private AENetworkProxy networkProxy;
-    public IItemHandler getInternalInventory() {
-        return this.inv;
-    }
-
+    private boolean markDirtyQueued = false;
 
     public estoreTEST(ResourceLocation metaTileEntityId) {
         super(metaTileEntityId);
@@ -103,18 +76,20 @@ public class estoreTEST extends MultiblockWithDisplayBase implements IChestOrDri
         this.inventoryHandlers = new IdentityHashMap();
     }
 
+
+    public IItemHandler getInternalInventory() {
+        return this.inv;
+    }
+
     @Override
     protected void updateFormedValid() {
-        if (!this.getWorld().isRemote) {
-            ++this.meUpdateTick;
-        }
-        if (!this.getWorld().isRemote && this.updateMEStatus() && this.shouldSyncME()) {
+        if (getNetWorkProxyHatch().couldSyncME()) {
             this.syncME();
         }
     }
 
     private void syncME() {
-        AENetworkProxy proxy = this.getProxy();
+        AENetworkProxy proxy = this.getNetWorkProxyHatch().getProxy();
         if (proxy == null) return;
 
         try {
@@ -139,7 +114,8 @@ public class estoreTEST extends MultiblockWithDisplayBase implements IChestOrDri
     }
 
     public boolean isPowered() {
-        return Platform.isClient() ? this.powered : this.getProxy().isActive();
+        if(!getNetWorkProxyHatch().couldUse())return false;
+        return this.getNetWorkProxyHatch().getProxy().isActive();
     }
 
     public boolean isCellBlinking(int slot) {
@@ -161,7 +137,8 @@ public class estoreTEST extends MultiblockWithDisplayBase implements IChestOrDri
     @Nullable
     @Override
     public IGridNode getGridNode(AEPartLocation dir) {
-        return this.getProxy().getNode();
+        if(!getNetWorkProxyHatch().canBeUse()) return null;
+        return this.getNetWorkProxyHatch().getProxy().getNode();
     }
 
     public AECableType getCableConnectionType(AEPartLocation dir) {
@@ -173,8 +150,6 @@ public class estoreTEST extends MultiblockWithDisplayBase implements IChestOrDri
 
     }
 
-    private boolean markDirtyQueued = false;
-
     public void saveChanges() {
         if (this.getWorld() != null && !this.getWorld().isRemote) {
             this.markDirty();
@@ -185,17 +160,20 @@ public class estoreTEST extends MultiblockWithDisplayBase implements IChestOrDri
 
         }
     }
+
     private Object markDirtyAtEndOfTick(World w) {
         this.markDirty();
         this.markDirtyQueued = false;
         return null;
     }
+
     public void onChangeInventory(IItemHandler inv, int slot, InvOperation mc, ItemStack removed, ItemStack added) {
         this.isCached = false;
         this.updateState();
         try {
-            this.getProxy().getGrid().postEvent(new MENetworkCellArrayUpdate());
-        } catch (GridAccessException ignored) {}
+            this.getNetWorkProxyHatch().getProxy().getGrid().postEvent(new MENetworkCellArrayUpdate());
+        } catch (GridAccessException ignored) {
+        }
     }
 
     private void updateState() {
@@ -205,7 +183,7 @@ public class estoreTEST extends MultiblockWithDisplayBase implements IChestOrDri
                     inventoryHandlers.put(channel, new ArrayList<>())
             );
 
-            for(int x = 0; x < inv.getSlots(); x++) {
+            for (int x = 0; x < inv.getSlots(); x++) {
                 ItemStack is = inv.getStackInSlot(x);
                 invBySlot[x] = null;
                 handlersBySlot[x] = null;
@@ -217,7 +195,7 @@ public class estoreTEST extends MultiblockWithDisplayBase implements IChestOrDri
                             ICellInventoryHandler cell = handler.getCellInventory(is, this, channel);
                             if (cell != null) {
                                 ECellDriveWatcher<IAEItemStack> watcher = new ECellDriveWatcher<>(cell, is, handler, this);
-                                ((List) inventoryHandlers.get(channel)).add(watcher);
+                                inventoryHandlers.get(channel).add(watcher);
                                 invBySlot[x] = watcher;
                                 break;
                             }
@@ -235,7 +213,7 @@ public class estoreTEST extends MultiblockWithDisplayBase implements IChestOrDri
 
     public List<IMEInventoryHandler> getCellArray(IStorageChannel channel) {
         this.updateState();
-        return (List)this.inventoryHandlers.get(channel);
+        return this.inventoryHandlers.get(channel);
     }
 
     public int getPriority() {
@@ -249,7 +227,7 @@ public class estoreTEST extends MultiblockWithDisplayBase implements IChestOrDri
         this.updateState();
 
         try {
-            this.getProxy().getGrid().postEvent(new MENetworkCellArrayUpdate());
+            this.getNetWorkProxyHatch().getProxy().getGrid().postEvent(new MENetworkCellArrayUpdate());
         } catch (GridAccessException var3) {
         }
 
@@ -264,9 +242,8 @@ public class estoreTEST extends MultiblockWithDisplayBase implements IChestOrDri
     }
 
     public ItemStack getItemStackRepresentation() {
-        return (ItemStack)AEApi.instance().definitions().blocks().drive().maybeStack(1).orElse(ItemStack.EMPTY);
+        return AEApi.instance().definitions().blocks().drive().maybeStack(1).orElse(ItemStack.EMPTY);
     }
-
 
 
     @Override
@@ -283,119 +260,22 @@ public class estoreTEST extends MultiblockWithDisplayBase implements IChestOrDri
         return builder.build(this.getHolder(), entityPlayer);
     }
 
-
-    public @Nullable AENetworkProxy getProxy() {
-        if (this.networkProxy == null) {
-            return this.networkProxy = this.createProxy();
-        } else {
-            if (!this.networkProxy.isReady() && this.getWorld() != null) {
-                this.networkProxy.onReady();
-            }
-
-            return this.networkProxy;
-        }
-    }
-
-    private @Nullable AENetworkProxy createProxy() {
-        IGregTechTileEntity mte = this.getHolder();
-        if (mte instanceof IGridProxyable holder) {
-            AENetworkProxy proxy = new AENetworkProxy(holder, "mte_proxy", this.getStackForm(), true);
-            proxy.setFlags(GridFlags.REQUIRE_CHANNEL);
-            proxy.setIdlePowerUsage(ConfigHolder.compat.ae2.meHatchEnergyUsage);
-            proxy.setValidSides(EnumSet.of(this.getFrontFacing()));
-            return proxy;
-        } else {
-            return null;
-        }
-    }
-
-    public void writeInitialSyncData(PacketBuffer buf) {
-        super.writeInitialSyncData(buf);
-
-        if (this.networkProxy != null) {
-            buf.writeBoolean(true);
-            NBTTagCompound proxy = new NBTTagCompound();
-            this.networkProxy.writeToNBT(proxy);
-            buf.writeCompoundTag(proxy);
-        } else {
-            buf.writeBoolean(false);
-        }
-
-        buf.writeInt(this.meUpdateTick);
-        buf.writeBoolean(this.isOnline);
-    }
-
-    public void receiveInitialSyncData(PacketBuffer buf) {
-        super.receiveInitialSyncData(buf);
-
-
-        if (buf.readBoolean()) {
-            NBTTagCompound nbtTagCompound;
-            try {
-                nbtTagCompound = buf.readCompoundTag();
-            } catch (IOException var4) {
-                nbtTagCompound = null;
-            }
-
-            if (this.networkProxy != null && nbtTagCompound != null) {
-                this.networkProxy.readFromNBT(nbtTagCompound);
-            }
-        }
-
-        this.meUpdateTick = buf.readInt();
-        this.isOnline = buf.readBoolean();
-    }
-
-    public void receiveCustomData(int dataId, PacketBuffer buf) {
-        super.receiveCustomData(dataId, buf);
-        if (dataId == GregtechDataCodes.UPDATE_ONLINE_STATUS) {
-            boolean isOnline = buf.readBoolean();
-            if (this.isOnline != isOnline) {
-                this.isOnline = isOnline;
-                this.scheduleRenderUpdate();
-            }
-        }
-
-    }
-
-
-    protected void formStructure(PatternMatchContext context) {
-        super.formStructure(context);
-        this.networkProxy = createProxy();
-        if (this.networkProxy != null) {
-            this.networkProxy.setValidSides(EnumSet.of(this.getFrontFacing()));
-            this.networkProxy.onReady();
-        }
-        this.updateState();
-    }
-
-
-    public boolean updateMEStatus() {
-        if (!this.getWorld().isRemote) {
-            boolean isOnline = this.networkProxy != null && this.networkProxy.isActive() && this.networkProxy.isPowered();
-            if (this.isOnline != isOnline) {
-                this.writeCustomData(GregtechDataCodes.UPDATE_ONLINE_STATUS, (buf) -> {
-                    buf.writeBoolean(isOnline);
-                });
-                this.isOnline = isOnline;
-            }
-        }
-
-        return this.isOnline;
-    }
-
-    protected boolean shouldSyncME() {
-        return this.meUpdateTick % 200 == 0;
-    }
-
     protected BlockPattern createStructurePattern() {
         return FactoryBlockPattern.start()
                 .aisle("XXX", "XXX", "XXX")
                 .aisle("XXX", "XXX", "XXX")
                 .aisle("XXX", "XSX", "XXX")
                 .where('S', this.selfPredicate())
-                .where('X', states(this.getCasingState()))
+                .where('X', states(this.getCasingState())
+                        .or(abilities(PrismPlanMultiblockAbility.NETWORK_PROXY).setExactLimit(1)))
                 .build();
+    }
+
+    public INetWorkProxy getNetWorkProxyHatch() {
+        List<INetWorkProxy> abilities = getAbilities(PrismPlanMultiblockAbility.NETWORK_PROXY);
+        if (abilities.isEmpty())
+            return null;
+        return abilities.get(0);
     }
 
     private IBlockState getCasingState() {
@@ -425,7 +305,7 @@ public class estoreTEST extends MultiblockWithDisplayBase implements IChestOrDri
     @Nonnull
     @Override
     public IGridNode getActionableNode() {
-        return this.getProxy().getNode();
+        return this.getNetWorkProxyHatch().getProxy().getNode();
     }
 
     @Override

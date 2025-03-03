@@ -104,9 +104,9 @@ public class ECellDriveWatcher<T extends IAEStack<T>> extends MEInventoryHandler
                 this.oldStatus = newStatus;
             }
 
-            if (this.drive.getProxy().isActive() && !(this.handler instanceof CreativeCellHandler)) {
+            if (this.drive.getNetWorkProxyHatch().getProxy().isActive() && !(this.handler instanceof CreativeCellHandler)) {
                 try {
-                    this.drive.getProxy().getStorage().postAlterationOfStoredItems(this.getChannel(), Collections.singletonList(input.copy().setStackSize(input.getStackSize() - (remainder == null ? 0L : remainder.getStackSize()))), drive.getSource());
+                    this.drive.getNetWorkProxyHatch().getProxy().getStorage().postAlterationOfStoredItems(this.getChannel(), Collections.singletonList(input.copy().setStackSize(input.getStackSize() - (remainder == null ? 0L : remainder.getStackSize()))), drive.getNetWorkProxyHatch().getSource());
                 } catch (GridAccessException var9) {
                     GridAccessException e = var9;
                     e.printStackTrace();
@@ -115,7 +115,7 @@ public class ECellDriveWatcher<T extends IAEStack<T>> extends MEInventoryHandler
         }
         drive.saveChanges();
         try {
-            drive.getProxy().getGrid().postEvent(new MENetworkCellArrayUpdate());
+            drive.getNetWorkProxyHatch().getProxy().getGrid().postEvent(new MENetworkCellArrayUpdate());
         } catch (GridAccessException e) {
             PrismPlanLog.logger.warn(ThrowableUtil.stackTraceToString(e));
         }
@@ -131,9 +131,9 @@ public class ECellDriveWatcher<T extends IAEStack<T>> extends MEInventoryHandler
                 this.oldStatus = newStatus;
             }
 
-            if (this.drive.getProxy().isActive() && !(this.handler instanceof CreativeCellHandler)) {
+            if (this.drive.getNetWorkProxyHatch().getProxy().isActive() && !(this.handler instanceof CreativeCellHandler)) {
                 try {
-                    this.drive.getProxy().getStorage().postAlterationOfStoredItems(this.getChannel(), Collections.singletonList(request.copy().setStackSize(-extractable.getStackSize())), drive.getSource());
+                    this.drive.getNetWorkProxyHatch().getProxy().getStorage().postAlterationOfStoredItems(this.getChannel(), Collections.singletonList(request.copy().setStackSize(-extractable.getStackSize())), drive.getNetWorkProxyHatch().getSource());
                 } catch (GridAccessException var7) {
                     GridAccessException e = var7;
                     e.printStackTrace();
@@ -142,7 +142,7 @@ public class ECellDriveWatcher<T extends IAEStack<T>> extends MEInventoryHandler
         }
         drive.saveChanges();
         try {
-            drive.getProxy().getGrid().postEvent(new MENetworkCellArrayUpdate());
+            drive.getNetWorkProxyHatch().getProxy().getGrid().postEvent(new MENetworkCellArrayUpdate());
         } catch (GridAccessException e) {
             PrismPlanLog.logger.warn(ThrowableUtil.stackTraceToString(e));
         }
