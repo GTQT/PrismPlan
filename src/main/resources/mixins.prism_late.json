@@ -11,6 +11,9 @@
   "server": [],
   "client":[
     "gregtech.MinxinRecipeMapMultiblockController",
-    "gregtech.MultiblockRecipeLogicMixin"
+    "gregtech.MultiblockRecipeLogicMixin",
+    "ae2.AccessorAbstractCellInventory",
+    "ae2.AccessorCellRegistry",
+    "nae2.MixinJEICellCategory"
   ]
 }

@@ -348,7 +348,6 @@ public class MetaTileEntityECPart extends MetaTileEntityMultiblockNotifiablePart
         IAEItemStack aeOutput = AEItemStack.fromItemStack(outputStack);
         if (aeOutput != null) {
             IAEItemStack remaining = monitor.injectItems(aeOutput, Actionable.MODULATE, getActionSource());
-
             if (remaining != null && remaining.getStackSize() > 0) {
                 int inserted = Math.max(0, outputStack.getCount() - (int) remaining.getStackSize());
                 outputItem.extractItem(i, inserted, false);
