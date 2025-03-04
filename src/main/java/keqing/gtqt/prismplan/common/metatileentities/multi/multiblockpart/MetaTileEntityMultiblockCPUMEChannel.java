@@ -9,6 +9,7 @@ import appeng.api.networking.security.IActionHost;
 import appeng.api.networking.security.IActionSource;
 import appeng.api.util.AECableType;
 import appeng.api.util.AEPartLocation;
+import appeng.api.util.WorldCoord;
 import appeng.me.GridAccessException;
 import appeng.me.cluster.implementations.CraftingCPUCluster;
 import appeng.me.helpers.AENetworkProxy;
@@ -16,13 +17,13 @@ import appeng.me.helpers.BaseActionSource;
 import appeng.me.helpers.IGridProxyable;
 import appeng.me.helpers.MachineSource;
 import gregtech.api.GTValues;
-import gregtech.api.capability.IControllable;
 import gregtech.api.gui.ModularUI;
 import gregtech.api.metatileentity.MetaTileEntity;
 import gregtech.api.metatileentity.interfaces.IGregTechTileEntity;
 import gregtech.common.ConfigHolder;
 import gregtech.common.metatileentities.multi.multiblockpart.MetaTileEntityMultiblockPart;
 
+import it.unimi.dsi.fastutil.objects.ObjectList;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.PacketBuffer;
@@ -32,6 +33,7 @@ import net.minecraft.util.ResourceLocation;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.io.IOException;
+import java.sql.Array;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.EnumSet;
@@ -39,21 +41,21 @@ import java.util.List;
 
 import static gregtech.api.capability.GregtechDataCodes.UPDATE_ONLINE_STATUS;
 
-public class MetaTileEntityMultiblockCPUMEChannel extends MetaTileEntityMultiblockPart
-                                                  implements IControllable{
+public class MetaTileEntityMultiblockCPUMEChannel extends MetaTileEntityMultiblockPart {
 
 //todo: online状态相关的补全, 以及正确的时候重新计数cpu（也许应该在虚拟cpu创建是postevent）
     private AENetworkProxy aeProxy;
-//    private int meUpdateTick;
     protected boolean isOnline;
     private boolean allowExtraConnections;
     protected boolean meStatusChanged = false;
     private boolean wasActive = false;
     private boolean onRemoval = false;
 
+    //test
+    private ArrayList<CraftingCPUCluster> cluster = new ArrayList<>();
+
     public MetaTileEntityMultiblockCPUMEChannel(ResourceLocation metaTileEntityId) {
         super(metaTileEntityId, GTValues.EV);
-//        this.meUpdateTick = 0;
         this.allowExtraConnections = false;
     }
 
@@ -72,16 +74,13 @@ public class MetaTileEntityMultiblockCPUMEChannel extends MetaTileEntityMultiblo
         return null;
     }
 
-    @Override
-    public void update() {
-        super.update();
-//        if (!this.getWorld().isRemote || !this.aeProxy.isActive() || !this.aeProxy.isPowered()) {
+//    @Override
+//    public void update() {
+//        super.update();
+//        if(isFirstTick()){
 //            postCPUClusterChangeEvent();
 //        }
-        if(isFirstTick()){
-            postCPUClusterChangeEvent();
-        }
-    }
+//    }
 
     @Override
     public void writeInitialSyncData(PacketBuffer buf) {
@@ -94,7 +93,6 @@ public class MetaTileEntityMultiblockCPUMEChannel extends MetaTileEntityMultiblo
         } else {
             buf.writeBoolean(false);
         }
-//        buf.writeInt(this.meUpdateTick);
         buf.writeBoolean(this.isOnline);
         buf.writeBoolean(this.allowExtraConnections);
     }
@@ -241,42 +239,28 @@ public class MetaTileEntityMultiblockCPUMEChannel extends MetaTileEntityMultiblo
         this.allowExtraConnections = data.getBoolean("AllowExtraConnections");
     }
 
-    @Override
-    public boolean isWorkingEnabled() {
-        return false;
-    }
-
-    @Override
-    public void setWorkingEnabled(boolean b) {
-
-    }
-
     // cluster
     //todo: finish controller
-//    public List<CraftingCPUCluster> getCPUs() {
-//        MultiblockCPUController controller = this.getController();
-//        if (!onRemoval) {
-//            System.out.println(123123);
-//            controller.getCpus();
-//        }
-//        return Collections.emptyList();
-//    }
-
     public List<CraftingCPUCluster> getCPUs() {
-//        WorldCoord pos = new WorldCoord(this.getPos());
-//        if (this.cpuClusters.isEmpty() && this.getPos()!=null) {
-//            CraftingCPUCluster ccc = new CraftingCPUCluster(pos,pos);
-//            this.cpuClusters.add(new CraftingCPUCluster(pos,pos));
-//        }
-//        return this.cpuClusters;
-        System.out.println(123123);
-        //todo
-        if (!onRemoval) {
-            System.out.println(123123);
+        //test
+        if (cluster.isEmpty()) {
+            WorldCoord coord = new WorldCoord(getPos());
+            CraftingCPUCluster clu = new CraftingCPUCluster(coord, coord);
+            cluster.add(clu);
+            IPrismPlanCPUCluster Pcpu = IPrismPlanCPUCluster.from(clu);
+            Pcpu.prismPlan$setSource(new MachineSource((IActionHost) this.getHolder()));
         }
-        return Collections.emptyList();
-
+//        if (isAttachedToMultiBlock()){
+//            MetaTileEntityMultiblockCPU controller = (MetaTileEntityMultiblockCPU) this.getController();
+//            if (!onRemoval) {
+//                System.out.println(123123);
+//                controller.getCPUs();
+//            }
+//            return Collections.emptyList();
+//        }
+        return cluster;
     }
+
 
     @MENetworkEventSubscribe
     public void stateChange(final MENetworkPowerStatusChange c) {

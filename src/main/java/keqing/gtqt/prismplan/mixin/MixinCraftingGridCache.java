@@ -32,9 +32,11 @@ public abstract class MixinCraftingGridCache {
         for (final IGridNode ecNode : grid.getMachines(MetaTileEntityHolder.class)) {
 
             final MetaTileEntityHolder ec = (MetaTileEntityHolder) ecNode.getMachine();
+            if (!(ec.getMetaTileEntity() instanceof MetaTileEntityMultiblockCPUMEChannel)) {
+                continue;
+            }
             MetaTileEntityMultiblockCPUMEChannel mte = (MetaTileEntityMultiblockCPUMEChannel) ec.getMetaTileEntity();
             final List<CraftingCPUCluster> cpus = mte.getCPUs();
-
 
             for (CraftingCPUCluster cpu : cpus) {
                 this.craftingCPUClusters.add(cpu);

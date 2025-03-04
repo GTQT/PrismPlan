@@ -126,10 +126,14 @@ public class MetaTileEntityStorageCellHatch extends MetaTileEntityMultiblockPart
     @SuppressWarnings("unchecked")
     public <T extends IAEStack<T>> IMEInventoryHandler<T> getHandler(final IStorageChannel<T> channel) {
         updateHandler(false);
-        if (driveInv.getStackInSlot(0).getItem() instanceof EStorageCell<?> cell && isCellSupported(cell.getLevel())) {
+        if (driveInv.getStackInSlot(0).getItem() instanceof EStorageCell<?>) {
             IMEInventoryHandler<?> handler = inventoryHandlers.get(channel);
             return handler == null ? null : (IMEInventoryHandler<T>) handler;
         }
+//        if (driveInv.getStackInSlot(0).getItem() instanceof EStorageCell<?> cell && isCellSupported(cell.getLevel())) {
+//            IMEInventoryHandler<?> handler = inventoryHandlers.get(channel);
+//            return handler == null ? null : (IMEInventoryHandler<T>) handler;
+//        }
         return null;
     }
 

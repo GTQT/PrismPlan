@@ -1,5 +1,6 @@
 package keqing.gtqt.prismplan.common.metatileentities.multi.multiblock.estorage;
 
+import appeng.api.implementations.tiles.IChestOrDrive;
 import appeng.api.networking.GridFlags;
 import appeng.api.networking.IGridNode;
 import appeng.api.networking.events.MENetworkCellArrayUpdate;
@@ -341,6 +342,7 @@ public class MetaTileEntityNetWorkStoreHatch extends MetaTileEntityMultiblockPar
     @Override
     @SuppressWarnings("rawtypes")
     public List<IMEInventoryHandler> getCellArray(final IStorageChannel<?> channel) {
+
         if (this.getController() != null) {
             return ((MetaTileEntityStorageCellControl) this.getController()).getCellDrives().stream()
                     .map(a -> a.getHandler(channel))
@@ -385,4 +387,5 @@ public class MetaTileEntityNetWorkStoreHatch extends MetaTileEntityMultiblockPar
     @Override
     public void saveChanges(@Nullable final ICellInventory<?> cellInventory) {
     }
+
 }
