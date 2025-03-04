@@ -6,6 +6,7 @@ import net.minecraft.util.IStringSerializable;
 import javax.annotation.Nonnull;
 
 public enum DriveStorageLevel implements IStringSerializable {
+
     EMPTY("empty"),
     A("a"),
     B("b"),

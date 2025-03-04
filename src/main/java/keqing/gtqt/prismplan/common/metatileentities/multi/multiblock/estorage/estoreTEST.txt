@@ -220,6 +220,9 @@ public class estoreTEST extends MultiblockWithDisplayBase implements IChestOrDri
         return this.priority;
     }
 
+    public void recalculateEnergyUsage() {
+
+    }
     public void setPriority(int newValue) {
         this.priority = newValue;
         this.saveChanges();

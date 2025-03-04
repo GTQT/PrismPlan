@@ -4,12 +4,16 @@ import keqing.gtqt.prismplan.api.utils.PrismPlanLog;
 import keqing.gtqt.prismplan.client.ClientProxy;
 import keqing.gtqt.prismplan.common.CommonProxy;
 import keqing.gtqt.prismplan.common.metatileentities.multi.PrismPlanMetaTileEntities;
+import keqing.gtqt.prismplan.common.network.PktCellDriveStatusUpdate;
 import keqing.gtqt.prismplan.common.register.AE2RegisterManager;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.SidedProxy;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
+import net.minecraftforge.fml.common.network.NetworkRegistry;
+import net.minecraftforge.fml.common.network.simpleimpl.SimpleNetworkWrapper;
+import net.minecraftforge.fml.relauncher.Side;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -37,8 +41,16 @@ public class PrismPlan {
 
     private static AE2RegisterManager registerManager;
 
+    public static final SimpleNetworkWrapper NET_CHANNEL = NetworkRegistry.INSTANCE.newSimpleChannel(Tags.MOD_ID);
     @Mod.EventHandler
     public void preInit(FMLPreInitializationEvent event) {
+
+        byte start = 0;
+
+        NET_CHANNEL.registerMessage(PktCellDriveStatusUpdate.class, PktCellDriveStatusUpdate.class, start++, Side.CLIENT);
+
+        start = 64;
+
         PrismPlanLog.init(event.getModLog());
         registerManager = new AE2RegisterManager();
         registerManager.onPreInit(event);

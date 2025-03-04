@@ -25,11 +25,11 @@ import java.util.List;
 import static keqing.gtqt.prismplan.common.CommonProxy.PRISM_PLAN_TAB;
 
 public abstract class EStorageCell<T extends IAEStack<T>> extends AEBaseItem implements IStorageCell<T> {
-    protected final DriveStorageLevel level;
+    protected final int level;
     protected final int totalBytes;
     protected final int byteMultiplier;
 
-    public EStorageCell(DriveStorageLevel level, final int millionBytes, final int byteMultiplier) {
+    public EStorageCell(int level, final int millionBytes, final int byteMultiplier) {
         this.level = level;
         this.totalBytes = (millionBytes * 1000) * 1024;
         this.byteMultiplier = byteMultiplier;
@@ -47,10 +47,10 @@ public abstract class EStorageCell<T extends IAEStack<T>> extends AEBaseItem imp
                 .addCellInformation(EStorageCellHandler.getHandler(stack).getCellInventory(stack, null, this.getChannel()), lines);
         lines.add(I18n.format("novaeng.estorage_cell.insert.tip"));
         lines.add(I18n.format("novaeng.estorage_cell.extract.tip"));
-        if (level == DriveStorageLevel.B) {
+        if (level == 2) {
             lines.add(I18n.format("novaeng.estorage_cell.l6.tip"));
         }
-        if (level == DriveStorageLevel.C) {
+        if (level == 3) {
             lines.add(I18n.format("novaeng.estorage_cell.l9.tip"));
         }
     }
@@ -60,7 +60,7 @@ public abstract class EStorageCell<T extends IAEStack<T>> extends AEBaseItem imp
         return (double) totalBytes / 1024 / 1024;
     }
 
-    public DriveStorageLevel getLevel() {
+    public int getLevel() {
         return level;
     }
 
