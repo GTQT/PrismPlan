@@ -84,6 +84,9 @@ public class MetaTileEntityStorageCellHatch extends MetaTileEntityMultiblockPart
     }
 
     public void update() {
+        if (!this.getWorld().isRemote && isFirstTick()) {
+            this.isCached = false;
+        }
         if(this.getController()==null)return;
         long totalWorldTime = this.getWorld().getTotalWorldTime();
         if(this.getController().isStructureFormed()) {
@@ -128,6 +131,7 @@ public class MetaTileEntityStorageCellHatch extends MetaTileEntityMultiblockPart
         updateHandler(false);
         if (driveInv.getStackInSlot(0).getItem() instanceof EStorageCell<?>) {
             IMEInventoryHandler<?> handler = inventoryHandlers.get(channel);
+
             return handler == null ? null : (IMEInventoryHandler<T>) handler;
         }
 //        if (driveInv.getStackInSlot(0).getItem() instanceof EStorageCell<?> cell && isCellSupported(cell.getLevel())) {
