@@ -81,10 +81,10 @@ public class MetaTileEntityStorageCellControl extends MultiblockWithDisplayBase 
     //多方块
     protected BlockPattern createStructurePattern() {
         FactoryBlockPattern pattern = FactoryBlockPattern.start(FRONT, UP, RIGHT)
+                .aisle("NX", "SX", "XX")
                 .aisle("XX", "XX", "XX")
                 .aisle("TX", "TX", "TX").setRepeatable(1,16)
                 .aisle("XX", "XX", "XX")
-                .aisle("NX", "SX", "XX")
                 .where('S', this.selfPredicate())
                 .where('N', abilities(PrismPlanMultiblockAbility.NETWORK_STORE))
                 .where('T', abilities(PrismPlanMultiblockAbility.CELL_HATCH))
