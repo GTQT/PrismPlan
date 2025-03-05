@@ -1,12 +1,13 @@
 package keqing.gtqt.prismplan.common.metatileentities.multi.multiblock.estorage;
 
+import appeng.api.config.AccessRestriction;
+import appeng.api.config.Actionable;
+import appeng.api.config.PowerMultiplier;
 import appeng.api.implementations.tiles.IChestOrDrive;
 import appeng.api.networking.GridFlags;
 import appeng.api.networking.IGridNode;
-import appeng.api.networking.events.MENetworkCellArrayUpdate;
-import appeng.api.networking.events.MENetworkChannelsChanged;
-import appeng.api.networking.events.MENetworkEventSubscribe;
-import appeng.api.networking.events.MENetworkPowerStatusChange;
+import appeng.api.networking.energy.IAEPowerStorage;
+import appeng.api.networking.events.*;
 import appeng.api.networking.security.IActionHost;
 import appeng.api.networking.security.IActionSource;
 import appeng.api.storage.ICellContainer;
@@ -64,7 +65,7 @@ import static net.minecraft.init.Blocks.AIR;
 
 public class MetaTileEntityNetWorkStoreHatch extends MetaTileEntityMultiblockPart implements
         IMultiblockAbilityPart<INetWorkStore>, INetWorkStore, IActionHost, IGridProxyable,
-        ICellContainer {
+        ICellContainer, IAEPowerStorage {
 
     //接口可能不全，使用到了请自行补全
 
@@ -342,7 +343,6 @@ public class MetaTileEntityNetWorkStoreHatch extends MetaTileEntityMultiblockPar
     @Override
     @SuppressWarnings("rawtypes")
     public List<IMEInventoryHandler> getCellArray(final IStorageChannel<?> channel) {
-
         if (this.getController() != null) {
             return ((MetaTileEntityStorageCellControl) this.getController()).getCellDrives().stream()
                     .map(a -> a.getHandler(channel))
@@ -388,4 +388,68 @@ public class MetaTileEntityNetWorkStoreHatch extends MetaTileEntityMultiblockPar
     public void saveChanges(@Nullable final ICellInventory<?> cellInventory) {
     }
 
+
+    public MetaTileEntityStorageCellControl getControl()
+    {
+        return (MetaTileEntityStorageCellControl) this.getController();
+    }
+    @Override
+    public double injectAEPower(final double amt, @Nonnull final Actionable mode) {
+        if (this.getControl() == null) {
+            return 0;
+        }
+        if (amt < 0.000001) {
+            return 0;
+        }
+        if (mode == Actionable.MODULATE && this.getAECurrentPower() < 0.01 && amt > 0) {
+            try {
+                this.getControl().getNetWorkStoreHatch().getProxy().getGrid().postEvent(new MENetworkPowerStorage(this, MENetworkPowerStorage.PowerEventType.PROVIDE_POWER));
+            } catch (final GridAccessException ignored) {
+            }
+        }
+        return getControl().injectPower(amt, mode);
+    }
+
+    @Override
+    public double extractAEPower(final double amt, @Nonnull final Actionable mode, @Nonnull final PowerMultiplier multiplier) {
+        if (this.getControl() == null) {
+            return 0;
+        }
+        if (mode == Actionable.MODULATE) {
+            final boolean wasFull = this.getAECurrentPower() >= this.getAEMaxPower() - 0.001;
+            if (wasFull && amt > 0) {
+                try {
+                    this.getControl().getNetWorkStoreHatch().getProxy().getGrid().postEvent(new MENetworkPowerStorage(this, MENetworkPowerStorage.PowerEventType.REQUEST_POWER));
+                } catch (final GridAccessException ignored) {
+                }
+            }
+        }
+        return multiplier.divide(getControl().extractPower(multiplier.multiply(amt), mode));
+    }
+
+    @Override
+    public double getAEMaxPower() {
+        if (this.getControl() == null) {
+            return 0;
+        }
+        return this.getControl().getMaxEnergyStore();
+    }
+
+    @Override
+    public double getAECurrentPower() {
+        if (this.getControl() == null) {
+            return 0;
+        }
+        return this.getControl().getEnergyStored();
+    }
+    @Override
+    public boolean isAEPublicPowerStorage() {
+        return true;
+    }
+
+    @Nonnull
+    @Override
+    public AccessRestriction getPowerFlow() {
+        return AccessRestriction.READ_WRITE;
+    }
 }

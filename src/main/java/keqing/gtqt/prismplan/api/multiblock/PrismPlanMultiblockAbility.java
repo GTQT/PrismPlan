@@ -9,4 +9,5 @@ public class PrismPlanMultiblockAbility {
     public static final MultiblockAbility<INetWorkStore> NETWORK_STORE = new MultiblockAbility<>("network_store");
 
     public static final MultiblockAbility<ICellHatch> CELL_HATCH = new MultiblockAbility<>("cell_hatch");
+    public static final MultiblockAbility<IEnergyHatch> ENERGY_HATCH = new MultiblockAbility<>("energy_hatch");
 }

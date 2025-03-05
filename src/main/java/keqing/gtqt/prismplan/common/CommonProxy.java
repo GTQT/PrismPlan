@@ -3,6 +3,7 @@ package keqing.gtqt.prismplan.common;
 import gregtech.common.items.MetaItems;
 import gregtech.common.metatileentities.MetaTileEntities;
 import keqing.gtqt.prismplan.api.utils.PrismPlanLog;
+import keqing.gtqt.prismplan.integration.theoneprobe.IntegrationTOP;
 import net.minecraft.block.Block;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
@@ -55,6 +56,6 @@ public class CommonProxy {
 
     }
     public void init() {
-
+        IntegrationTOP.registerProvider();
     }
 }

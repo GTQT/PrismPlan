@@ -15,8 +15,10 @@ import appeng.util.helpers.ItemHandlerUtil;
 import appeng.util.inv.IAEAppEngInventory;
 import appeng.util.inv.InvOperation;
 import appeng.util.inv.filter.IAEItemFilter;
+import gregtech.api.capability.GregtechDataCodes;
 import gregtech.api.gui.GuiTextures;
 import gregtech.api.gui.ModularUI;
+import gregtech.api.gui.widgets.AdvancedTextWidget;
 import gregtech.api.gui.widgets.SlotWidget;
 import gregtech.api.metatileentity.MetaTileEntity;
 import gregtech.api.metatileentity.interfaces.IGregTechTileEntity;
@@ -26,17 +28,22 @@ import gregtech.api.metatileentity.multiblock.MultiblockControllerBase;
 import gregtech.common.metatileentities.multi.multiblockpart.MetaTileEntityMultiblockPart;
 import it.unimi.dsi.fastutil.objects.Reference2ObjectOpenHashMap;
 import keqing.gtqt.prismplan.PrismPlan;
-import keqing.gtqt.prismplan.api.capability.ICellHatch;
-import keqing.gtqt.prismplan.api.capability.INetWorkProxy;
+import keqing.gtqt.prismplan.api.capability.*;
 import keqing.gtqt.prismplan.api.multiblock.PrismPlanMultiblockAbility;
+import keqing.gtqt.prismplan.api.utils.PrismPlanLog;
 import keqing.gtqt.prismplan.common.item.ae2.estorage.EStorageCell;
+import keqing.gtqt.prismplan.common.item.ae2.estorage.EStorageCellFluid;
+import keqing.gtqt.prismplan.common.item.ae2.estorage.EStorageCellItem;
 import keqing.gtqt.prismplan.common.network.PktCellDriveStatusUpdate;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.network.PacketBuffer;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.fml.common.network.NetworkRegistry;
 import net.minecraftforge.items.CapabilityItemHandler;
@@ -44,12 +51,14 @@ import net.minecraftforge.items.IItemHandler;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
+import java.io.IOException;
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 
 import static appeng.helpers.ItemStackHelper.stackFromNBT;
 import static appeng.helpers.ItemStackHelper.stackWriteToNBT;
+import static keqing.gtqt.prismplan.api.capability.DriveStorageLevel.*;
 
 public class MetaTileEntityStorageCellHatch extends MetaTileEntityMultiblockPart
         implements IMultiblockAbilityPart<ICellHatch>,ICellHatch,ISaveProvider, IAEAppEngInventory {
@@ -76,17 +85,49 @@ public class MetaTileEntityStorageCellHatch extends MetaTileEntityMultiblockPart
     protected long lastWriteTick = 0;
     protected boolean writing = false;
 
-
     int tier;
     public MetaTileEntityStorageCellHatch(ResourceLocation metaTileEntityId, int tier) {
         super(metaTileEntityId, tier);
         this.driveInv.setFilter(CellInvFilter.INSTANCE);
+        this.tier = tier;
     }
 
+    public static int getMaxTypes(final EStorageCellData data) {
+        return switch (data.type()) {
+            case EMPTY -> 0;
+            case ITEM -> 315;
+            case FLUID -> 25;
+        };
+    }
+
+    public static long getMaxBytes(final EStorageCellData data) {
+        DriveStorageType type = data.type();
+        DriveStorageLevel level = data.level();
+        return switch (type) {
+            case EMPTY -> 0;
+            case ITEM -> switch (level) {
+                case EMPTY -> 0;
+                case A -> EStorageCellItem.LEVEL_A.getBytes(ItemStack.EMPTY);
+                case B -> EStorageCellItem.LEVEL_B.getBytes(ItemStack.EMPTY);
+                case C -> EStorageCellItem.LEVEL_C.getBytes(ItemStack.EMPTY);
+            };
+            case FLUID -> switch (level) {
+                case EMPTY -> 0;
+                case A -> EStorageCellFluid.LEVEL_A.getBytes(ItemStack.EMPTY);
+                case B -> EStorageCellFluid.LEVEL_B.getBytes(ItemStack.EMPTY);
+                case C -> EStorageCellFluid.LEVEL_C.getBytes(ItemStack.EMPTY);
+            };
+        };
+    }
+
+    boolean firstRender = true;
     public void update() {
         if(this.getController()==null)return;
+
         long totalWorldTime = this.getWorld().getTotalWorldTime();
         if(this.getController().isStructureFormed()) {
+
+
             boolean changed = false;
             if (totalWorldTime - lastWriteTick >= 40) {
                 if (writing) {
@@ -125,21 +166,14 @@ public class MetaTileEntityStorageCellHatch extends MetaTileEntityMultiblockPart
 
     @SuppressWarnings("unchecked")
     public <T extends IAEStack<T>> IMEInventoryHandler<T> getHandler(final IStorageChannel<T> channel) {
-        updateHandler(false);
-        if (driveInv.getStackInSlot(0).getItem() instanceof EStorageCell<?>) {
+        this.updateHandler();
+        if (driveInv.getStackInSlot(0).getItem() instanceof EStorageCell<?> cell && isCellSupported(cell.getLevel())) {
             IMEInventoryHandler<?> handler = inventoryHandlers.get(channel);
             return handler == null ? null : (IMEInventoryHandler<T>) handler;
         }
-//        if (driveInv.getStackInSlot(0).getItem() instanceof EStorageCell<?> cell && isCellSupported(cell.getLevel())) {
-//            IMEInventoryHandler<?> handler = inventoryHandlers.get(channel);
-//            return handler == null ? null : (IMEInventoryHandler<T>) handler;
-//        }
         return null;
     }
 
-    public boolean isCellSupported(int level) {
-        return this.tier >= level;
-    }
     @Override
     public void saveChanges(@Nullable final ICellInventory<?> cellInventory) {
         saveChanges();
@@ -153,7 +187,7 @@ public class MetaTileEntityStorageCellHatch extends MetaTileEntityMultiblockPart
     @Override
     public void onChangeInventory(final IItemHandler inv, final int slot, final InvOperation mc, final ItemStack removed, final ItemStack added) {
         this.isCached = false; // recalculate the storage cell.
-        this.updateHandler(true);
+        this.updateHandler();
         this.markDirty();
 
         MultiblockControllerBase controller = getController();
@@ -176,8 +210,9 @@ public class MetaTileEntityStorageCellHatch extends MetaTileEntityMultiblockPart
             } catch (final GridAccessException ignored) {
             }
         }
-
     }
+
+
     @SuppressWarnings("unchecked")
     public void postChanges(final IStorageGrid gs, final ItemStack removed, final ItemStack added, final IActionSource src) {
         if (cellHandler == null) {
@@ -204,7 +239,7 @@ public class MetaTileEntityStorageCellHatch extends MetaTileEntityMultiblockPart
             gs.postAlterationOfStoredItems(chan, myChanges, src);
         }
     }
-    protected void updateHandler(final boolean refreshState) {
+    protected void updateHandler() {
         if (isCached) {
             return;
         }
@@ -213,10 +248,7 @@ public class MetaTileEntityStorageCellHatch extends MetaTileEntityMultiblockPart
         inventoryHandlers.clear();
         isCached = true;
         ItemStack stack = driveInv.getStackInSlot(0);
-        if (stack.isEmpty()) {
-            updateDriveBlockState();
-            return;
-        }
+
         if ((cellHandler = EStorageCellHandler.getHandler(stack)) == null) {
             return;
         }
@@ -227,7 +259,7 @@ public class MetaTileEntityStorageCellHatch extends MetaTileEntityMultiblockPart
         }
 
         if(controller instanceof MetaTileEntityStorageCellControl mte) {
-            ICellInventoryHandler cellInventory = null;
+            ICellInventoryHandler cellInventory;
             final Collection<IStorageChannel<? extends IAEStack<?>>> storageChannels = AEApi.instance().storage().storageChannels();
             for (final IStorageChannel<? extends IAEStack<?>> channel : storageChannels) {
                 cellInventory = cellHandler.getCellInventory(stack, this, channel);
@@ -240,23 +272,11 @@ public class MetaTileEntityStorageCellHatch extends MetaTileEntityMultiblockPart
                 inventoryHandlers.put(channel, watcher);
                 break;
             }
-            if (mte != null) {
-                mte.recalculateEnergyUsage();
-            }
+            mte.recalculateEnergyUsage();
 
-            if (cellInventory == null || !refreshState) {
-                return;
-            }
-            updateDriveBlockState();
         }
     }
 
-    public void updateDriveBlockState() {
-        if (this.getWorld() == null) {
-            return;
-        }
-        this.markDirty();
-    }
 
 
     public AppEngCellInventory getDriveInv() {
@@ -338,18 +358,71 @@ public class MetaTileEntityStorageCellHatch extends MetaTileEntityMultiblockPart
         abilityList.add(this);
     }
 
+    public static DriveStorageType getCellType(final EStorageCell<?> cell) {
+        DriveStorageType type;
+        if (cell instanceof EStorageCellItem) {
+            type = DriveStorageType.ITEM;
+        } else if (cell instanceof EStorageCellFluid) {
+            type = DriveStorageType.FLUID;
+        } else {
+            return null;
+        }
+        return type;
+    }
+
     @Override
     protected ModularUI createUI(EntityPlayer entityPlayer) {
         ModularUI.Builder builder = ModularUI.builder(GuiTextures.BACKGROUND, 180, 240);
-        builder.dynamicLabel(28, 12, () -> "硬盘槽位", 0xFFFFFF);
+        builder.dynamicLabel(28, 12, () -> "硬盘槽位"+tier, 0xFFFFFF);
         builder.widget(new SlotWidget(driveInv, 0, 8, 8, true, true)
                 .setBackgroundTexture(GuiTextures.SLOT)
                 .setTooltipText("输入硬盘"));
 
         builder.image(4, 28, 172, 128, GuiTextures.DISPLAY);
+        builder.widget((new AdvancedTextWidget(8, 32, this::addDisplayText, 16777215)).setMaxWidthLimit(180));
 
         builder.bindPlayerInventory(entityPlayer.inventory, GuiTextures.SLOT, 8, 160);
         return builder.build(this.getHolder(), entityPlayer);
+    }
+
+
+    protected void addDisplayText(List<ITextComponent> textList) {
+        EStorageCellData data = EStorageCellData.from(this);
+        if (data == null) {
+            return;
+        }
+        DriveStorageLevel level = data.level();
+
+        DriveStorageType type = data.type();
+        String typeName = switch (type) {
+            case EMPTY -> "empty";
+            case ITEM -> "item";
+            case FLUID -> "fluid";
+        };
+        String levelName = switch (level) {
+            case EMPTY -> "empty";
+            case A -> "L4";
+            case B -> "L6";
+            case C -> "L9";
+        };
+
+        textList.add(new TextComponentTranslation("信息"+typeName + " / " +levelName));
+
+        long usedBytes = data.usedBytes();
+        long maxBytes = MetaTileEntityStorageCellHatch.getMaxBytes(data);
+
+        textList.add(new TextComponentTranslation("容量"+usedBytes + " / " +maxBytes));
+
+        int usedTypes = data.usedTypes();
+        int maxTypes = MetaTileEntityStorageCellHatch.getMaxTypes(data);
+
+        textList.add(new TextComponentTranslation("类型"+usedTypes + " / " +maxTypes));
+    }
+    public boolean isCellSupported(final DriveStorageLevel level) {
+        if(level==A)return tier>=1;
+        if(level==B)return tier>=2;
+        if(level==C)return tier>=3;
+        return true;
     }
 
     private static class CellInvFilter implements IAEItemFilter {
