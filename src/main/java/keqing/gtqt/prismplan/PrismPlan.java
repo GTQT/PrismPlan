@@ -61,6 +61,7 @@ public class PrismPlan {
     @Mod.EventHandler
     public void init(FMLInitializationEvent event) {
         registerManager.onInit(event);
+        Proxy.init();
     }
 
     @Mod.EventHandler

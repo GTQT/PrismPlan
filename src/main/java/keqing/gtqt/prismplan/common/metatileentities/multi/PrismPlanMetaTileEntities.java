@@ -5,6 +5,7 @@ import keqing.gtqt.prismplan.api.utils.PrismPlanLog;
 import keqing.gtqt.prismplan.common.metatileentities.multi.multiblock.estorage.MetaTileEntityNetWorkStoreHatch;
 import keqing.gtqt.prismplan.common.metatileentities.multi.multiblock.estorage.MetaTileEntityStorageCellControl;
 import keqing.gtqt.prismplan.common.metatileentities.multi.multiblock.estorage.MetaTileEntityStorageCellHatch;
+import keqing.gtqt.prismplan.common.metatileentities.multi.multiblock.estorage.MetaTileEntityStorageEnergyCell;
 import keqing.gtqt.prismplan.common.metatileentities.multi.multiblockpart.MetaTileEntityECPart;
 import keqing.gtqt.prismplan.common.metatileentities.multi.multiblockpart.MetaTileEntityECPart111;
 import keqing.gtqt.prismplan.common.metatileentities.multi.multiblockpart.MetaTileEntityNetWorkProxyHatch;
@@ -27,6 +28,7 @@ public class PrismPlanMetaTileEntities {
     public static MetaTileEntityNetWorkProxyHatch NETWORK_PROXY_HATCH;
     public static MetaTileEntityNetWorkStoreHatch NETWORK_STORE_HATCH;
     public static MetaTileEntityStorageCellHatch STORAGE_CELL_HATCH;
+    public static MetaTileEntityStorageEnergyCell STORAGE_ENERGY_CELL;
 
     public int getID()
     {
@@ -41,7 +43,8 @@ public class PrismPlanMetaTileEntities {
 
         NETWORK_PROXY_HATCH= registerMetaTileEntity(15540, new MetaTileEntityNetWorkProxyHatch(prismPlanID("network_proxy_hatch")));
         NETWORK_STORE_HATCH= registerMetaTileEntity(15541, new MetaTileEntityNetWorkStoreHatch(prismPlanID("network_store_hatch")));
-        STORAGE_CELL_HATCH= registerMetaTileEntity(15542, new MetaTileEntityStorageCellHatch(prismPlanID("storage_cell_hatch"), 6));
+        STORAGE_CELL_HATCH= registerMetaTileEntity(15542, new MetaTileEntityStorageCellHatch(prismPlanID("storage_cell_hatch"), 3));
+        STORAGE_ENERGY_CELL = registerMetaTileEntity(15543, new MetaTileEntityStorageEnergyCell(prismPlanID("storage_energy_cell"), 3, 1000000));
 
     }
 }
