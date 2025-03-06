@@ -4,6 +4,9 @@ import appeng.api.config.Actionable;
 import appeng.api.storage.ICellInventory;
 import appeng.api.storage.ICellInventoryHandler;
 import appeng.api.storage.data.IAEItemStack;
+import gregtech.api.gui.GuiTextures;
+import gregtech.api.gui.ModularUI;
+import gregtech.api.gui.widgets.AdvancedTextWidget;
 import gregtech.api.metatileentity.MetaTileEntity;
 import gregtech.api.metatileentity.interfaces.IGregTechTileEntity;
 import gregtech.api.metatileentity.multiblock.IMultiblockPart;
@@ -19,9 +22,11 @@ import keqing.gtqt.prismplan.api.capability.ICellHatch;
 import keqing.gtqt.prismplan.api.capability.IEnergyHatch;
 import keqing.gtqt.prismplan.api.capability.INetWorkStore;
 import keqing.gtqt.prismplan.api.multiblock.PrismPlanMultiblockAbility;
-import keqing.gtqt.prismplan.api.utils.PrismPlanLog;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.text.TextComponentTranslation;
 
 import java.util.*;
 
@@ -36,6 +41,18 @@ public class MetaTileEntityStorageCellControl extends MultiblockWithDisplayBase 
             Comparator.comparingDouble(IEnergyHatch::getEnergyStored).reversed()
     );
 
+    // 定义常量提升可读性
+    protected double idleDrain = 64;
+
+    long[] usedBytes = new long[2];
+    long[] maxBytes = new long[2];
+    int[] usedTypes = new int[2];
+    int[] maxTypes = new int[2];
+
+    public MetaTileEntityStorageCellControl(ResourceLocation metaTileEntityId) {
+        super(metaTileEntityId);
+    }
+
     @Override
     protected void formStructure(PatternMatchContext context) {
         super.formStructure(context);
@@ -45,11 +62,6 @@ public class MetaTileEntityStorageCellControl extends MultiblockWithDisplayBase 
             energyCellsMin.addAll(cells);
             energyCellsMax.addAll(cells);
         }
-    }
-
-    protected double idleDrain = 64;
-    public MetaTileEntityStorageCellControl(ResourceLocation metaTileEntityId) {
-        super(metaTileEntityId);
     }
 
     @Override
@@ -62,7 +74,35 @@ public class MetaTileEntityStorageCellControl extends MultiblockWithDisplayBase 
             });
 
             getNetWorkStoreHatch().refresh();
+
+            long[] currentUsedBytes = new long[2];
+            long[] currentMaxBytes = new long[2];
+            int[] currentUsedTypes = new int[2];
+            int[] currentMaxTypes = new int[2];
+
+            for (ICellHatch cell : getCellDrives()) {
+                if (cell.getData() == null) continue;
+                int index = switch (cell.getType()) {
+                    case ITEM -> 0;
+                    case FLUID -> 1;
+                    default -> -1;
+                };
+                if (index == -1) continue;
+
+                currentUsedBytes[index] += cell.usedBytes();
+                currentMaxBytes[index] += cell.maxBytes();
+                currentUsedTypes[index] += cell.usedTypes();
+                currentMaxTypes[index] += cell.maxTypes();
+            }
+
+            // 使用内容比较替代引用比较
+            if (!Arrays.equals(usedBytes, currentUsedBytes)) usedBytes = currentUsedBytes;
+            if (!Arrays.equals(maxBytes, currentMaxBytes)) maxBytes = currentMaxBytes;
+            if (!Arrays.equals(usedTypes, currentUsedTypes)) usedTypes = currentUsedTypes;
+            if (!Arrays.equals(maxTypes, currentMaxTypes)) maxTypes = currentMaxTypes;
         }
+
+
     }
 
     public double injectPower(final double amt, final Actionable mode) {
@@ -130,7 +170,7 @@ public class MetaTileEntityStorageCellControl extends MultiblockWithDisplayBase 
     }
 
     public void recalculateEnergyUsage() {
-        if(!isStructureFormed())return;
+        if (!isStructureFormed()) return;
         double newIdleDrain = 64;
         for (final ICellHatch drive : getCellDrives()) {
             ECellDriveWatcher<IAEItemStack> watcher = drive.getWatcher();
@@ -148,7 +188,7 @@ public class MetaTileEntityStorageCellControl extends MultiblockWithDisplayBase 
             newIdleDrain += cellInv.getIdleDrain();
         }
         this.idleDrain = newIdleDrain;
-        if (this.getNetWorkStoreHatch()!= null&&this.getNetWorkStoreHatch().getProxy() != null) {
+        if (this.getNetWorkStoreHatch() != null && this.getNetWorkStoreHatch().getProxy() != null) {
             this.getNetWorkStoreHatch().getProxy().setIdlePowerUsage(idleDrain);
         }
     }
@@ -182,7 +222,7 @@ public class MetaTileEntityStorageCellControl extends MultiblockWithDisplayBase 
         return abilities.get(0);
     }
 
-    public  List<IEnergyHatch> getCellHatch() {
+    public List<IEnergyHatch> getCellHatch() {
         List<IEnergyHatch> abilities = getAbilities(PrismPlanMultiblockAbility.ENERGY_HATCH);
         if (abilities.isEmpty())
             return null;
@@ -232,5 +272,26 @@ public class MetaTileEntityStorageCellControl extends MultiblockWithDisplayBase 
 
     public List<ICellHatch> getCellDrives() {
         return getAbilities(PrismPlanMultiblockAbility.CELL_HATCH);
+    }
+
+    @Override
+    protected ModularUI createUI(EntityPlayer entityPlayer) {
+        ModularUI.Builder builder = ModularUI.builder(GuiTextures.BACKGROUND, 180, 240);
+        builder.dynamicLabel(8, 12, () -> "ECO S", 0xFFFFFF);
+
+        builder.image(4, 28, 172, 128, GuiTextures.DISPLAY);
+        builder.widget((new AdvancedTextWidget(8, 32, this::addDisplayText, 16777215)).setMaxWidthLimit(180));
+
+        builder.bindPlayerInventory(entityPlayer.inventory, GuiTextures.SLOT, 8, 160);
+        return builder.build(this.getHolder(), entityPlayer);
+    }
+
+    protected void addDisplayText(List<ITextComponent> textList) {
+        textList.add(new TextComponentTranslation("物品："));
+        textList.add(new TextComponentTranslation("容量" + usedBytes[0] + " / " + maxBytes[0]));
+        textList.add(new TextComponentTranslation("类型" + usedTypes[0] + " / " + maxTypes[0]));
+        textList.add(new TextComponentTranslation("流体："));
+        textList.add(new TextComponentTranslation("容量" + usedBytes[1] + " / " + maxBytes[1]));
+        textList.add(new TextComponentTranslation("类型" + usedTypes[1] + " / " + maxTypes[1]));
     }
 }
