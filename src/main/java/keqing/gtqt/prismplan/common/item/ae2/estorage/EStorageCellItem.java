@@ -14,9 +14,12 @@ import javax.annotation.Nonnull;
 
 public class EStorageCellItem extends EStorageCell<IAEItemStack> {
 
-    public static final EStorageCellItem LEVEL_A = new EStorageCellItem(DriveStorageLevel.A, 16, 4);
-    public static final EStorageCellItem LEVEL_B = new EStorageCellItem(DriveStorageLevel.B, 64, 16);
-    public static final EStorageCellItem LEVEL_C = new EStorageCellItem(DriveStorageLevel.C, 256, 64);
+    public static final EStorageCellItem LEVEL_A = new EStorageCellItem(DriveStorageLevel.A, 4, 1);
+    public static final EStorageCellItem LEVEL_B = new EStorageCellItem(DriveStorageLevel.B, 16, 4);
+    public static final EStorageCellItem LEVEL_C = new EStorageCellItem(DriveStorageLevel.C, 64, 16);
+    public static final EStorageCellItem LEVEL_D = new EStorageCellItem(DriveStorageLevel.D, 256, 64);
+    public static final EStorageCellItem LEVEL_E = new EStorageCellItem(DriveStorageLevel.E, 1024, 256);
+
 
     public EStorageCellItem(DriveStorageLevel level, final int millionBytes, final int byteMultiplier) {
         super(level, millionBytes, byteMultiplier);

@@ -51,9 +51,13 @@ public class ItemRegistry {
         event.getRegistry().register(EStorageCellItem.LEVEL_A);
         event.getRegistry().register(EStorageCellItem.LEVEL_B);
         event.getRegistry().register(EStorageCellItem.LEVEL_C);
+        event.getRegistry().register(EStorageCellItem.LEVEL_D);
+        event.getRegistry().register(EStorageCellItem.LEVEL_E);
         event.getRegistry().register(EStorageCellFluid.LEVEL_A);
         event.getRegistry().register(EStorageCellFluid.LEVEL_B);
         event.getRegistry().register(EStorageCellFluid.LEVEL_C);
+        event.getRegistry().register(EStorageCellFluid.LEVEL_D);
+        event.getRegistry().register(EStorageCellFluid.LEVEL_E);
     }
     @SubscribeEvent
     @SideOnly(Side.CLIENT)
@@ -64,11 +68,13 @@ public class ItemRegistry {
         registerModel(EStorageCellItem.LEVEL_A);
         registerModel(EStorageCellItem.LEVEL_B);
         registerModel(EStorageCellItem.LEVEL_C);
+        registerModel(EStorageCellItem.LEVEL_D);
+        registerModel(EStorageCellItem.LEVEL_E);
         registerModel(EStorageCellFluid.LEVEL_A);
         registerModel(EStorageCellFluid.LEVEL_B);
         registerModel(EStorageCellFluid.LEVEL_C);
-
-
+        registerModel(EStorageCellFluid.LEVEL_D);
+        registerModel(EStorageCellFluid.LEVEL_E);
     }
 
     @SideOnly(Side.CLIENT)

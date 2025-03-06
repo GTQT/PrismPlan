@@ -10,12 +10,17 @@ item.prismplan.singularity_cell_fluid.name=§5奇点§9流体存储元件
 item.prismplan.universe_cell.name=§d宇宙存储元件
 item.prismplan.universe_cell_fluid.name=§d宇宙§9流体存储元件
 
+item.prismplan.estorage_cell_item_4m.name=高性能晶格存储矩阵（4M）
 item.prismplan.estorage_cell_item_16m.name=高性能晶格存储矩阵（16M）
 item.prismplan.estorage_cell_item_64m.name=高性能晶格存储矩阵（64M）
 item.prismplan.estorage_cell_item_256m.name=高性能晶格存储矩阵（256M）
+item.prismplan.estorage_cell_item_1024m.name=高性能晶格存储矩阵（1024M）
+
+item.prismplan.estorage_cell_fluid_4m.name=高性能晶格流体存储矩阵（4M）
 item.prismplan.estorage_cell_fluid_16m.name=高性能晶格流体存储矩阵（16M）
 item.prismplan.estorage_cell_fluid_64m.name=高性能晶格流体存储矩阵（64M）
 item.prismplan.estorage_cell_fluid_256m.name=高性能晶格流体存储矩阵（256M）
+item.prismplan.estorage_cell_fluid_1024m.name=高性能晶格流体存储矩阵（1024M）
 # 方块类
 tile.prismplan.storage_crafting_65536k.name=§a合成存储器§7（65536k）
 tile.prismplan.storage_crafting_262144k.name=§a合成存储器§7（262144k）
@@ -47,7 +52,8 @@ prismplan.machine.network_store_hatch.name=网络存储仓口
 prismplan.machine.storage_cell_hatch.1.name=存储单元仓口 I
 prismplan.machine.storage_cell_hatch.2.name=存储单元仓口 II
 prismplan.machine.storage_cell_hatch.3.name=存储单元仓口 III
-
+prismplan.machine.storage_cell_hatch.4.name=存储单元仓口 IV
+prismplan.machine.storage_cell_hatch.5.name=存储单元仓口 V
 # 储能单元（分等级）
 prismplan.machine.storage_energy_cell.1.name=储能单元 I (1M)
 prismplan.machine.storage_energy_cell.2.name=储能单元 II (4M)
@@ -58,8 +64,12 @@ prismplan.machine.storage_energy_cell.5.name=储能单元 V (256M)
 #tooltips
 prismplan.estorage_cell.insert.tip=蹲下时§a手持矩阵并右击§7驱动器以插入矩阵。
 prismplan.estorage_cell.extract.tip=蹲下时§a空手并右击§7驱动器以取出矩阵。
-prismplan.estorage_cell.l6.tip=§c只有 §6Tier 2§c 等级及以上的存储单元仓口可以驱动此矩阵。
-prismplan.estorage_cell.l9.tip=§c只有 §6Tier 3§c 等级的存储矩阵可以驱动此矩阵。
+
+prismplan.estorage_cell.l1.tip=§c只有 §6Tier 1§c 等级及以上的存储单元仓口可以驱动此矩阵。
+prismplan.estorage_cell.l2.tip=§c只有 §6Tier 2§c 等级及以上的存储单元仓口可以驱动此矩阵。
+prismplan.estorage_cell.l3.tip=§c只有 §6Tier 3§c 等级及以上的存储单元仓口可以驱动此矩阵。
+prismplan.estorage_cell.l4.tip=§c只有 §6Tier 4§c 等级及以上的存储单元仓口可以驱动此矩阵。
+prismplan.estorage_cell.l5.tip=§c只有 §6Tier 5§c 等级及以上的存储单元仓口可以驱动此矩阵。
 
 prismplan.estorage_cell_drive.player.inserted=§a已插入存储矩阵。
 prismplan.estorage_cell_drive.player.removed=§a已取出存储矩阵。
@@ -81,7 +91,7 @@ gui.estorage_controller.cell_info.tip.2=字节使用：%s / %s
 
 gui.estorage_controller.cell_info.item=物品存储矩阵
 gui.estorage_controller.cell_info.fluid=流体存储矩阵
-
+gui.estorage_controller.cell_info.energy=能源设备监控
 gui.estorage_controller.graph.energy_usage=总耗能：%sAE/t
 gui.estorage_controller.graph.energy_stored=能量存储：%sAE / %sAE
 

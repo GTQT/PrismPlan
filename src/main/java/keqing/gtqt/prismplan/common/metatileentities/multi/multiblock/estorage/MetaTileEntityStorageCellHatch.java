@@ -37,6 +37,7 @@ import keqing.gtqt.prismplan.common.item.ae2.estorage.EStorageCell;
 import keqing.gtqt.prismplan.common.item.ae2.estorage.EStorageCellFluid;
 import keqing.gtqt.prismplan.common.item.ae2.estorage.EStorageCellItem;
 import keqing.gtqt.prismplan.common.network.PktCellDriveStatusUpdate;
+import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -111,12 +112,16 @@ public class MetaTileEntityStorageCellHatch extends MetaTileEntityMultiblockPart
                 case A -> EStorageCellItem.LEVEL_A.getBytes(ItemStack.EMPTY);
                 case B -> EStorageCellItem.LEVEL_B.getBytes(ItemStack.EMPTY);
                 case C -> EStorageCellItem.LEVEL_C.getBytes(ItemStack.EMPTY);
+                case D -> EStorageCellItem.LEVEL_D.getBytes(ItemStack.EMPTY);
+                case E -> EStorageCellItem.LEVEL_E.getBytes(ItemStack.EMPTY);
             };
             case FLUID -> switch (level) {
                 case EMPTY -> 0;
                 case A -> EStorageCellFluid.LEVEL_A.getBytes(ItemStack.EMPTY);
                 case B -> EStorageCellFluid.LEVEL_B.getBytes(ItemStack.EMPTY);
                 case C -> EStorageCellFluid.LEVEL_C.getBytes(ItemStack.EMPTY);
+                case D -> EStorageCellFluid.LEVEL_D.getBytes(ItemStack.EMPTY);
+                case E -> EStorageCellFluid.LEVEL_E.getBytes(ItemStack.EMPTY);
             };
         };
     }
@@ -131,6 +136,16 @@ public class MetaTileEntityStorageCellHatch extends MetaTileEntityMultiblockPart
             return null;
         }
         return type;
+    }
+
+    @Override
+    public void onRemoval() {
+        super.onRemoval();
+        var pos = getPos();
+        if (!driveInv.getStackInSlot(0).isEmpty()) {
+            getWorld().spawnEntity(new EntityItem(getWorld(), pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5, driveInv.getStackInSlot(0)));
+            driveInv.extractItem(0, 1, false);
+        }
     }
 
     public void update() {
@@ -380,7 +395,7 @@ public class MetaTileEntityStorageCellHatch extends MetaTileEntityMultiblockPart
     @Override
     protected ModularUI createUI(EntityPlayer entityPlayer) {
         ModularUI.Builder builder = ModularUI.builder(GuiTextures.BACKGROUND, 180, 240);
-        builder.dynamicLabel(28, 12, () -> "硬盘槽位" + tier, 0xFFFFFF);
+        builder.dynamicLabel(28, 12, () -> "存储单元仓口 等级" + tier, 0xFFFFFF);
         builder.widget(new SlotWidget(driveInv, 0, 8, 8, true, true)
                 .setBackgroundTexture(GuiTextures.SLOT)
                 .setTooltipText("输入硬盘"));
@@ -402,9 +417,11 @@ public class MetaTileEntityStorageCellHatch extends MetaTileEntityMultiblockPart
         };
         String levelName = switch (getLevel()) {
             case EMPTY -> "empty";
-            case A -> "L4";
-            case B -> "L6";
-            case C -> "L9";
+            case A -> "L1";
+            case B -> "L2";
+            case C -> "L3";
+            case D -> "L4";
+            case E -> "L5";
         };
 
         textList.add(new TextComponentTranslation("gui.estorage_controller.cell_info.tip.0", typeName, levelName));
@@ -456,6 +473,8 @@ public class MetaTileEntityStorageCellHatch extends MetaTileEntityMultiblockPart
         if (level == A) return tier >= 1;
         if (level == B) return tier >= 2;
         if (level == C) return tier >= 3;
+        if (level == D) return tier >= 4;
+        if (level == E) return tier >= 5;
         return true;
     }
 

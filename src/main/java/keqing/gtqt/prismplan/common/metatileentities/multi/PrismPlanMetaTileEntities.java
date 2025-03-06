@@ -27,7 +27,7 @@ public class PrismPlanMetaTileEntities {
     public static MetaTileEntityStorageCellControl STORAGE_CELL_CONTROL;
     public static MetaTileEntityNetWorkProxyHatch NETWORK_PROXY_HATCH;
     public static MetaTileEntityNetWorkStoreHatch NETWORK_STORE_HATCH;
-    public static MetaTileEntityStorageCellHatch[] STORAGE_CELL_HATCH= new MetaTileEntityStorageCellHatch[3];
+    public static MetaTileEntityStorageCellHatch[] STORAGE_CELL_HATCH= new MetaTileEntityStorageCellHatch[5];
     public static MetaTileEntityStorageEnergyCell[] STORAGE_ENERGY_CELL= new MetaTileEntityStorageEnergyCell[5];
 
     public int getID()
@@ -49,6 +49,8 @@ public class PrismPlanMetaTileEntities {
         STORAGE_CELL_HATCH[0]= registerMetaTileEntity(15550, new MetaTileEntityStorageCellHatch(prismPlanID("storage_cell_hatch.1"), 1));
         STORAGE_CELL_HATCH[1]= registerMetaTileEntity(15551, new MetaTileEntityStorageCellHatch(prismPlanID("storage_cell_hatch.2"), 2));
         STORAGE_CELL_HATCH[2]= registerMetaTileEntity(15552, new MetaTileEntityStorageCellHatch(prismPlanID("storage_cell_hatch.3"), 3));
+        STORAGE_CELL_HATCH[3]= registerMetaTileEntity(15553, new MetaTileEntityStorageCellHatch(prismPlanID("storage_cell_hatch.4"), 4));
+        STORAGE_CELL_HATCH[4]= registerMetaTileEntity(15554, new MetaTileEntityStorageCellHatch(prismPlanID("storage_cell_hatch.5"), 5));
 
         STORAGE_ENERGY_CELL[0] = registerMetaTileEntity(15570, new MetaTileEntityStorageEnergyCell(prismPlanID("storage_energy_cell.1"), 1, 1000000));
         STORAGE_ENERGY_CELL[1] = registerMetaTileEntity(15571, new MetaTileEntityStorageEnergyCell(prismPlanID("storage_energy_cell.2"), 2, 4000000));

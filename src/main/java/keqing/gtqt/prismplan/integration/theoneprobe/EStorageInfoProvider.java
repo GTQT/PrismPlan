@@ -84,9 +84,11 @@ public class EStorageInfoProvider implements IProbeInfoProvider {
         };
         String levelName = switch (level) {
             case EMPTY -> "empty";
-            case A -> "L4";
-            case B -> "L6";
-            case C -> "L9";
+            case A -> "L1";
+            case B -> "L2";
+            case C -> "L3";
+            case D -> "L4";
+            case E -> "L5";
         };
         leftInfo.text("{*top.estorage.drive.cell*}");
         rightInfo.text(String.format("{*%s*} (%s)", typeName, levelName));

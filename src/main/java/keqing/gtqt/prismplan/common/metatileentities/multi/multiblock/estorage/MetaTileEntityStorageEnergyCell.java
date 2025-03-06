@@ -20,6 +20,7 @@ import gregtech.client.utils.PipelineUtil;
 import gregtech.common.metatileentities.multi.multiblockpart.MetaTileEntityMultiblockPart;
 import keqing.gtqt.prismplan.api.capability.IEnergyHatch;
 import keqing.gtqt.prismplan.api.multiblock.PrismPlanMultiblockAbility;
+import keqing.gtqt.prismplan.api.utils.PrimsPlanUtility;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.ResourceLocation;
@@ -72,7 +73,9 @@ public class MetaTileEntityStorageEnergyCell extends MetaTileEntityMultiblockPar
     }
 
     protected void addDisplayText(List<ITextComponent> textList) {
-        textList.add(new TextComponentTranslation("gui.estorage_controller.graph.energy_stored",energyStored ,maxEnergyStore));
+        textList.add(new TextComponentTranslation("gui.estorage_controller.graph.energy_stored"
+                , PrimsPlanUtility.formatNumber(Math.round(getEnergyStored())), PrimsPlanUtility.formatNumber(Math.round( getMaxEnergyStore()))));
+
     }
     public void recalculateCapacity() {
         recalculateCap = false;

@@ -28,7 +28,9 @@ import gregtech.api.capability.GregtechDataCodes;
 import gregtech.api.capability.impl.NotifiableItemStackHandler;
 import gregtech.api.gui.GuiTextures;
 import gregtech.api.gui.ModularUI;
+import gregtech.api.gui.Widget;
 import gregtech.api.gui.widgets.AdvancedTextWidget;
+import gregtech.api.gui.widgets.ClickButtonWidget;
 import gregtech.api.gui.widgets.SlotWidget;
 import gregtech.api.metatileentity.MetaTileEntity;
 import gregtech.api.metatileentity.interfaces.IGregTechTileEntity;
@@ -50,6 +52,7 @@ import net.minecraft.network.PacketBuffer;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraftforge.items.IItemHandlerModifiable;
@@ -128,7 +131,7 @@ public class MetaTileEntityNetWorkStoreHatch extends MetaTileEntityMultiblockPar
         if (!this.getWorld().isRemote && (this.isAttached == (this.getControl() == null))) {
             this.isAttached = true;
             try {
-                networkProxy.getGrid().postEvent(new MENetworkCellArrayUpdate());
+                getProxy().getGrid().postEvent(new MENetworkCellArrayUpdate());
             } catch (GridAccessException ignored) {}
         }
     }
@@ -187,6 +190,7 @@ public class MetaTileEntityNetWorkStoreHatch extends MetaTileEntityMultiblockPar
         builder.image(4, 28, 172, 128, GuiTextures.DISPLAY);
         builder.dynamicLabel(8, 32, () -> this.isOnline ? I18n.format("gregtech.gui.me_network.online") : I18n.format("gregtech.gui.me_network.offline"), 4210752);
         builder.widget((new AdvancedTextWidget(8, 42, this::addDisplayText, 16777215)).setMaxWidthLimit(180));
+
 
         builder.bindPlayerInventory(entityPlayer.inventory, GuiTextures.SLOT, 8, 160);
         return builder.build(this.getHolder(), entityPlayer);

@@ -1,0 +1,6 @@
+{
+  "parent": "item/generated",
+  "textures": {
+    "layer0": "prismplan:items/cells/estorage_cell_fluid_1024m"
+  }
+}

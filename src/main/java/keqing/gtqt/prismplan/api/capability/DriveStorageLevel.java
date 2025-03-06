@@ -10,7 +10,9 @@ public enum DriveStorageLevel implements IStringSerializable {
     EMPTY("empty"),
     A("a"),
     B("b"),
-    C("c");
+    C("c"),
+    D("d"),
+    E("e");
 
     public static final PropertyEnum<DriveStorageLevel> STORAGE_LEVEL = PropertyEnum.create("storage_level", DriveStorageLevel.class);
     private final String name;

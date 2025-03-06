@@ -31,7 +31,7 @@ public abstract class EStorageCell<T extends IAEStack<T>> extends AEBaseItem imp
 
     public EStorageCell(DriveStorageLevel level, final int millionBytes, final int byteMultiplier) {
         this.level = level;
-        this.totalBytes = (millionBytes * 1000) * 1024;
+        this.totalBytes = (millionBytes * 1024) * 1024;
         this.byteMultiplier = byteMultiplier;
         this.setMaxStackSize(1);
         this.setCreativeTab(PRISM_PLAN_TAB);
@@ -47,11 +47,20 @@ public abstract class EStorageCell<T extends IAEStack<T>> extends AEBaseItem imp
                 .addCellInformation(EStorageCellHandler.getHandler(stack).getCellInventory(stack, null, this.getChannel()), lines);
         lines.add(I18n.format("prismplan.estorage_cell.insert.tip"));
         lines.add(I18n.format("prismplan.estorage_cell.extract.tip"));
+        if (level == DriveStorageLevel.A) {
+            lines.add(I18n.format("prismplan.estorage_cell.l1.tip"));
+        }
         if (level == DriveStorageLevel.B) {
-            lines.add(I18n.format("prismplan.estorage_cell.l6.tip"));
+            lines.add(I18n.format("prismplan.estorage_cell.l2.tip"));
         }
         if (level == DriveStorageLevel.C) {
-            lines.add(I18n.format("prismplan.estorage_cell.l9.tip"));
+            lines.add(I18n.format("prismplan.estorage_cell.l3.tip"));
+        }
+        if (level == DriveStorageLevel.D) {
+            lines.add(I18n.format("prismplan.estorage_cell.l4.tip"));
+        }
+        if (level == DriveStorageLevel.E) {
+            lines.add(I18n.format("prismplan.estorage_cell.l5.tip"));
         }
     }
 
