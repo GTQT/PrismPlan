@@ -188,7 +188,7 @@ public class MetaTileEntityNetWorkStoreHatch extends MetaTileEntityMultiblockPar
 
     protected void addDisplayText(List<ITextComponent> textList) {
         if (this.getController() != null)
-            textList.add(new TextComponentTranslation("正在访问：%s", this.getController()));
+            textList.add(new TextComponentTranslation("正在访问："+I18n.format(this.getController().getMetaFullName())));
     }
 
     public @Nullable AENetworkProxy getProxy() {

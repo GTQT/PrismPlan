@@ -27,6 +27,7 @@ import keqing.gtqt.prismplan.api.capability.IEnergyHatch;
 import keqing.gtqt.prismplan.api.capability.INetWorkStore;
 import keqing.gtqt.prismplan.api.multiblock.PrismPlanMultiblockAbility;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.client.resources.I18n;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.ITextComponent;
@@ -281,7 +282,7 @@ public class MetaTileEntityStorageCellControl extends MultiblockWithDisplayBase 
     @Override
     protected ModularUI createUI(EntityPlayer entityPlayer) {
         ModularUI.Builder builder = ModularUI.builder(GuiTextures.BACKGROUND, 180, 240);
-        builder.dynamicLabel(8, 12, () -> "ECO S", 0xFFFFFF);
+        builder.dynamicLabel(8, 12, () -> I18n.format(getMetaFullName()), 0xFFFFFF);
 
         builder.image(4, 28, 172, 128, GuiTextures.DISPLAY);
         builder.widget((new AdvancedTextWidget(8, 32, this::addDisplayText, 16777215)).setMaxWidthLimit(180));
