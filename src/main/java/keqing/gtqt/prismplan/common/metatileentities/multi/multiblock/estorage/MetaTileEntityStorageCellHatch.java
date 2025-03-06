@@ -120,13 +120,9 @@ public class MetaTileEntityStorageCellHatch extends MetaTileEntityMultiblockPart
         };
     }
 
-    boolean firstRender = true;
     public void update() {
-        if (!this.getWorld().isRemote && isFirstTick()) {
-            this.isCached = false;
-        }
         if(this.getController()==null)return;
-
+        
         long totalWorldTime = this.getWorld().getTotalWorldTime();
         if(this.getController().isStructureFormed()) {
 
@@ -146,6 +142,9 @@ public class MetaTileEntityStorageCellHatch extends MetaTileEntityMultiblockPart
             }
             // Static update or changed update.
             if (this.getWorld().getTotalWorldTime() % 200 == 0) {
+                this.isCached = false;
+                this.updateHandler();
+
                 BlockPos pos = getPos();
                 PrismPlan.NET_CHANNEL.sendToAllTracking(
                         new PktCellDriveStatusUpdate(getPos(), writing),
@@ -257,6 +256,10 @@ public class MetaTileEntityStorageCellHatch extends MetaTileEntityMultiblockPart
             return;
         }
 
+        if(stack.isEmpty())
+        {
+            return;
+        }
         MultiblockControllerBase controller = getController();
         if (controller == null) {
             return;
@@ -272,7 +275,9 @@ public class MetaTileEntityStorageCellHatch extends MetaTileEntityMultiblockPart
                 }
                 driveInv.setHandler(0, cellInventory);
                 watcher = new ECellDriveWatcher<>(cellInventory, channel, this);
-                watcher.setPriority(mte.getNetWorkStoreHatch().getPriority());
+                if(mte.getNetWorkStoreHatch()!=null) {
+                    watcher.setPriority(mte.getNetWorkStoreHatch().getPriority());
+                }
                 inventoryHandlers.put(channel, watcher);
                 break;
             }
@@ -344,6 +349,7 @@ public class MetaTileEntityStorageCellHatch extends MetaTileEntityMultiblockPart
             final NBTTagCompound item = opt.getCompoundTag("item" + x);
             ItemHandlerUtil.setStackInSlot(driveInv, x, stackFromNBT(item));
         }
+        this.isCached = false; // recalculate the storage cell.
     }
 
 

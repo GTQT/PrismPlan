@@ -19,6 +19,7 @@ import keqing.gtqt.prismplan.api.capability.ICellHatch;
 import keqing.gtqt.prismplan.api.capability.IEnergyHatch;
 import keqing.gtqt.prismplan.api.capability.INetWorkStore;
 import keqing.gtqt.prismplan.api.multiblock.PrismPlanMultiblockAbility;
+import keqing.gtqt.prismplan.api.utils.PrismPlanLog;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.util.ResourceLocation;
 
@@ -59,6 +60,8 @@ public class MetaTileEntityStorageCellControl extends MultiblockWithDisplayBase 
                     cell.recalculateCapacity();
                 }
             });
+
+            getNetWorkStoreHatch().refresh();
         }
     }
 
@@ -127,6 +130,7 @@ public class MetaTileEntityStorageCellControl extends MultiblockWithDisplayBase 
     }
 
     public void recalculateEnergyUsage() {
+        if(!isStructureFormed())return;
         double newIdleDrain = 64;
         for (final ICellHatch drive : getCellDrives()) {
             ECellDriveWatcher<IAEItemStack> watcher = drive.getWatcher();
@@ -144,7 +148,7 @@ public class MetaTileEntityStorageCellControl extends MultiblockWithDisplayBase 
             newIdleDrain += cellInv.getIdleDrain();
         }
         this.idleDrain = newIdleDrain;
-        if (this.getNetWorkStoreHatch().getProxy() != null) {
+        if (this.getNetWorkStoreHatch()!= null&&this.getNetWorkStoreHatch().getProxy() != null) {
             this.getNetWorkStoreHatch().getProxy().setIdlePowerUsage(idleDrain);
         }
     }

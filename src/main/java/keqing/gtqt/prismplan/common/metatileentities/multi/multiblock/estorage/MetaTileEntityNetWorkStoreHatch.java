@@ -38,8 +38,10 @@ import gregtech.client.renderer.texture.Textures;
 import gregtech.client.renderer.texture.cube.OrientedOverlayRenderer;
 import gregtech.common.ConfigHolder;
 import gregtech.common.metatileentities.multi.multiblockpart.MetaTileEntityMultiblockPart;
+import keqing.gtqt.prismplan.api.capability.ICellHatch;
 import keqing.gtqt.prismplan.api.capability.INetWorkStore;
 import keqing.gtqt.prismplan.api.multiblock.PrismPlanMultiblockAbility;
+import keqing.gtqt.prismplan.api.utils.PrismPlanLog;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.entity.player.EntityPlayer;
@@ -211,10 +213,9 @@ public class MetaTileEntityNetWorkStoreHatch extends MetaTileEntityMultiblockPar
         IGregTechTileEntity mte = this.getHolder();
         if (mte instanceof IGridProxyable holder) {
             AENetworkProxy proxy = new AENetworkProxy(holder, "mte_proxy", this.getStackForm(), true);
-            proxy.setFlags(GridFlags.REQUIRE_CHANNEL);
-            proxy.setIdlePowerUsage(ConfigHolder.compat.ae2.meHatchEnergyUsage);
+            proxy.setFlags(GridFlags.REQUIRE_CHANNEL, GridFlags.DENSE_CAPACITY);
+            proxy.setIdlePowerUsage(1.0D);
             proxy.setValidSides(EnumSet.of(this.getFrontFacing()));
-
             canBeUse = true;
 
             return proxy;
@@ -284,6 +285,18 @@ public class MetaTileEntityNetWorkStoreHatch extends MetaTileEntityMultiblockPar
             if (this.isOnline != isOnline) {
                 this.isOnline = isOnline;
                 this.scheduleRenderUpdate();
+            }
+        }
+    }
+
+    public void refresh() {
+        networkProxy.onReady();
+        getControl().recalculateEnergyUsage();
+        List<ICellHatch> cellDrives = getControl().getCellDrives();
+        if (!cellDrives.isEmpty()) {
+            try {
+                networkProxy.getGrid().postEvent(new MENetworkCellArrayUpdate());
+            } catch (GridAccessException ignored) {
             }
         }
     }
@@ -391,8 +404,10 @@ public class MetaTileEntityNetWorkStoreHatch extends MetaTileEntityMultiblockPar
 
     public MetaTileEntityStorageCellControl getControl()
     {
-        return (MetaTileEntityStorageCellControl) this.getController();
+        if(this.getController() instanceof MetaTileEntityStorageCellControl mte) return mte;
+        return null;
     }
+
     @Override
     public double injectAEPower(final double amt, @Nonnull final Actionable mode) {
         if (this.getControl() == null) {
@@ -403,7 +418,7 @@ public class MetaTileEntityNetWorkStoreHatch extends MetaTileEntityMultiblockPar
         }
         if (mode == Actionable.MODULATE && this.getAECurrentPower() < 0.01 && amt > 0) {
             try {
-                this.getControl().getNetWorkStoreHatch().getProxy().getGrid().postEvent(new MENetworkPowerStorage(this, MENetworkPowerStorage.PowerEventType.PROVIDE_POWER));
+                networkProxy.getGrid().postEvent(new MENetworkPowerStorage(this, MENetworkPowerStorage.PowerEventType.PROVIDE_POWER));
             } catch (final GridAccessException ignored) {
             }
         }
@@ -419,7 +434,7 @@ public class MetaTileEntityNetWorkStoreHatch extends MetaTileEntityMultiblockPar
             final boolean wasFull = this.getAECurrentPower() >= this.getAEMaxPower() - 0.001;
             if (wasFull && amt > 0) {
                 try {
-                    this.getControl().getNetWorkStoreHatch().getProxy().getGrid().postEvent(new MENetworkPowerStorage(this, MENetworkPowerStorage.PowerEventType.REQUEST_POWER));
+                    networkProxy.getGrid().postEvent(new MENetworkPowerStorage(this, MENetworkPowerStorage.PowerEventType.REQUEST_POWER));
                 } catch (final GridAccessException ignored) {
                 }
             }
@@ -452,4 +467,5 @@ public class MetaTileEntityNetWorkStoreHatch extends MetaTileEntityMultiblockPar
     public AccessRestriction getPowerFlow() {
         return AccessRestriction.READ_WRITE;
     }
+
 }

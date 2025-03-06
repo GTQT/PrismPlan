@@ -17,15 +17,7 @@ public interface IEnergyHatch {
     }
 
     // 容量重计算相关
-    default boolean shouldRecalculateCap() {
-        return false;
-    }
+    boolean shouldRecalculateCap();
 
-    default void recalculateCapacity() {}
-
-    // 其他必要方法
-    default double getIdleDrain() {
-        return 0.0;
-    }
-
+    void recalculateCapacity();
 }

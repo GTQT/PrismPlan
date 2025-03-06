@@ -25,7 +25,7 @@ import net.minecraftforge.items.IItemHandlerModifiable;
 import java.util.List;
 
 public class MetaTileEntityStorageEnergyCell extends MetaTileEntityMultiblockPart implements
-        IMultiblockAbilityPart<IEnergyHatch>,IEnergyHatch,Comparable<MetaTileEntityStorageEnergyCell> {
+        IMultiblockAbilityPart<IEnergyHatch>,IEnergyHatch,Comparable<IEnergyHatch>{
 
     protected double energyStored = 0D;
     protected double maxEnergyStore = 0D;
@@ -39,6 +39,12 @@ public class MetaTileEntityStorageEnergyCell extends MetaTileEntityMultiblockPar
         this.maxEnergyStore = maxEnergyStore;
         this.targetItem = new NotifiableItemStackHandler(this, 1, null, false);
     }
+
+    @Override
+    public int compareTo(final IEnergyHatch o) {
+        return Double.compare(o.getEnergyStored(), energyStored);
+    }
+
 
     @Override
     public MetaTileEntity createMetaTileEntity(IGregTechTileEntity tileEntity) {
@@ -61,7 +67,7 @@ public class MetaTileEntityStorageEnergyCell extends MetaTileEntityMultiblockPar
     }
 
     protected void addDisplayText(List<ITextComponent> textList) {
-        textList.add(new TextComponentTranslation("容量"+energyStored + " / " +maxEnergyStore));
+        textList.add(new TextComponentTranslation("容量:"+energyStored + " / " +maxEnergyStore));
     }
     public void recalculateCapacity() {
         recalculateCap = false;
@@ -141,10 +147,6 @@ public class MetaTileEntityStorageEnergyCell extends MetaTileEntityMultiblockPar
         this.maxEnergyStore = data.getDouble("maxEnergyStore");
 
         super.readFromNBT(data);
-    }
-    @Override
-    public int compareTo(final MetaTileEntityStorageEnergyCell o) {
-        return Double.compare(o.energyStored, energyStored);
     }
 
     public static EnergyCellStatus getStatusFromFillFactor(final double fillFactor) {

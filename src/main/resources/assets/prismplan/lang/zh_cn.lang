@@ -29,6 +29,10 @@ prismplan.monitor.growth_amount=小时增长：%s
 prismplan.monitor.growth_rate=小时增长率：%s
 prismplan.monitor.no_change=无变化
 
+prismplan.estorage_cell_drive.player.inserted=§a已插入存储矩阵。
+prismplan.estorage_cell_drive.player.removed=§a已取出存储矩阵。
+prismplan.estorage_cell_drive.player.no_permission=§c访问被拒绝（原因：无 ME 网络权限）。
+
 top.estorage.drive.status=§9驱动器状态：
 top.estorage.drive.status.offline=§c离线
 top.estorage.drive.status.online=§a在线

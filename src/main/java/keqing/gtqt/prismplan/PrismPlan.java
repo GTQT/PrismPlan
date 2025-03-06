@@ -44,7 +44,6 @@ public class PrismPlan {
     public static final SimpleNetworkWrapper NET_CHANNEL = NetworkRegistry.INSTANCE.newSimpleChannel(Tags.MOD_ID);
     @Mod.EventHandler
     public void preInit(FMLPreInitializationEvent event) {
-
         byte start = 0;
 
         NET_CHANNEL.registerMessage(PktCellDriveStatusUpdate.class, PktCellDriveStatusUpdate.class, start++, Side.CLIENT);
@@ -55,6 +54,7 @@ public class PrismPlan {
         registerManager = new AE2RegisterManager();
         registerManager.onPreInit(event);
 
+        Proxy.preInit();
         PrismPlanMetaTileEntities.initialization();
     }
 
