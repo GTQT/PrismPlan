@@ -100,6 +100,7 @@ public class MetaTileEntityNetWorkStoreHatch extends MetaTileEntityMultiblockPar
     //其他
     private int meUpdateTick = 0;
     private boolean wasActive = false;
+    private boolean isAttached = false;
 
     public MetaTileEntityNetWorkStoreHatch(ResourceLocation metaTileEntityId) {
         super(metaTileEntityId, 6);
@@ -124,7 +125,12 @@ public class MetaTileEntityNetWorkStoreHatch extends MetaTileEntityMultiblockPar
         if (!this.getWorld().isRemote && this.updateMEStatus() && this.shouldSyncME()) {
             this.syncME();
         }
-
+        if (!this.getWorld().isRemote && (this.isAttached == (this.getControl() == null))) {
+            this.isAttached = true;
+            try {
+                networkProxy.getGrid().postEvent(new MENetworkCellArrayUpdate());
+            } catch (GridAccessException ignored) {}
+        }
     }
 
     public IBlockState getFrontBlock() {
@@ -356,7 +362,7 @@ public class MetaTileEntityNetWorkStoreHatch extends MetaTileEntityMultiblockPar
     @Override
     @SuppressWarnings("rawtypes")
     public List<IMEInventoryHandler> getCellArray(final IStorageChannel<?> channel) {
-        if (this.getController() != null) {
+        if ( this.getController() != null) {
             return ((MetaTileEntityStorageCellControl) this.getController()).getCellDrives().stream()
                     .map(a -> a.getHandler(channel))
                     .filter(Objects::nonNull)
