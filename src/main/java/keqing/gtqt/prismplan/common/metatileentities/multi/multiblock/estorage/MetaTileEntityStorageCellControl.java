@@ -4,6 +4,9 @@ import appeng.api.config.Actionable;
 import appeng.api.storage.ICellInventory;
 import appeng.api.storage.ICellInventoryHandler;
 import appeng.api.storage.data.IAEItemStack;
+import codechicken.lib.render.CCRenderState;
+import codechicken.lib.render.pipeline.IVertexOperation;
+import codechicken.lib.vec.Matrix4;
 import gregtech.api.gui.GuiTextures;
 import gregtech.api.gui.ModularUI;
 import gregtech.api.gui.widgets.AdvancedTextWidget;
@@ -16,6 +19,7 @@ import gregtech.api.pattern.FactoryBlockPattern;
 import gregtech.api.pattern.PatternMatchContext;
 import gregtech.client.renderer.ICubeRenderer;
 import gregtech.client.renderer.texture.Textures;
+import gregtech.client.renderer.texture.cube.OrientedOverlayRenderer;
 import gregtech.common.blocks.BlockMetalCasing;
 import gregtech.common.blocks.MetaBlocks;
 import keqing.gtqt.prismplan.api.capability.ICellHatch;
@@ -287,11 +291,23 @@ public class MetaTileEntityStorageCellControl extends MultiblockWithDisplayBase 
     }
 
     protected void addDisplayText(List<ITextComponent> textList) {
-        textList.add(new TextComponentTranslation("物品："));
-        textList.add(new TextComponentTranslation("容量" + usedBytes[0] + " / " + maxBytes[0]));
-        textList.add(new TextComponentTranslation("类型" + usedTypes[0] + " / " + maxTypes[0]));
-        textList.add(new TextComponentTranslation("流体："));
-        textList.add(new TextComponentTranslation("容量" + usedBytes[1] + " / " + maxBytes[1]));
-        textList.add(new TextComponentTranslation("类型" + usedTypes[1] + " / " + maxTypes[1]));
+        textList.add(new TextComponentTranslation("gui.estorage_controller.cell_info.item"));
+        textList.add(new TextComponentTranslation("gui.estorage_controller.cell_info.tip.1", usedTypes[0], +maxTypes[0]));
+        textList.add(new TextComponentTranslation("gui.estorage_controller.cell_info.tip.2", usedBytes[0], maxBytes[0]));
+
+        textList.add(new TextComponentTranslation("gui.estorage_controller.cell_info.fluid"));
+        textList.add(new TextComponentTranslation("gui.estorage_controller.cell_info.tip.1", usedTypes[1], +maxTypes[1]));
+        textList.add(new TextComponentTranslation("gui.estorage_controller.cell_info.tip.2", usedBytes[1], maxBytes[1]));
+
+        textList.add(new TextComponentTranslation("gui.estorage_controller.graph.energy_usage", this.idleDrain));
+        textList.add(new TextComponentTranslation("gui.estorage_controller.graph.energy_stored",getEnergyStored() ,getMaxEnergyStore()));
+
+    }
+
+    @Override
+    public void renderMetaTileEntity(CCRenderState renderState, Matrix4 translation, IVertexOperation[] pipeline) {
+        super.renderMetaTileEntity(renderState, translation, pipeline);
+        OrientedOverlayRenderer overlayRenderer = Textures.HPCA_OVERLAY;
+        overlayRenderer.renderOrientedState(renderState, translation, pipeline, getFrontFacing(), true, isStructureFormed());
     }
 }

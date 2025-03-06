@@ -17,6 +17,7 @@ tile.prismplan.coprocessor_256x.name=§c并行处理单元§6（256x）
 tile.prismplan.coprocessor_1024x.name=§c并行处理单元§6（1024x）
 tile.prismplan.coprocessor_4096x.name=§c并行处理单元§6（4096x）
 
+#
 prismplan.monitor.current_amount=当前存储：%s
 prismplan.monitor.consumption_rate=消耗速率：%s
 prismplan.monitor.estimated_time=预计耗空：%s
@@ -29,10 +30,35 @@ prismplan.monitor.growth_amount=小时增长：%s
 prismplan.monitor.growth_rate=小时增长率：%s
 prismplan.monitor.no_change=无变化
 
+#设备：
+# 存储控制相关
+prismplan.machine.storage_cell_control.name=存储单元控制器
+prismplan.machine.network_proxy_hatch.name=网络代理仓口
+prismplan.machine.network_store_hatch.name=网络存储仓口
+
+# 存储单元仓口（分等级）
+prismplan.machine.storage_cell_hatch.1.name=存储单元仓口 I
+prismplan.machine.storage_cell_hatch.2.name=存储单元仓口 II
+prismplan.machine.storage_cell_hatch.3.name=存储单元仓口 III
+
+# 储能单元（分等级）
+prismplan.machine.storage_energy_cell.1.name=储能单元 I (1M)
+prismplan.machine.storage_energy_cell.2.name=储能单元 II (4M)
+prismplan.machine.storage_energy_cell.3.name=储能单元 III (16M)
+prismplan.machine.storage_energy_cell.4.name=储能单元 IV (64M)
+prismplan.machine.storage_energy_cell.5.name=储能单元 V (256M)
+
+#tooltips
+prismplan.estorage_cell.insert.tip=蹲下时§a手持矩阵并右击§7驱动器以插入矩阵。
+prismplan.estorage_cell.extract.tip=蹲下时§a空手并右击§7驱动器以取出矩阵。
+prismplan.estorage_cell.l6.tip=§c只有 §6L6§c 等级及以上的主机可以驱动此矩阵。
+prismplan.estorage_cell.l9.tip=§c只有 §6L9§c 等级的主机可以驱动此矩阵。
+
 prismplan.estorage_cell_drive.player.inserted=§a已插入存储矩阵。
 prismplan.estorage_cell_drive.player.removed=§a已取出存储矩阵。
 prismplan.estorage_cell_drive.player.no_permission=§c访问被拒绝（原因：无 ME 网络权限）。
 
+#top
 top.estorage.drive.status=§9驱动器状态：
 top.estorage.drive.status.offline=§c离线
 top.estorage.drive.status.online=§a在线
@@ -41,77 +67,14 @@ top.estorage.drive.cell.unsupported=§c警告：驱动器不支持此矩阵等�
 top.estorage.drive.cell.bytes=§9字节使用：
 top.estorage.drive.cell.types=§9类型使用：
 
-top.efabricator.worker.status=§9工作核心状态：
-top.efabricator.worker.status.offline=§c离线
-top.efabricator.worker.status.online=§a在线
-top.efabricator.worker.queue_status=§9队列状态：
-top.efabricator.worker.current_crafting=§9正在合成：
-top.efabricator.worker.enqueued_crafting=§9排队中：
-
-top.ecalculator.controller.storage=§9字节使用：
-top.ecalculator.controller.threads=§9线程状态：
-top.ecalculator.controller.parallelism=§9最大并行数：
-top.ecalculator.thread_core.status=§9核心状态：
-top.ecalculator.thread_core.status.offline=§c离线
-top.ecalculator.thread_core.status.online=§a在线
-top.ecalculator.thread_core.threads=§9线程状态：
-top.ecalculator.thread_core.crafting=§9正在合成：
-
-gui.estorage_controller.cell_info.tip.0=%s（%s）
+#gui
+gui.estorage_controller.cell_info.tip.0=硬盘种类：%s（ %s ）
 gui.estorage_controller.cell_info.tip.1=类型使用：%s / %s
 gui.estorage_controller.cell_info.tip.2=字节使用：%s / %s
 
 gui.estorage_controller.cell_info.item=物品存储矩阵
 gui.estorage_controller.cell_info.fluid=流体存储矩阵
-gui.estorage_controller.cell_info.gas=气体存储矩阵
-gui.estorage_controller.cell_info.empty=未知
 
-gui.estorage_controller.graph.fluid.percent=流体存储占用：%s%%
-gui.estorage_controller.graph.item.percent=物品存储占用：%s%%
-gui.estorage_controller.graph.total.percent=总存储占用：%s%%
-gui.estorage_controller.graph.gas.percent=气体存储占用：%s%%
-gui.estorage_controller.graph.gas_type=气体类型：%s / %s
-gui.estorage_controller.graph.fluid_type=流体类型：%s / %s
-gui.estorage_controller.graph.item_type=物品类型：%s / %s
 gui.estorage_controller.graph.energy_usage=总耗能：%sAE/t
-
-gui.estorage_controller.graph.energy_stored.percent=能量存储：%s%%
 gui.estorage_controller.graph.energy_stored=能量存储：%sAE / %sAE
-
-gui.efabricator_pattern_bus.title=§9ECO - §eFD 智能样板总线
-gui.efabricator_pattern_bus.inventory=物品栏
-
-gui.efabricator.total_crafted=统计 - 已完成配方数：%s
-gui.efabricator.total_crafted.update=统计 - 已完成配方数：%s，合成速度：§a+%s/Tick§f
-gui.efabricator.button.upload_pattern=上传样板至当前网络中可用的§9可扩展合成子系统§7中。
-gui.efabricator.queue.status=队列：%s / %s
-gui.efabricator.max_energy_usage=最大能耗：§b%s AE
-gui.efabricator.max_energy_usage.tip=显示值为所有工作核心满负载时工作一次的能耗。
-gui.efabricator.overclocked.enable.tip=单击启用§e超频 I§f 模式，在有限范围内提升性能，消耗更多§c能量§f。
-gui.efabricator.overclocked.disable.tip=单击禁用§e超频 I§f 模式。
-gui.efabricator.active_cooling=主动冷却：%s
-gui.efabricator.active_cooling.enable.tip.0=单击启用 §9ECO - FZ 主动冷却子系统§f，消耗流体输入仓内的§9冷却液，§f提升§a性能§f并降低§a能耗§f。
-gui.efabricator.active_cooling.enable.tip.1=支持的§9冷却液§f：
-gui.efabricator.active_cooling.enable.tip.1.coolant=  输入：%s §a%smB§f，输出：%s §a%smB§f，冷却单位：§b%s§f
-gui.efabricator.active_cooling.enable.tip.1.coolant.no_output=  输入：%s §a%smB§f，输出：§c无§f，冷却单位：§b%s§f
-gui.efabricator.active_cooling.enable.tip.2=启用主动冷却会使子系统进入§6超频 II§f 模式。
-gui.efabricator.active_cooling.enable.tip.3=如果§e超频 I§f 模式已启用，启用§9主动冷却§f会使子系统进入§c超频 III§f 模式。
-gui.efabricator.active_cooling.enable.tip.4=  §c超频 III§f 模式将§2极大幅度§f提升整机性能，并降低§a能量§f消耗，消耗更多§9冷却液§f。
-gui.efabricator.active_cooling.enable.tip.5=§f启用期间如果§9冷却液§f不足会§c停止合成§f工作。
-gui.efabricator.active_cooling.enable.tip.6=§f如果流体输出仓为满，则§c无法消耗§f冷却液。
-gui.efabricator.active_cooling.disable.tip=单击禁用 §9ECO - FZ 主动冷却子系统§f。
-gui.efabricator.active_cooling.on=§a启用
-gui.efabricator.active_cooling.off=§c禁用
-gui.efabricator.pattern_bus.count=样板总线：%s
-gui.efabricator.parallel_proc.count=并行核心：%s
-gui.efabricator.worker.count=工作核心：%s
-gui.efabricator.crafting_progress.0=总队列占用：%s%%
-gui.efabricator.crafting_progress.1=%s / %s
-gui.efabricator.crafting_time.0=预计耗时：%s
-gui.efabricator.total_parallelism=总并行数：%s
-gui.efabricator.total_parallelism.limit=限制为：%s
-gui.efabricator.total_parallelism.overflow=溢出：%s (%s%%)
-gui.efabricator.total_parallelism.overflow_speedup=加速：%s Tick (%s%%)
-gui.efabricator.total_parallelism.overflow_speedup.coolants.0=冷却液消耗：
-gui.efabricator.total_parallelism.overflow_speedup.coolants.1=%s mB/t
 

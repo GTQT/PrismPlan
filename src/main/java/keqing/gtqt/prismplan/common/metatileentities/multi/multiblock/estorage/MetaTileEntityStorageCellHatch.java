@@ -15,6 +15,9 @@ import appeng.util.helpers.ItemHandlerUtil;
 import appeng.util.inv.IAEAppEngInventory;
 import appeng.util.inv.InvOperation;
 import appeng.util.inv.filter.IAEItemFilter;
+import codechicken.lib.render.CCRenderState;
+import codechicken.lib.render.pipeline.IVertexOperation;
+import codechicken.lib.vec.Matrix4;
 import gregtech.api.gui.GuiTextures;
 import gregtech.api.gui.ModularUI;
 import gregtech.api.gui.widgets.AdvancedTextWidget;
@@ -24,6 +27,7 @@ import gregtech.api.metatileentity.interfaces.IGregTechTileEntity;
 import gregtech.api.metatileentity.multiblock.IMultiblockAbilityPart;
 import gregtech.api.metatileentity.multiblock.MultiblockAbility;
 import gregtech.api.metatileentity.multiblock.MultiblockControllerBase;
+import gregtech.client.renderer.texture.Textures;
 import gregtech.common.metatileentities.multi.multiblockpart.MetaTileEntityMultiblockPart;
 import it.unimi.dsi.fastutil.objects.Reference2ObjectOpenHashMap;
 import keqing.gtqt.prismplan.PrismPlan;
@@ -390,11 +394,11 @@ public class MetaTileEntityStorageCellHatch extends MetaTileEntityMultiblockPart
 
 
     protected void addDisplayText(List<ITextComponent> textList) {
-        if(getData()==null)return;
+        if (getData() == null) return;
         String typeName = switch (getType()) {
             case EMPTY -> "empty";
-            case ITEM -> "item";
-            case FLUID -> "fluid";
+            case ITEM -> "物品";
+            case FLUID -> "流体";
         };
         String levelName = switch (getLevel()) {
             case EMPTY -> "empty";
@@ -403,46 +407,48 @@ public class MetaTileEntityStorageCellHatch extends MetaTileEntityMultiblockPart
             case C -> "L9";
         };
 
-        textList.add(new TextComponentTranslation("信息" + typeName + " / " + levelName));
+        textList.add(new TextComponentTranslation("gui.estorage_controller.cell_info.tip.0", typeName, levelName));
 
         long usedBytes = getData().usedBytes();
         long maxBytes = MetaTileEntityStorageCellHatch.getMaxBytes(getData());
 
-        textList.add(new TextComponentTranslation("容量" + usedBytes + " / " + maxBytes));
+        textList.add(new TextComponentTranslation("gui.estorage_controller.cell_info.tip.2", usedBytes, maxBytes));
 
         int usedTypes = getData().usedTypes();
         int maxTypes = MetaTileEntityStorageCellHatch.getMaxTypes(getData());
 
-        textList.add(new TextComponentTranslation("类型" + usedTypes + " / " + maxTypes));
+        textList.add(new TextComponentTranslation("gui.estorage_controller.cell_info.tip.1", usedTypes, maxTypes));
     }
+
     //信息
-    public EStorageCellData getData()
-    {
+    public EStorageCellData getData() {
         return EStorageCellData.from(this);
     }
+
     //类型
     public DriveStorageType getType() {
         return getData().type();
     }
+
     public DriveStorageLevel getLevel() {
         return getData().level();
     }
+
     //容量
-    public long usedBytes()
-    {
+    public long usedBytes() {
         return getData().usedBytes();
     }
-    public long maxBytes()
-    {
+
+    public long maxBytes() {
         return MetaTileEntityStorageCellHatch.getMaxBytes(getData());
     }
+
     //类型
-    public int usedTypes()
-    {
+    public int usedTypes() {
         return getData().usedTypes();
     }
-    public int maxTypes()
-    {
+
+    public int maxTypes() {
         return MetaTileEntityStorageCellHatch.getMaxTypes(getData());
     }
 
@@ -451,6 +457,13 @@ public class MetaTileEntityStorageCellHatch extends MetaTileEntityMultiblockPart
         if (level == B) return tier >= 2;
         if (level == C) return tier >= 3;
         return true;
+    }
+
+    public void renderMetaTileEntity(CCRenderState renderState, Matrix4 translation, IVertexOperation[] pipeline) {
+        super.renderMetaTileEntity(renderState, translation, pipeline);
+        if (this.shouldRenderOverlay()) {
+            Textures.DATA_ACCESS_HATCH.renderSided(this.getFrontFacing(), renderState, translation, pipeline);
+        }
     }
 
     private static class CellInvFilter implements IAEItemFilter {

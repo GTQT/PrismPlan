@@ -188,7 +188,7 @@ public class MetaTileEntityNetWorkStoreHatch extends MetaTileEntityMultiblockPar
 
     protected void addDisplayText(List<ITextComponent> textList) {
         if (this.getController() != null)
-            textList.add(new TextComponentTranslation("正在访问：%s", this.getController().getMetaFullName()));
+            textList.add(new TextComponentTranslation("正在访问：%s", this.getController()));
     }
 
     public @Nullable AENetworkProxy getProxy() {
@@ -290,7 +290,7 @@ public class MetaTileEntityNetWorkStoreHatch extends MetaTileEntityMultiblockPar
     }
 
     public void refresh() {
-        networkProxy.onReady();
+        getProxy();
         getControl().recalculateEnergyUsage();
         List<ICellHatch> cellDrives = getControl().getCellDrives();
         if (!cellDrives.isEmpty()) {

@@ -45,13 +45,13 @@ public abstract class EStorageCell<T extends IAEStack<T>> extends AEBaseItem imp
         AEApi.instance()
                 .client()
                 .addCellInformation(EStorageCellHandler.getHandler(stack).getCellInventory(stack, null, this.getChannel()), lines);
-        lines.add(I18n.format("novaeng.estorage_cell.insert.tip"));
-        lines.add(I18n.format("novaeng.estorage_cell.extract.tip"));
+        lines.add(I18n.format("prismplan.estorage_cell.insert.tip"));
+        lines.add(I18n.format("prismplan.estorage_cell.extract.tip"));
         if (level == DriveStorageLevel.B) {
-            lines.add(I18n.format("novaeng.estorage_cell.l6.tip"));
+            lines.add(I18n.format("prismplan.estorage_cell.l6.tip"));
         }
         if (level == DriveStorageLevel.C) {
-            lines.add(I18n.format("novaeng.estorage_cell.l9.tip"));
+            lines.add(I18n.format("prismplan.estorage_cell.l9.tip"));
         }
     }
 

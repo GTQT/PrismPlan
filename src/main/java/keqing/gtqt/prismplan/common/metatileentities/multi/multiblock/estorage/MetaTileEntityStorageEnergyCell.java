@@ -1,6 +1,10 @@
 package keqing.gtqt.prismplan.common.metatileentities.multi.multiblock.estorage;
 
 import appeng.api.config.Actionable;
+import codechicken.lib.render.CCRenderState;
+import codechicken.lib.render.pipeline.IVertexOperation;
+import codechicken.lib.vec.Matrix4;
+import gregtech.api.GTValues;
 import gregtech.api.capability.impl.NotifiableItemStackHandler;
 import gregtech.api.gui.GuiTextures;
 import gregtech.api.gui.ModularUI;
@@ -10,9 +14,10 @@ import gregtech.api.metatileentity.MetaTileEntity;
 import gregtech.api.metatileentity.interfaces.IGregTechTileEntity;
 import gregtech.api.metatileentity.multiblock.IMultiblockAbilityPart;
 import gregtech.api.metatileentity.multiblock.MultiblockAbility;
+import gregtech.client.renderer.texture.Textures;
+import gregtech.client.renderer.texture.cube.SimpleOverlayRenderer;
+import gregtech.client.utils.PipelineUtil;
 import gregtech.common.metatileentities.multi.multiblockpart.MetaTileEntityMultiblockPart;
-import keqing.gtqt.prismplan.api.capability.EnergyCellStatus;
-import keqing.gtqt.prismplan.api.capability.ICellHatch;
 import keqing.gtqt.prismplan.api.capability.IEnergyHatch;
 import keqing.gtqt.prismplan.api.multiblock.PrismPlanMultiblockAbility;
 import net.minecraft.entity.player.EntityPlayer;
@@ -57,7 +62,7 @@ public class MetaTileEntityStorageEnergyCell extends MetaTileEntityMultiblockPar
         builder.dynamicLabel(28, 12, () -> "能量元件"+tier, 0xFFFFFF);
         builder.widget(new SlotWidget(targetItem, 0, 8, 8, true, true)
                 .setBackgroundTexture(GuiTextures.SLOT)
-                .setTooltipText("输入硬盘"));
+                .setTooltipText("???"));
 
         builder.image(4, 28, 172, 128, GuiTextures.DISPLAY);
         builder.widget((new AdvancedTextWidget(8, 32, this::addDisplayText, 16777215)).setMaxWidthLimit(180));
@@ -67,7 +72,7 @@ public class MetaTileEntityStorageEnergyCell extends MetaTileEntityMultiblockPar
     }
 
     protected void addDisplayText(List<ITextComponent> textList) {
-        textList.add(new TextComponentTranslation("容量:"+energyStored + " / " +maxEnergyStore));
+        textList.add(new TextComponentTranslation("gui.estorage_controller.graph.energy_stored",energyStored ,maxEnergyStore));
     }
     public void recalculateCapacity() {
         recalculateCap = false;
@@ -149,20 +154,11 @@ public class MetaTileEntityStorageEnergyCell extends MetaTileEntityMultiblockPar
         super.readFromNBT(data);
     }
 
-    public static EnergyCellStatus getStatusFromFillFactor(final double fillFactor) {
-        EnergyCellStatus status;
-        if (fillFactor >= 0.9D) {
-            status = EnergyCellStatus.FULL;
-        } else if (fillFactor >= 0.7D) {
-            status = EnergyCellStatus.HIGH;
-        } else if (fillFactor >= 0.5D) {
-            status = EnergyCellStatus.MID;
-        } else if (fillFactor >= 0.05D) {
-            status = EnergyCellStatus.LOW;
-        } else {
-            status = EnergyCellStatus.EMPTY;
+    public void renderMetaTileEntity(CCRenderState renderState, Matrix4 translation, IVertexOperation[] pipeline) {
+        super.renderMetaTileEntity(renderState, translation, pipeline);
+        if (this.shouldRenderOverlay()) {
+            Textures.ENERGY_IN_HI.renderSided(this.getFrontFacing(), renderState, translation, PipelineUtil.color(pipeline, GTValues.VC[this.getTier()]));
         }
-        return status;
     }
 
     @Override
