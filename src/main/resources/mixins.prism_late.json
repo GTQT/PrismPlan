@@ -6,16 +6,18 @@
   "minVersion": "0.8.3",
   "compatibilityLevel": "JAVA_8",
   "mixins": [
-    "MixinCraftingGridCache",
     "MixinCraftingCPUCluster",
-    "MixinMetaTileEntityHolder"
+    "MixinCraftingGridCache",
+    "MixinMetaTileEntityHolder",
+    "ae2.MixinTileChestFilter",
+    "ae2.MixinTileDriveFilter",
+    "ae2.AccessorCellRegistry"
   ],
   "server": [],
-  "client":[
+  "client": [
+    "ae2.AccessorAbstractCellInventory",
     "gregtech.MinxinRecipeMapMultiblockController",
     "gregtech.MultiblockRecipeLogicMixin",
-    "ae2.AccessorAbstractCellInventory",
-    "ae2.AccessorCellRegistry",
     "nae2.MixinJEICellCategory"
   ]
 }

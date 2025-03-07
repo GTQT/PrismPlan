@@ -1,8 +1,8 @@
 package keqing.gtqt.prismplan.common;
-
+import appeng.api.storage.ICellRegistry;
+import appeng.core.features.registries.cell.CellRegistry;
 import appeng.api.AEApi;
 import appeng.api.storage.ICellHandler;
-import gregtech.common.items.MetaItems;
 import gregtech.common.metatileentities.MetaTileEntities;
 import keqing.gtqt.prismplan.api.utils.PrismPlanLog;
 import keqing.gtqt.prismplan.common.metatileentities.multi.multiblock.estorage.EStorageCellHandler;
@@ -16,12 +16,9 @@ import net.minecraft.item.ItemStack;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.fml.common.event.FMLInitializationEvent;
-import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
-import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
-import net.minecraftforge.registries.IForgeRegistry;
 
+import java.lang.reflect.Field;
 import java.util.List;
 
 @Mod.EventBusSubscriber(
