@@ -20,7 +20,6 @@ import gregtech.common.blocks.MetaBlocks;
 import keqing.gtqt.prismplan.api.capability.*;
 import keqing.gtqt.prismplan.api.multiblock.PrismPlanMultiblockAbility;
 import keqing.gtqt.prismplan.api.utils.PrismPlanLog;
-import keqing.gtqt.prismplan.common.metatileentities.multi.multiblock.estorage.MetaTileEntityStorageCellControl;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.item.ItemStack;
@@ -61,7 +60,7 @@ public class MetaTileEntityCalculatorControl extends MultiblockWithDisplayBase {
         // Update accelerators
         getIThreadHatch().forEach(threadCore -> threadCore.getCpus().stream()
                 .map(ECPUCluster::from)
-                .forEach(ecpuCluster -> ecpuCluster.novaeng_ec$setAccelerators(this.parallelism))
+                .forEach(ecpuCluster -> ecpuCluster.prismplan_ec$setAccelerators(this.parallelism))
         );
     }
 
@@ -93,8 +92,8 @@ public class MetaTileEntityCalculatorControl extends MultiblockWithDisplayBase {
         for (final IThreadHatch threadCore : getIThreadHatch()) {
             if (threadCore.addCPU(virtualCPU, false)) {
                 ECPUCluster ecpuCluster = ECPUCluster.from(this.virtualCPU);
-                ecpuCluster.novaeng_ec$setAvailableStorage(usedBytes);
-                ecpuCluster.novaeng_ec$setVirtualCPUOwner(null);
+                ecpuCluster.prismplan_ec$setAvailableStorage(usedBytes);
+                ecpuCluster.prismplan_ec$setVirtualCPUOwner(null);
                 this.virtualCPU = null;
                 createVirtualCPU();
                 return;
@@ -104,9 +103,9 @@ public class MetaTileEntityCalculatorControl extends MultiblockWithDisplayBase {
             if (threadCore.addCPU(virtualCPU, true)) {
                 ECPUCluster ecpuCluster = ECPUCluster.from(this.virtualCPU);
                 final long usedExtraBytes = (long) (usedBytes * 0.1F);
-                ecpuCluster.novaeng_ec$setAvailableStorage(usedBytes + usedExtraBytes);
-                ecpuCluster.novaeng_ec$setUsedExtraStorage(usedExtraBytes);
-                ecpuCluster.novaeng_ec$setVirtualCPUOwner(null);
+                ecpuCluster.prismplan_ec$setAvailableStorage(usedBytes + usedExtraBytes);
+                ecpuCluster.prismplan_ec$setUsedExtraStorage(usedExtraBytes);
+                ecpuCluster.prismplan_ec$setVirtualCPUOwner(null);
                 this.virtualCPU = null;
                 createVirtualCPU();
                 return;
@@ -127,8 +126,8 @@ public class MetaTileEntityCalculatorControl extends MultiblockWithDisplayBase {
 
         if (this.virtualCPU != null) {
             ECPUCluster eCluster = ECPUCluster.from(this.virtualCPU);
-            eCluster.novaeng_ec$setAvailableStorage(availableBytes);
-            eCluster.novaeng_ec$setAccelerators(parallelism);
+            eCluster.prismplan_ec$setAvailableStorage(availableBytes);
+            eCluster.prismplan_ec$setAccelerators(parallelism);
             return;
         }
 
@@ -147,9 +146,9 @@ public class MetaTileEntityCalculatorControl extends MultiblockWithDisplayBase {
         WorldCoord pos = new WorldCoord(getPos());
         this.virtualCPU = new CraftingCPUCluster(pos, pos);
         ECPUCluster eCluster = ECPUCluster.from(this.virtualCPU);
-        eCluster.novaeng_ec$setVirtualCPUOwner(this);
-        eCluster.novaeng_ec$setAvailableStorage(availableBytes);
-        eCluster.novaeng_ec$setAccelerators(parallelism);
+        eCluster.prismplan_ec$setVirtualCPUOwner(this);
+        eCluster.prismplan_ec$setAvailableStorage(availableBytes);
+        eCluster.prismplan_ec$setAccelerators(parallelism);
 
         if (getNetWorkCalculatorHatch() != null) {
             getNetWorkCalculatorHatch().postCPUClusterChangeEvent();
@@ -164,7 +163,7 @@ public class MetaTileEntityCalculatorControl extends MultiblockWithDisplayBase {
         }
         if (this.virtualCPU != null) {
             // Refresh machine source.
-            ECPUCluster.from(this.virtualCPU).novaeng_ec$setVirtualCPUOwner(this);
+            ECPUCluster.from(this.virtualCPU).prismplan_ec$setVirtualCPUOwner(this);
             clusters.add(this.virtualCPU);
         }
         return clusters;

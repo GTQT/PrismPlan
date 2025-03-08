@@ -14,7 +14,6 @@ import appeng.me.helpers.MachineSource;
 import appeng.tile.crafting.TileCraftingTile;
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
-import keqing.gtqt.prismplan.api.capability.ICalculatorHatch;
 import keqing.gtqt.prismplan.api.capability.INetWorkCalculator;
 import keqing.gtqt.prismplan.api.capability.Levels;
 import keqing.gtqt.prismplan.api.utils.TimeRecorder;
@@ -37,19 +36,19 @@ import javax.annotation.Nullable;
 public abstract class MixinCraftingCPUCluster implements ECPUCluster {
 
     @Unique
-    private MetaTileEntityThreadHatch novaeng_ec$core = null;
+    private MetaTileEntityThreadHatch prismplan_ec$core = null;
 
     @Unique
-    private MetaTileEntityCalculatorControl novaeng_ec$virtualCPUOwner = null;
+    private MetaTileEntityCalculatorControl prismplan_ec$virtualCPUOwner = null;
 
     @Unique
-    private long novaeng_ec$usedExtraStorage = 0;
+    private long prismplan_ec$usedExtraStorage = 0;
 
     @Unique
-    private final TimeRecorder novaeng_ec$timeRecorder = new TimeRecorder();
+    private final TimeRecorder prismplan_ec$timeRecorder = new TimeRecorder();
 
     @Unique
-    private final TimeRecorder novaeng_ec$parallelismRecorder = new TimeRecorder();
+    private final TimeRecorder prismplan_ec$parallelismRecorder = new TimeRecorder();
 
     @Shadow
     private long availableStorage;
@@ -84,15 +83,15 @@ public abstract class MixinCraftingCPUCluster implements ECPUCluster {
 
     @Inject(method = "submitJob", at = @At(value = "INVOKE", target = "Lappeng/api/networking/crafting/ICraftingJob;getOutput()Lappeng/api/storage/data/IAEItemStack;"))
     private void injectSubmitJob(final IGrid g, final ICraftingJob job, final IActionSource src, final ICraftingRequester requestingMachine, final CallbackInfoReturnable<ICraftingLink> cir) {
-        if (this.novaeng_ec$virtualCPUOwner == null) {
+        if (this.prismplan_ec$virtualCPUOwner == null) {
             return;
         }
-        this.novaeng_ec$virtualCPUOwner.onVirtualCPUSubmitJob(job.getByteTotal());
+        this.prismplan_ec$virtualCPUOwner.onVirtualCPUSubmitJob(job.getByteTotal());
     }
 
     @Inject(method = "cancel", at = @At("RETURN"))
     private void injectCancel(final CallbackInfo ci) {
-        if (this.novaeng_ec$core == null) {
+        if (this.prismplan_ec$core == null) {
             return;
         }
         // Ensure inventory is empty
@@ -103,7 +102,7 @@ public abstract class MixinCraftingCPUCluster implements ECPUCluster {
 
     @Inject(method = "updateCraftingLogic", at = @At("HEAD"), cancellable = true)
     private void injectUpdateCraftingLogicStoreItems(final IGrid grid, final IEnergyGrid eg, final CraftingGridCache cgc, final CallbackInfo ci) {
-        if (this.novaeng_ec$core == null) {
+        if (this.prismplan_ec$core == null) {
             return;
         }
         if (this.myLastLink != null) {
@@ -124,7 +123,7 @@ public abstract class MixinCraftingCPUCluster implements ECPUCluster {
     @Inject(method = "updateCraftingLogic", at = @At("TAIL"))
     private void injectUpdateCraftingLogicTail(final IGrid grid, final IEnergyGrid eg, final CraftingGridCache cgc, final CallbackInfo ci) {
         int currentParallelism = this.usedOps[0];
-        novaeng_ec$parallelismRecorder.addUsedTime(currentParallelism);
+        prismplan_ec$parallelismRecorder.addUsedTime(currentParallelism);
     }
 
     @WrapOperation(
@@ -135,12 +134,12 @@ public abstract class MixinCraftingCPUCluster implements ECPUCluster {
             )
     )
     private boolean redirectUpdateCraftingLogicIsActive(final TileCraftingTile instance, final Operation<Boolean> original) {
-        if (this.novaeng_ec$core != null) {
-            MetaTileEntityCalculatorControl controller = (MetaTileEntityCalculatorControl) this.novaeng_ec$core.getController();
+        if (this.prismplan_ec$core != null) {
+            MetaTileEntityCalculatorControl controller = (MetaTileEntityCalculatorControl) this.prismplan_ec$core.getController();
             return controller != null && controller.getNetWorkCalculatorHatch() != null && controller.getNetWorkCalculatorHatch().getProxy().isActive();
         }
-        if (this.novaeng_ec$virtualCPUOwner != null) {
-            MetaTileEntityCalculatorControl controller = novaeng_ec$virtualCPUOwner;
+        if (this.prismplan_ec$virtualCPUOwner != null) {
+            MetaTileEntityCalculatorControl controller = prismplan_ec$virtualCPUOwner;
             return controller.getNetWorkCalculatorHatch() != null && controller.getNetWorkCalculatorHatch().getProxy().isActive();
         }
         return original.call(instance);
@@ -148,35 +147,35 @@ public abstract class MixinCraftingCPUCluster implements ECPUCluster {
 
     @Inject(method = "destroy", at = @At("HEAD"), cancellable = true)
     private void injectDestroy(final CallbackInfo ci) {
-        if (this.novaeng_ec$core == null) {
+        if (this.prismplan_ec$core == null) {
             return;
         }
         if (this.isDestroyed) {
             ci.cancel();
             return;
         }
-        this.novaeng_ec$core.onCPUDestroyed((CraftingCPUCluster) (Object) this);
+        this.prismplan_ec$core.onCPUDestroyed((CraftingCPUCluster) (Object) this);
     }
 
     @Inject(method = "isActive", at = @At("HEAD"), cancellable = true)
     private void injectIsActive(final CallbackInfoReturnable<Boolean> cir) {
-        if (this.novaeng_ec$core == null && this.novaeng_ec$virtualCPUOwner == null) {
+        if (this.prismplan_ec$core == null && this.prismplan_ec$virtualCPUOwner == null) {
             return;
         }
-        if (this.novaeng_ec$core != null) {
-            MetaTileEntityCalculatorControl controller = (MetaTileEntityCalculatorControl) this.novaeng_ec$core.getController();
+        if (this.prismplan_ec$core != null) {
+            MetaTileEntityCalculatorControl controller = (MetaTileEntityCalculatorControl) this.prismplan_ec$core.getController();
             cir.setReturnValue(controller != null && controller.getNetWorkCalculatorHatch() != null && controller.getNetWorkCalculatorHatch().getProxy().isActive());
         }
-        if (this.novaeng_ec$virtualCPUOwner != null) {
-            MetaTileEntityCalculatorControl controller = novaeng_ec$virtualCPUOwner;
+        if (this.prismplan_ec$virtualCPUOwner != null) {
+            MetaTileEntityCalculatorControl controller = prismplan_ec$virtualCPUOwner;
             cir.setReturnValue(controller.getNetWorkCalculatorHatch() != null && controller.getNetWorkCalculatorHatch().getProxy().isActive());
         }
     }
 
     @Inject(method = "getGrid", at = @At("HEAD"), cancellable = true)
     private void injectGetGrid(final CallbackInfoReturnable<IGrid> cir) {
-        if (this.novaeng_ec$core != null) {
-            final MetaTileEntityCalculatorControl controller = (MetaTileEntityCalculatorControl) this.novaeng_ec$core.getController();
+        if (this.prismplan_ec$core != null) {
+            final MetaTileEntityCalculatorControl controller = (MetaTileEntityCalculatorControl) this.prismplan_ec$core.getController();
             if (controller == null) {
                 return;
             }
@@ -187,8 +186,8 @@ public abstract class MixinCraftingCPUCluster implements ECPUCluster {
             IGridNode node = channel.getProxy().getNode();
             cir.setReturnValue(node == null ? null : node.getGrid());
         }
-        if (this.novaeng_ec$virtualCPUOwner != null) {
-            final INetWorkCalculator channel = novaeng_ec$virtualCPUOwner.getNetWorkCalculatorHatch();
+        if (this.prismplan_ec$virtualCPUOwner != null) {
+            final INetWorkCalculator channel = prismplan_ec$virtualCPUOwner.getNetWorkCalculatorHatch();
             if (channel == null) {
                 return;
             }
@@ -199,55 +198,55 @@ public abstract class MixinCraftingCPUCluster implements ECPUCluster {
 
     @Inject(method = "getCore", at = @At("HEAD"), cancellable = true)
     private void injectGetCore(final CallbackInfoReturnable<TileCraftingTile> cir) {
-        if (this.novaeng_ec$core != null || this.novaeng_ec$virtualCPUOwner != null) {
+        if (this.prismplan_ec$core != null || this.prismplan_ec$virtualCPUOwner != null) {
             cir.setReturnValue(null);
         }
     }
 
     @Inject(method = "getWorld", at = @At("HEAD"), cancellable = true)
     private void injectGetWorld(final CallbackInfoReturnable<World> cir) {
-        if (this.novaeng_ec$core != null) {
-            cir.setReturnValue(this.novaeng_ec$core.getWorld());
+        if (this.prismplan_ec$core != null) {
+            cir.setReturnValue(this.prismplan_ec$core.getWorld());
         }
-        if (this.novaeng_ec$virtualCPUOwner != null) {
-            cir.setReturnValue(novaeng_ec$virtualCPUOwner.getWorld());
+        if (this.prismplan_ec$virtualCPUOwner != null) {
+            cir.setReturnValue(prismplan_ec$virtualCPUOwner.getWorld());
         }
     }
 
     @Inject(method = "markDirty", at = @At("HEAD"), cancellable = true)
     private void injectMarkDirty(final CallbackInfo ci) {
-        if (this.novaeng_ec$core != null) {
-            this.novaeng_ec$core.markDirty();
+        if (this.prismplan_ec$core != null) {
+            this.prismplan_ec$core.markDirty();
             ci.cancel();
         }
-        if (this.novaeng_ec$virtualCPUOwner != null) {
-            this.novaeng_ec$virtualCPUOwner.markDirty();
+        if (this.prismplan_ec$virtualCPUOwner != null) {
+            this.prismplan_ec$virtualCPUOwner.markDirty();
             ci.cancel();
         }
     }
 
     @Unique
     @Override
-    public void novaeng_ec$setAvailableStorage(final long availableStorage) {
+    public void prismplan_ec$setAvailableStorage(final long availableStorage) {
         this.availableStorage = availableStorage;
     }
 
     @Unique
     @Override
-    public void novaeng_ec$setAccelerators(final int accelerators) {
+    public void prismplan_ec$setAccelerators(final int accelerators) {
         this.accelerator = accelerators;
     }
 
     @Unique
     @Override
-    public MetaTileEntityThreadHatch novaeng_ec$getController() {
-        return novaeng_ec$core;
+    public MetaTileEntityThreadHatch prismplan_ec$getController() {
+        return prismplan_ec$core;
     }
 
     @Unique
     @Override
-    public void novaeng_ec$setThreadCore(final MetaTileEntityThreadHatch threadCore) {
-        this.novaeng_ec$core = threadCore;
+    public void prismplan_ec$setThreadCore(final MetaTileEntityThreadHatch threadCore) {
+        this.prismplan_ec$core = threadCore;
 
         final MetaTileEntityCalculatorControl controller = (MetaTileEntityCalculatorControl) threadCore.getController();
         if (controller == null) {
@@ -261,8 +260,8 @@ public abstract class MixinCraftingCPUCluster implements ECPUCluster {
 
     @Unique
     @Override
-    public void novaeng_ec$setVirtualCPUOwner(@Nullable final MetaTileEntityCalculatorControl virtualCPUOwner) {
-        this.novaeng_ec$virtualCPUOwner = virtualCPUOwner;
+    public void prismplan_ec$setVirtualCPUOwner(@Nullable final MetaTileEntityCalculatorControl virtualCPUOwner) {
+        this.prismplan_ec$virtualCPUOwner = virtualCPUOwner;
         if (virtualCPUOwner == null) {
             return;
         }
@@ -275,12 +274,12 @@ public abstract class MixinCraftingCPUCluster implements ECPUCluster {
 
     @Unique
     @Override
-    public Levels novaeng_ec$getControllerLevel() {
+    public Levels prismplan_ec$getControllerLevel() {
         final MetaTileEntityCalculatorControl controller;
-        if (this.novaeng_ec$core != null) {
-            controller = (MetaTileEntityCalculatorControl) this.novaeng_ec$core.getController();
-        } else if (this.novaeng_ec$virtualCPUOwner != null) {
-            controller = this.novaeng_ec$virtualCPUOwner;
+        if (this.prismplan_ec$core != null) {
+            controller = (MetaTileEntityCalculatorControl) this.prismplan_ec$core.getController();
+        } else if (this.prismplan_ec$virtualCPUOwner != null) {
+            controller = this.prismplan_ec$virtualCPUOwner;
         } else {
             return null;
         }
@@ -293,33 +292,33 @@ public abstract class MixinCraftingCPUCluster implements ECPUCluster {
 
     @Unique
     @Override
-    public void novaeng_ec$setUsedExtraStorage(final long usedExtraStorage) {
-        this.novaeng_ec$usedExtraStorage = usedExtraStorage;
+    public void prismplan_ec$setUsedExtraStorage(final long usedExtraStorage) {
+        this.prismplan_ec$usedExtraStorage = usedExtraStorage;
     }
 
     @Unique
     @Override
-    public long novaeng_ec$getUsedExtraStorage() {
-        return novaeng_ec$usedExtraStorage;
+    public long prismplan_ec$getUsedExtraStorage() {
+        return prismplan_ec$usedExtraStorage;
     }
 
     @Unique
     @Override
-    public void novaeng_ec$markDestroyed() {
+    public void prismplan_ec$markDestroyed() {
         this.isDestroyed = true;
         this.isComplete = true;
     }
 
     @Unique
     @Override
-    public TimeRecorder novaeng_ec$getTimeRecorder() {
-        return novaeng_ec$timeRecorder;
+    public TimeRecorder prismplan_ec$getTimeRecorder() {
+        return prismplan_ec$timeRecorder;
     }
 
     @Unique
     @Override
-    public TimeRecorder novaeng_ec$getParallelismRecorder() {
-        return novaeng_ec$parallelismRecorder;
+    public TimeRecorder prismplan_ec$getParallelismRecorder() {
+        return prismplan_ec$parallelismRecorder;
     }
 
 }

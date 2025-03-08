@@ -12,13 +12,13 @@
     "ae2.AccessorCellRegistry",
     "ae2.MixinCraftingCPUCluster",
     "ae2.MixinCraftingCPUStatus",
-    "ae2.MixinCraftingGridCache"
+    "ae2.MixinCraftingGridCache",
+    "gregtech.MinxinRecipeMapMultiblockController",
+    "gregtech.MultiblockRecipeLogicMixin"
   ],
   "server": [],
   "client": [
     "ae2.AccessorAbstractCellInventory",
-    "gregtech.MinxinRecipeMapMultiblockController",
-    "gregtech.MultiblockRecipeLogicMixin",
     "nae2.MixinJEICellCategory"
   ]
 }

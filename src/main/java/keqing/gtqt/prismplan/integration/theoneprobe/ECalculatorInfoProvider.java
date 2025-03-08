@@ -4,7 +4,6 @@ import appeng.api.storage.data.IAEItemStack;
 import appeng.me.cluster.implementations.CraftingCPUCluster;
 import gregtech.api.metatileentity.MetaTileEntity;
 import gregtech.api.metatileentity.interfaces.IGregTechTileEntity;
-import keqing.gtqt.prismplan.PrismPlan;
 import keqing.gtqt.prismplan.Tags;
 import keqing.gtqt.prismplan.api.capability.IThreadHatch;
 import keqing.gtqt.prismplan.api.utils.ColorUtils;
@@ -12,8 +11,6 @@ import keqing.gtqt.prismplan.api.utils.PrimsPlanUtility;
 import keqing.gtqt.prismplan.common.metatileentities.multi.multiblock.ecalculator.ECPUCluster;
 import keqing.gtqt.prismplan.common.metatileentities.multi.multiblock.ecalculator.MetaTileEntityCalculatorControl;
 import keqing.gtqt.prismplan.common.metatileentities.multi.multiblock.ecalculator.MetaTileEntityThreadHatch;
-import keqing.gtqt.prismplan.common.metatileentities.multi.multiblock.estorage.MetaTileEntityStorageCellHatch;
-import keqing.gtqt.prismplan.common.metatileentities.multi.multiblock.estorage.MetaTileEntityStorageEnergyCell;
 import mcjty.theoneprobe.api.*;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
@@ -120,8 +117,8 @@ public class ECalculatorInfoProvider implements IProbeInfoProvider {
             row.text("  x " + count);
 
             final ECPUCluster ecpu = ECPUCluster.from(cpu);
-            int cpuUsagePerTick = ecpu.novaeng_ec$getTimeRecorder().usedTimeAvg();
-            int parallelismPerTick = ecpu.novaeng_ec$getParallelismRecorder().usedTimeAvg();
+            int cpuUsagePerTick = ecpu.prismplan_ec$getTimeRecorder().usedTimeAvg();
+            int parallelismPerTick = ecpu.prismplan_ec$getParallelismRecorder().usedTimeAvg();
             row = taskBox.horizontal();
 
             TextFormatting cpuUsageColor;
@@ -194,7 +191,7 @@ public class ECalculatorInfoProvider implements IProbeInfoProvider {
         final int totalParallelismPerSecond = controller.getIThreadHatch().stream()
                 .flatMap(core -> core.getCpus().stream())
                 .map(ECPUCluster::from)
-                .map(ECPUCluster::novaeng_ec$getParallelismRecorder)
+                .map(ECPUCluster::prismplan_ec$getParallelismRecorder)
                 .mapToInt(TimeRecorder::usedTimeAvg)
                 .sum();
 
@@ -204,7 +201,7 @@ public class ECalculatorInfoProvider implements IProbeInfoProvider {
         final int totalCPUUsagePerSecond = controller.getIThreadHatch().stream()
                 .flatMap(core -> core.getCpus().stream())
                 .map(ECPUCluster::from)
-                .map(ECPUCluster::novaeng_ec$getTimeRecorder)
+                .map(ECPUCluster::prismplan_ec$getTimeRecorder)
                 .mapToInt(TimeRecorder::usedTimeAvg)
                 .sum();
 

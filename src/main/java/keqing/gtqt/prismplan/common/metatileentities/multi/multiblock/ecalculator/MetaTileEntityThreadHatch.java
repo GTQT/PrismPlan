@@ -60,7 +60,7 @@ public class MetaTileEntityThreadHatch extends MetaTileEntityMultiblockPart
 
         final boolean prevEmpty = cpus.isEmpty();
 
-        ECPUCluster.from(cluster).novaeng_ec$setThreadCore(this);
+        ECPUCluster.from(cluster).prismplan_ec$setThreadCore(this);
         cpus.add(cluster);
 
         if (prevEmpty) {
@@ -92,20 +92,23 @@ public class MetaTileEntityThreadHatch extends MetaTileEntityMultiblockPart
     public void refreshCPUSource() {
         for (final CraftingCPUCluster cluster : cpus) {
             ECPUCluster eCluster = ECPUCluster.from(cluster);
-            // Refresh machine source.
-            eCluster.novaeng_ec$setThreadCore(this);
+            eCluster.prismplan_ec$setThreadCore(this);
         }
     }
 
+    @Override
+    public void onRemoval() {
+        super.onRemoval();
+        onBlockDestroyed();
+    }
     public void onBlockDestroyed() {
-        cpus.forEach(cluster -> ECPUCluster.from(cluster).novaeng_ec$markDestroyed());
+        cpus.forEach(cluster -> ECPUCluster.from(cluster).prismplan_ec$markDestroyed());
         cpus.clear();
         MetaTileEntityCalculatorControl controller = (MetaTileEntityCalculatorControl) getController();
         if (controller != null && controller.getNetWorkCalculatorHatch().getProxy() != null) {
             controller.onClusterChanged();
         }
     }
-
     public void onCPUDestroyed(final CraftingCPUCluster cluster) {
         cpus.remove(cluster);
         MetaTileEntityCalculatorControl controller = (MetaTileEntityCalculatorControl) getController();
@@ -151,9 +154,9 @@ public class MetaTileEntityThreadHatch extends MetaTileEntityMultiblockPart
             CraftingCPUCluster cluster = new CraftingCPUCluster(coord, coord);
             ECPUCluster eCluster = ECPUCluster.from(cluster);
 
-            eCluster.novaeng_ec$setThreadCore(this);
-            eCluster.novaeng_ec$setAvailableStorage(clusterTag.getLong("availableStorage"));
-            eCluster.novaeng_ec$setUsedExtraStorage(clusterTag.getLong("usedExtraStorage"));
+            eCluster.prismplan_ec$setThreadCore(this);
+            eCluster.prismplan_ec$setAvailableStorage(clusterTag.getLong("availableStorage"));
+            eCluster.prismplan_ec$setUsedExtraStorage(clusterTag.getLong("usedExtraStorage"));
             cluster.readFromNBT(clusterTag);
             cpus.add(cluster);
         }
@@ -181,7 +184,7 @@ public class MetaTileEntityThreadHatch extends MetaTileEntityMultiblockPart
             NBTTagCompound clusterTag = new NBTTagCompound();
             cluster.writeToNBT(clusterTag);
             clusterTag.setLong("availableStorage", cluster.getAvailableStorage());
-            clusterTag.setLong("usedExtraStorage", eCluster.novaeng_ec$getUsedExtraStorage());
+            clusterTag.setLong("usedExtraStorage", eCluster.prismplan_ec$getUsedExtraStorage());
             clustersTag.appendTag(clusterTag);
         });
         compound.setTag("clusters", clustersTag);

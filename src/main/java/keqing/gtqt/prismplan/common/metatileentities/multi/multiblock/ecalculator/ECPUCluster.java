@@ -12,26 +12,26 @@ public interface ECPUCluster {
         return (ECPUCluster) (Object) cluster;
     }
 
-    void novaeng_ec$setAvailableStorage(final long availableStorage);
+    void prismplan_ec$setAvailableStorage(final long availableStorage);
 
-    void novaeng_ec$setAccelerators(final int accelerators);
+    void prismplan_ec$setAccelerators(final int accelerators);
 
-    MetaTileEntityThreadHatch novaeng_ec$getController();
+    MetaTileEntityThreadHatch prismplan_ec$getController();
 
-    void novaeng_ec$setThreadCore(final MetaTileEntityThreadHatch threadCore);
+    void prismplan_ec$setThreadCore(final MetaTileEntityThreadHatch threadCore);
 
-    void novaeng_ec$setVirtualCPUOwner(@Nullable final MetaTileEntityCalculatorControl isVirtualCPUOwner);
+    void prismplan_ec$setVirtualCPUOwner(@Nullable final MetaTileEntityCalculatorControl isVirtualCPUOwner);
 
-    Levels novaeng_ec$getControllerLevel();
+    Levels prismplan_ec$getControllerLevel();
 
-    long novaeng_ec$getUsedExtraStorage();
+    long prismplan_ec$getUsedExtraStorage();
 
-    void novaeng_ec$setUsedExtraStorage(final long usedExtraStorage);
+    void prismplan_ec$setUsedExtraStorage(final long usedExtraStorage);
 
-    void novaeng_ec$markDestroyed();
+    void prismplan_ec$markDestroyed();
 
-    TimeRecorder novaeng_ec$getTimeRecorder();
+    TimeRecorder prismplan_ec$getTimeRecorder();
 
-    TimeRecorder novaeng_ec$getParallelismRecorder();
+    TimeRecorder prismplan_ec$getParallelismRecorder();
 
 }

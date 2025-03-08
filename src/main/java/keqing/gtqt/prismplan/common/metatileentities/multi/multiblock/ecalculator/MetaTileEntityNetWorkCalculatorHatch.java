@@ -82,45 +82,6 @@ public class MetaTileEntityNetWorkCalculatorHatch extends MetaTileEntityMultiblo
         return new MetaTileEntityNetWorkCalculatorHatch(metaTileEntityId);
     }
 
-    //测试用 检查网络是否畅通
-    public void update() {
-        super.update();
-
-        if (!this.getWorld().isRemote) {
-            if (networkProxy != null && networkProxy.isReady() && getFrontBlock() == AIR)
-                this.networkProxy.invalidate();
-
-            ++this.meUpdateTick;
-        }
-        if (!this.getWorld().isRemote && this.updateMEStatus() && this.shouldSyncME()) {
-            this.syncME();
-        }
-    }
-
-    public void syncME() {
-        AENetworkProxy proxy = this.getProxy();
-        /*
-        if (proxy == null) return;
-
-        try {
-            IItemStorageChannel channel = AEApi.instance().storage().getStorageChannel(IItemStorageChannel.class);
-            IMEMonitor<IAEItemStack> monitor = proxy.getStorage().getInventory(channel);
-            PrismPlanLog.logger.info("Network proxy update:" + monitor.getStorageList());
-
-        } catch (GridAccessException e) {
-            PrismPlanLog.logger.warn("Grid access failed", e);
-        }
-
-         */
-    }
-
-
-    public IBlockState getFrontBlock() {
-        BlockPos pos = this.getPos();
-        EnumFacing facing = this.getFrontFacing();
-        return getWorld().getBlockState(pos.offset(facing));
-    }
-
     @Override
     public boolean canBeUse() {
         return canBeUse;
