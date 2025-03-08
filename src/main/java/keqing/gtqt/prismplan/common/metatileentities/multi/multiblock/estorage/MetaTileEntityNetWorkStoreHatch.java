@@ -3,7 +3,6 @@ package keqing.gtqt.prismplan.common.metatileentities.multi.multiblock.estorage;
 import appeng.api.config.AccessRestriction;
 import appeng.api.config.Actionable;
 import appeng.api.config.PowerMultiplier;
-import appeng.api.implementations.tiles.IChestOrDrive;
 import appeng.api.networking.GridFlags;
 import appeng.api.networking.IGridNode;
 import appeng.api.networking.energy.IAEPowerStorage;
@@ -28,9 +27,7 @@ import gregtech.api.capability.GregtechDataCodes;
 import gregtech.api.capability.impl.NotifiableItemStackHandler;
 import gregtech.api.gui.GuiTextures;
 import gregtech.api.gui.ModularUI;
-import gregtech.api.gui.Widget;
 import gregtech.api.gui.widgets.AdvancedTextWidget;
-import gregtech.api.gui.widgets.ClickButtonWidget;
 import gregtech.api.gui.widgets.SlotWidget;
 import gregtech.api.metatileentity.MetaTileEntity;
 import gregtech.api.metatileentity.interfaces.IGregTechTileEntity;
@@ -43,7 +40,6 @@ import gregtech.common.metatileentities.multi.multiblockpart.MetaTileEntityMulti
 import keqing.gtqt.prismplan.api.capability.ICellHatch;
 import keqing.gtqt.prismplan.api.capability.INetWorkStore;
 import keqing.gtqt.prismplan.api.multiblock.PrismPlanMultiblockAbility;
-import keqing.gtqt.prismplan.api.utils.PrismPlanLog;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.entity.player.EntityPlayer;
@@ -52,7 +48,6 @@ import net.minecraft.network.PacketBuffer;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraftforge.items.IItemHandlerModifiable;
@@ -132,7 +127,8 @@ public class MetaTileEntityNetWorkStoreHatch extends MetaTileEntityMultiblockPar
             this.isAttached = true;
             try {
                 getProxy().getGrid().postEvent(new MENetworkCellArrayUpdate());
-            } catch (GridAccessException ignored) {}
+            } catch (GridAccessException ignored) {
+            }
         }
     }
 
@@ -198,7 +194,7 @@ public class MetaTileEntityNetWorkStoreHatch extends MetaTileEntityMultiblockPar
 
     protected void addDisplayText(List<ITextComponent> textList) {
         if (this.getController() != null)
-            textList.add(new TextComponentTranslation("正在访问："+I18n.format(this.getController().getMetaFullName())));
+            textList.add(new TextComponentTranslation("正在访问：" + I18n.format(this.getController().getMetaFullName())));
     }
 
     public @Nullable AENetworkProxy getProxy() {
@@ -366,7 +362,7 @@ public class MetaTileEntityNetWorkStoreHatch extends MetaTileEntityMultiblockPar
     @Override
     @SuppressWarnings("rawtypes")
     public List<IMEInventoryHandler> getCellArray(final IStorageChannel<?> channel) {
-        if ( this.getController() != null) {
+        if (this.getController() != null) {
             return ((MetaTileEntityStorageCellControl) this.getController()).getCellDrives().stream()
                     .map(a -> a.getHandler(channel))
                     .filter(Objects::nonNull)
@@ -412,9 +408,8 @@ public class MetaTileEntityNetWorkStoreHatch extends MetaTileEntityMultiblockPar
     }
 
 
-    public MetaTileEntityStorageCellControl getControl()
-    {
-        if(this.getController() instanceof MetaTileEntityStorageCellControl mte) return mte;
+    public MetaTileEntityStorageCellControl getControl() {
+        if (this.getController() instanceof MetaTileEntityStorageCellControl mte) return mte;
         return null;
     }
 
@@ -467,6 +462,7 @@ public class MetaTileEntityNetWorkStoreHatch extends MetaTileEntityMultiblockPar
         }
         return this.getControl().getEnergyStored();
     }
+
     @Override
     public boolean isAEPublicPowerStorage() {
         return true;

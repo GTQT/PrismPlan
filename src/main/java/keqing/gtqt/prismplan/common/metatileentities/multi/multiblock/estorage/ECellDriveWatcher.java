@@ -2,23 +2,18 @@ package keqing.gtqt.prismplan.common.metatileentities.multi.multiblock.estorage;
 
 
 import appeng.api.config.Actionable;
-import appeng.api.networking.events.MENetworkCellArrayUpdate;
 import appeng.api.networking.security.IActionSource;
-import appeng.api.storage.ICellHandler;
 import appeng.api.storage.ICellInventoryHandler;
 import appeng.api.storage.IMEInventory;
 import appeng.api.storage.IStorageChannel;
 import appeng.api.storage.data.IAEStack;
-import appeng.core.features.registries.cell.CreativeCellHandler;
 import appeng.me.GridAccessException;
 import appeng.me.helpers.AENetworkProxy;
 import appeng.me.storage.MEInventoryHandler;
-import appeng.tile.storage.TileDrive;
 import gregtech.api.metatileentity.multiblock.MultiblockControllerBase;
 import io.netty.util.internal.ThrowableUtil;
 import keqing.gtqt.prismplan.api.capability.INetWorkProxy;
 import keqing.gtqt.prismplan.api.utils.PrismPlanLog;
-import net.minecraft.item.ItemStack;
 
 import java.util.Collections;
 import java.util.List;
@@ -31,6 +26,7 @@ public class ECellDriveWatcher<T extends IAEStack<T>> extends MEInventoryHandler
         super(i, channel);
         this.drive = drive;
     }
+
     @Override
     public T injectItems(final T input, final Actionable type, final IActionSource src) {
         final long size = input.getStackSize();
@@ -41,7 +37,7 @@ public class ECellDriveWatcher<T extends IAEStack<T>> extends MEInventoryHandler
             MultiblockControllerBase controller = this.drive.getController();
 
 
-            if(controller instanceof MetaTileEntityStorageCellControl mte) {
+            if (controller instanceof MetaTileEntityStorageCellControl mte) {
 
                 INetWorkProxy channel = mte.getNetWorkStoreHatch();
 
@@ -71,7 +67,7 @@ public class ECellDriveWatcher<T extends IAEStack<T>> extends MEInventoryHandler
             MultiblockControllerBase controller = this.drive.getController();
 
 
-            if(controller instanceof MetaTileEntityStorageCellControl mte) {
+            if (controller instanceof MetaTileEntityStorageCellControl mte) {
 
                 INetWorkProxy channel = mte.getNetWorkStoreHatch();
                 AENetworkProxy proxy = channel.getProxy();

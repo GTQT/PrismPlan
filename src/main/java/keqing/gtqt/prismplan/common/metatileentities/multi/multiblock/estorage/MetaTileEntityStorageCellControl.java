@@ -58,10 +58,6 @@ public class MetaTileEntityStorageCellControl extends MultiblockWithDisplayBase 
     // 定义常量提升可读性
     protected double idleDrain = 64;
 
-    long[] usedBytes = new long[2];
-    long[] maxBytes = new long[2];
-    int[] usedTypes = new int[2];
-    int[] maxTypes = new int[2];
     int page;
 
     public MetaTileEntityStorageCellControl(ResourceLocation metaTileEntityId) {
@@ -89,36 +85,65 @@ public class MetaTileEntityStorageCellControl extends MultiblockWithDisplayBase 
             });
 
             getNetWorkStoreHatch().refresh();
-
-            long[] currentUsedBytes = new long[2];
-            long[] currentMaxBytes = new long[2];
-            int[] currentUsedTypes = new int[2];
-            int[] currentMaxTypes = new int[2];
-
-            for (ICellHatch cell : getCellDrives()) {
-                if (cell.getData() == null) continue;
-                int index = switch (cell.getType()) {
-                    case ITEM -> 0;
-                    case FLUID -> 1;
-                    default -> -1;
-                };
-                if (index == -1) continue;
-
-                currentUsedBytes[index] += cell.usedBytes();
-                currentMaxBytes[index] += cell.maxBytes();
-                currentUsedTypes[index] += cell.usedTypes();
-                currentMaxTypes[index] += cell.maxTypes();
-            }
-
-            // 使用内容比较替代引用比较
-            if (!Arrays.equals(usedBytes, currentUsedBytes)) usedBytes = currentUsedBytes;
-            if (!Arrays.equals(maxBytes, currentMaxBytes)) maxBytes = currentMaxBytes;
-            if (!Arrays.equals(usedTypes, currentUsedTypes)) usedTypes = currentUsedTypes;
-            if (!Arrays.equals(maxTypes, currentMaxTypes)) maxTypes = currentMaxTypes;
         }
-
-
     }
+
+    public int[] getMaxTypes() {
+        int[] currentMaxTypes = new int[2];
+        for (ICellHatch cell : getCellDrives()) {
+            if (cell.getData() == null) continue;
+            int index = switch (cell.getType()) {
+                case ITEM -> 0;
+                case FLUID -> 1;
+                default -> -1;
+            };
+            currentMaxTypes[index] += cell.maxTypes();
+        }
+        return currentMaxTypes;
+    }
+
+    public int[] getUsedTypes() {
+        int[] currentUsedTypes = new int[2];
+        for (ICellHatch cell : getCellDrives()) {
+            if (cell.getData() == null) continue;
+            int index = switch (cell.getType()) {
+                case ITEM -> 0;
+                case FLUID -> 1;
+                default -> -1;
+            };
+            currentUsedTypes[index] += cell.usedTypes();
+        }
+        return currentUsedTypes;
+    }
+
+    public long[] getMaxBytes() {
+        long[] currentMaxBytes = new long[2];
+        for (ICellHatch cell : getCellDrives()) {
+            if (cell.getData() == null) continue;
+            int index = switch (cell.getType()) {
+                case ITEM -> 0;
+                case FLUID -> 1;
+                default -> -1;
+            };
+            currentMaxBytes[index] += cell.maxBytes();
+        }
+        return currentMaxBytes;
+    }
+
+    public long[] getUsedBytes() {
+        long[] currentUsedBytes = new long[2];
+        for (ICellHatch cell : getCellDrives()) {
+            if (cell.getData() == null) continue;
+            int index = switch (cell.getType()) {
+                case ITEM -> 0;
+                case FLUID -> 1;
+                default -> -1;
+            };
+            currentUsedBytes[index] += cell.usedBytes();
+        }
+        return currentUsedBytes;
+    }
+
 
     public double injectPower(final double amt, final Actionable mode) {
         double toInject = amt;
@@ -298,13 +323,13 @@ public class MetaTileEntityStorageCellControl extends MultiblockWithDisplayBase 
     }
 
     public double getTypes(int n) {
-        if (maxTypes[n] == 0) return 0;
-        return (double) usedTypes[n] / maxTypes[n];
+        if (getMaxTypes()[n] == 0) return 0;
+        return (double) getUsedTypes()[n] / getMaxTypes()[n];
     }
 
     public double getBytes(int n) {
-        if (maxBytes[n] == 0) return 0;
-        return (double) usedBytes[n] / maxBytes[n];
+        if (getMaxBytes()[n] == 0) return 0;
+        return (double) getUsedBytes()[n] / getMaxBytes()[n];
     }
 
     public double getEnergy() {
@@ -315,7 +340,7 @@ public class MetaTileEntityStorageCellControl extends MultiblockWithDisplayBase 
     public void addTypesText(List<ITextComponent> hoverList, int n) {
         ITextComponent cwutInfo = TextComponentUtil.stringWithColor(
                 TextFormatting.AQUA,
-                PrimsPlanUtility.formatNumber(usedTypes[n]) + " / " + PrimsPlanUtility.formatNumber(maxTypes[n]) + " Types");
+                PrimsPlanUtility.formatNumber(getUsedTypes()[n]) + " / " + PrimsPlanUtility.formatNumber(getMaxTypes()[n]) + " Types");
         hoverList.add(TextComponentUtil.translationWithColor(
                 TextFormatting.GRAY,
                 "类型: %s",
@@ -325,7 +350,7 @@ public class MetaTileEntityStorageCellControl extends MultiblockWithDisplayBase 
     public void addBytesText(List<ITextComponent> hoverList, int n) {
         ITextComponent cwutInfo = TextComponentUtil.stringWithColor(
                 TextFormatting.AQUA,
-                PrimsPlanUtility.formatNumber(usedBytes[n]) + " / " + PrimsPlanUtility.formatNumber(maxBytes[n]) + " Bytes");
+                PrimsPlanUtility.formatNumber(getUsedBytes()[n]) + " / " + PrimsPlanUtility.formatNumber(getMaxBytes()[n]) + " Bytes");
         hoverList.add(TextComponentUtil.translationWithColor(
                 TextFormatting.GRAY,
                 "字节: %s",
@@ -344,16 +369,16 @@ public class MetaTileEntityStorageCellControl extends MultiblockWithDisplayBase 
 
     protected void addDisplayText1(List<ITextComponent> textList) {
         textList.add(new TextComponentTranslation("gui.estorage_controller.cell_info.item"));
-        textList.add(new TextComponentTranslation("gui.estorage_controller.cell_info.tip.1", usedTypes[0], maxTypes[0]));
+        textList.add(new TextComponentTranslation("gui.estorage_controller.cell_info.tip.1", getUsedTypes()[0], getMaxTypes()[0]));
         textList.add(new TextComponentTranslation("gui.estorage_controller.cell_info.tip.2"
-                , PrimsPlanUtility.formatNumber(Math.round(usedBytes[0])), PrimsPlanUtility.formatNumber(Math.round(maxBytes[0]))));
+                , PrimsPlanUtility.formatNumber(Math.round(getUsedBytes()[0])), PrimsPlanUtility.formatNumber(Math.round(getMaxBytes()[0]))));
     }
 
     protected void addDisplayText2(List<ITextComponent> textList) {
         textList.add(new TextComponentTranslation("gui.estorage_controller.cell_info.fluid"));
-        textList.add(new TextComponentTranslation("gui.estorage_controller.cell_info.tip.1", usedTypes[1], maxTypes[1]));
+        textList.add(new TextComponentTranslation("gui.estorage_controller.cell_info.tip.1", getUsedTypes()[1], getMaxTypes()[1]));
         textList.add(new TextComponentTranslation("gui.estorage_controller.cell_info.tip.2"
-                , PrimsPlanUtility.formatNumber(Math.round(usedBytes[1])), PrimsPlanUtility.formatNumber(Math.round(maxBytes[1]))));
+                , PrimsPlanUtility.formatNumber(Math.round(getUsedBytes()[1])), PrimsPlanUtility.formatNumber(Math.round(getMaxBytes()[1]))));
     }
 
     protected void addDisplayText3(List<ITextComponent> textList) {

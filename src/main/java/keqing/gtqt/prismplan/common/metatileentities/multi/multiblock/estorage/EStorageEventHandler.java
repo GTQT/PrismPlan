@@ -5,14 +5,12 @@ import appeng.api.networking.IGrid;
 import appeng.api.networking.IGridNode;
 import appeng.api.networking.energy.IEnergyGrid;
 import appeng.api.networking.security.ISecurityGrid;
-import appeng.me.helpers.IGridProxyable;
 import appeng.tile.inventory.AppEngCellInventory;
 import gregtech.api.metatileentity.MetaTileEntity;
 import gregtech.api.metatileentity.interfaces.IGregTechTileEntity;
 import keqing.gtqt.prismplan.api.capability.INetWorkProxy;
 import keqing.gtqt.prismplan.api.capability.INetWorkStore;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
@@ -26,6 +24,7 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 public class EStorageEventHandler {
 
     public static final EStorageEventHandler INSTANCE = new EStorageEventHandler();
+
     private static boolean canInteract(final EntityPlayer player, final INetWorkProxy proxyable) {
         final IGridNode gn = proxyable.getProxy().getNode();
         if (gn != null) {

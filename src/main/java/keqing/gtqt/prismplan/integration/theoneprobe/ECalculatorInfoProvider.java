@@ -8,9 +8,7 @@ import keqing.gtqt.prismplan.Tags;
 import keqing.gtqt.prismplan.api.capability.IThreadHatch;
 import keqing.gtqt.prismplan.api.utils.ColorUtils;
 import keqing.gtqt.prismplan.api.utils.PrimsPlanUtility;
-import keqing.gtqt.prismplan.common.metatileentities.multi.multiblock.ecalculator.ECPUCluster;
-import keqing.gtqt.prismplan.common.metatileentities.multi.multiblock.ecalculator.MetaTileEntityCalculatorControl;
-import keqing.gtqt.prismplan.common.metatileentities.multi.multiblock.ecalculator.MetaTileEntityThreadHatch;
+import keqing.gtqt.prismplan.common.metatileentities.multi.multiblock.ecalculator.*;
 import mcjty.theoneprobe.api.*;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
@@ -22,6 +20,8 @@ import net.minecraft.world.World;
 import java.awt.*;
 import java.util.List;
 import keqing.gtqt.prismplan.api.utils.TimeRecorder;
+
+import static keqing.gtqt.prismplan.api.utils.PrimsPlanUtility.formatNumber;
 
 public class ECalculatorInfoProvider implements IProbeInfoProvider {
 
@@ -61,8 +61,45 @@ public class ECalculatorInfoProvider implements IProbeInfoProvider {
             if (mte instanceof final MetaTileEntityThreadHatch hatch) {
                 processThreadCoreInfo(probeInfo, hatch);
             }
-
+            if (mte instanceof final MetaTileEntityCalculatorCellHatch hatch) {
+                processCellHatchInfo(probeInfo, hatch);
+            }
+            if (mte instanceof final MetaTileEntityParallelHatch hatch) {
+                processParallelHatchInfo(probeInfo, hatch);
+            }
         }
+    }
+
+    private void processParallelHatchInfo(IProbeInfo probeInfo, MetaTileEntityParallelHatch hatch) {
+        final boolean online = hatch.getController() != null;
+        IProbeInfo box = newBox(probeInfo);
+        box.text("{*top.ecalculator.thread_core.status*}" +
+                (online ? "{*top.ecalculator.thread_core.status.online*}" : "{*top.ecalculator.thread_core.status.offline*}")
+        );
+        if (!online) {
+            return;
+        }
+
+        final long parallelism = hatch.getParallelism();
+        box = newBox(probeInfo).vertical();
+        box.text("{*top.ecalculator.calculator_core.parallelism*}" + formatNumber(parallelism)
+        );
+    }
+
+    private void processCellHatchInfo(IProbeInfo probeInfo, MetaTileEntityCalculatorCellHatch hatch) {
+        final boolean online = hatch.getController() != null;
+        IProbeInfo box = newBox(probeInfo);
+        box.text("{*top.ecalculator.thread_core.status*}" +
+                (online ? "{*top.ecalculator.thread_core.status.online*}" : "{*top.ecalculator.thread_core.status.offline*}")
+        );
+        if (!online) {
+            return;
+        }
+
+        final long bytes = hatch.getSuppliedBytes();
+        box = newBox(probeInfo).vertical();
+        box.text("{*top.ecalculator.calculator_core.bytes*}" + formatNumber(bytes)
+        );
     }
 
     private static void processThreadCoreInfo(final IProbeInfo probeInfo, final MetaTileEntityThreadHatch threadCore) {
@@ -147,7 +184,7 @@ public class ECalculatorInfoProvider implements IProbeInfoProvider {
         int color = ColorUtils.getGradientColor(new Color[]{
                 LOW_COLOR, LOW_COLOR, LOW_COLOR, MID_COLOR, MID_COLOR, FULL_COLOR, FULL_COLOR
         }, 0xCC, percent).getRGB();
-        String progressStr = String.format("%s / %s", PrimsPlanUtility.formatNumber(usedMemory), PrimsPlanUtility.formatNumber(totalMemory));
+        String progressStr = String.format("%s / %s", formatNumber(usedMemory), formatNumber(totalMemory));
         newBox(probeInfo).horizontal(probeInfo.defaultLayoutStyle().alignment(ElementAlignment.ALIGN_CENTER))
                 .text(TextFormatting.AQUA + "{*top.ecalculator.controller.storage*}")
                 .progress((int) (percent * 150), 150, probeInfo.defaultProgressStyle()

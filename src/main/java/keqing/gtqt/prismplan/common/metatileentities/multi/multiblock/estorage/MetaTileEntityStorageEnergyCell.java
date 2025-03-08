@@ -15,7 +15,6 @@ import gregtech.api.metatileentity.interfaces.IGregTechTileEntity;
 import gregtech.api.metatileentity.multiblock.IMultiblockAbilityPart;
 import gregtech.api.metatileentity.multiblock.MultiblockAbility;
 import gregtech.client.renderer.texture.Textures;
-import gregtech.client.renderer.texture.cube.SimpleOverlayRenderer;
 import gregtech.client.utils.PipelineUtil;
 import gregtech.common.metatileentities.multi.multiblockpart.MetaTileEntityMultiblockPart;
 import keqing.gtqt.prismplan.api.capability.IEnergyHatch;
@@ -31,14 +30,15 @@ import net.minecraftforge.items.IItemHandlerModifiable;
 import java.util.List;
 
 public class MetaTileEntityStorageEnergyCell extends MetaTileEntityMultiblockPart implements
-        IMultiblockAbilityPart<IEnergyHatch>,IEnergyHatch,Comparable<IEnergyHatch>{
+        IMultiblockAbilityPart<IEnergyHatch>, IEnergyHatch, Comparable<IEnergyHatch> {
 
     protected double energyStored = 0D;
     protected double maxEnergyStore = 0D;
 
     protected boolean recalculateCap = false;
-
+    protected IItemHandlerModifiable targetItem;
     int tier;
+
     public MetaTileEntityStorageEnergyCell(ResourceLocation metaTileEntityId, int tier, final double maxEnergyStore) {
         super(metaTileEntityId, tier);
         this.tier = tier;
@@ -51,16 +51,15 @@ public class MetaTileEntityStorageEnergyCell extends MetaTileEntityMultiblockPar
         return Double.compare(o.getEnergyStored(), energyStored);
     }
 
-
     @Override
     public MetaTileEntity createMetaTileEntity(IGregTechTileEntity tileEntity) {
-        return new MetaTileEntityStorageEnergyCell(metaTileEntityId,tier,maxEnergyStore);
+        return new MetaTileEntityStorageEnergyCell(metaTileEntityId, tier, maxEnergyStore);
     }
-    protected IItemHandlerModifiable targetItem;
+
     @Override
     protected ModularUI createUI(EntityPlayer entityPlayer) {
         ModularUI.Builder builder = ModularUI.builder(GuiTextures.BACKGROUND, 180, 240);
-        builder.dynamicLabel(28, 12, () -> "能量元件"+tier, 0xFFFFFF);
+        builder.dynamicLabel(28, 12, () -> "能量元件" + tier, 0xFFFFFF);
         builder.widget(new SlotWidget(targetItem, 0, 8, 8, true, true)
                 .setBackgroundTexture(GuiTextures.SLOT)
                 .setTooltipText("???"));
@@ -74,9 +73,10 @@ public class MetaTileEntityStorageEnergyCell extends MetaTileEntityMultiblockPar
 
     protected void addDisplayText(List<ITextComponent> textList) {
         textList.add(new TextComponentTranslation("gui.estorage_controller.graph.energy_stored"
-                , PrimsPlanUtility.formatNumber(Math.round(getEnergyStored())), PrimsPlanUtility.formatNumber(Math.round( getMaxEnergyStore()))));
+                , PrimsPlanUtility.formatNumber(Math.round(getEnergyStored())), PrimsPlanUtility.formatNumber(Math.round(getMaxEnergyStore()))));
 
     }
+
     public void recalculateCapacity() {
         recalculateCap = false;
         markDirty();

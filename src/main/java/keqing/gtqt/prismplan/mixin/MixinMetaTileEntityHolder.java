@@ -16,6 +16,7 @@ import org.spongepowered.asm.mixin.Unique;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
+import java.util.Collections;
 import java.util.List;
 
 @Mixin(value = MetaTileEntityHolder.class, remap = false)
@@ -42,7 +43,7 @@ public abstract class MixinMetaTileEntityHolder implements ICellContainer, IAEPo
         if (this.metaTileEntity instanceof MetaTileEntityNetWorkStoreHatch) {
             return ((MetaTileEntityNetWorkStoreHatch)this.metaTileEntity).getCellArray(iStorageChannel);
         }
-        return null;
+        return Collections.emptyList();
     }
 
     @Unique

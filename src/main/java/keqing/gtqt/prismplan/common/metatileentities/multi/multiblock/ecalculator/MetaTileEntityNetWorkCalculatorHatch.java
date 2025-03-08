@@ -2,8 +2,10 @@ package keqing.gtqt.prismplan.common.metatileentities.multi.multiblock.ecalculat
 
 import appeng.api.networking.GridFlags;
 import appeng.api.networking.IGridNode;
-import appeng.api.networking.events.*;
-import appeng.api.networking.security.IActionHost;
+import appeng.api.networking.events.MENetworkChannelsChanged;
+import appeng.api.networking.events.MENetworkCraftingCpuChange;
+import appeng.api.networking.events.MENetworkEventSubscribe;
+import appeng.api.networking.events.MENetworkPowerStatusChange;
 import appeng.api.networking.security.IActionSource;
 import appeng.api.util.AECableType;
 import appeng.api.util.AEPartLocation;
@@ -32,7 +34,6 @@ import gregtech.common.ConfigHolder;
 import gregtech.common.metatileentities.multi.multiblockpart.MetaTileEntityMultiblockPart;
 import keqing.gtqt.prismplan.api.capability.INetWorkCalculator;
 import keqing.gtqt.prismplan.api.multiblock.PrismPlanMultiblockAbility;
-import keqing.gtqt.prismplan.api.utils.PrismPlanLog;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.entity.player.EntityPlayer;
@@ -70,7 +71,7 @@ public class MetaTileEntityNetWorkCalculatorHatch extends MetaTileEntityMultiblo
     //其他
     private int meUpdateTick = 0;
     private boolean wasActive = false;
-    private boolean isAttached = false;
+    private final boolean isAttached = false;
 
     public MetaTileEntityNetWorkCalculatorHatch(ResourceLocation metaTileEntityId) {
         super(metaTileEntityId, 6);
@@ -80,6 +81,46 @@ public class MetaTileEntityNetWorkCalculatorHatch extends MetaTileEntityMultiblo
     @Override
     public MetaTileEntity createMetaTileEntity(IGregTechTileEntity tileEntity) {
         return new MetaTileEntityNetWorkCalculatorHatch(metaTileEntityId);
+    }
+
+    //测试用 检查网络是否畅通
+    public void update() {
+        super.update();
+
+        if (!this.getWorld().isRemote) {
+            if (networkProxy != null && networkProxy.isReady() && getFrontBlock() == AIR)
+                this.networkProxy.invalidate();
+
+            ++this.meUpdateTick;
+        }
+        if (!this.getWorld().isRemote && this.updateMEStatus() && this.shouldSyncME()) {
+            this.syncME();
+        }
+
+    }
+
+    public void syncME() {
+        AENetworkProxy proxy = this.getProxy();
+        /*
+        if (proxy == null) return;
+
+        try {
+            IItemStorageChannel channel = AEApi.instance().storage().getStorageChannel(IItemStorageChannel.class);
+            IMEMonitor<IAEItemStack> monitor = proxy.getStorage().getInventory(channel);
+            PrismPlanLog.logger.info("Network proxy update:" + monitor.getStorageList());
+
+        } catch (GridAccessException e) {
+            PrismPlanLog.logger.warn("Grid access failed", e);
+        }
+
+         */
+    }
+
+
+    public IBlockState getFrontBlock() {
+        BlockPos pos = this.getPos();
+        EnumFacing facing = this.getFrontFacing();
+        return getWorld().getBlockState(pos.offset(facing));
     }
 
     @Override
@@ -318,6 +359,7 @@ public class MetaTileEntityNetWorkCalculatorHatch extends MetaTileEntityMultiblo
         OrientedOverlayRenderer overlayRenderer = Textures.FUSION_REACTOR_OVERLAY;
         overlayRenderer.renderOrientedState(renderState, translation, pipeline, getFrontFacing(), this.getController() != null, isOnline);
     }
+
     @Override
     public void addInformation(ItemStack stack, World player, List<String> tooltip, boolean advanced) {
         super.addInformation(stack, player, tooltip, advanced);

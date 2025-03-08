@@ -10,6 +10,7 @@ import codechicken.lib.render.pipeline.IVertexOperation;
 import codechicken.lib.vec.Matrix4;
 import gregtech.api.gui.GuiTextures;
 import gregtech.api.gui.ModularUI;
+import gregtech.api.gui.widgets.AdvancedTextWidget;
 import gregtech.api.gui.widgets.SlotWidget;
 import gregtech.api.metatileentity.MetaTileEntity;
 import gregtech.api.metatileentity.interfaces.IGregTechTileEntity;
@@ -22,13 +23,14 @@ import keqing.gtqt.prismplan.api.capability.ICalculatorHatch;
 import keqing.gtqt.prismplan.api.multiblock.PrismPlanMultiblockAbility;
 import keqing.gtqt.prismplan.common.item.ae2.ecalculator.ECalculatorCell;
 import net.minecraft.client.resources.I18n;
-import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.world.World;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.items.CapabilityItemHandler;
@@ -52,6 +54,7 @@ public class MetaTileEntityCalculatorCellHatch extends MetaTileEntityMultiblockP
         this.tier = tier;
         this.driveInv.setFilter(CellInvFilter.INSTANCE);
     }
+
     @Override
     public void onRemoval() {
         super.onRemoval();
@@ -61,6 +64,7 @@ public class MetaTileEntityCalculatorCellHatch extends MetaTileEntityMultiblockP
             driveInv.extractItem(0, 1, false);
         }
     }
+
     public NBTTagCompound writeToNBT(NBTTagCompound data) {
 
         final NBTTagCompound opt = new NBTTagCompound();
@@ -92,10 +96,10 @@ public class MetaTileEntityCalculatorCellHatch extends MetaTileEntityMultiblockP
         markDirty();
     }
 
-    public int getTier()
-    {
+    public int getTier() {
         return tier;
     }
+
     @Override
     public void onChangeInventory(final IItemHandler inv, final int slot, final InvOperation mc, final ItemStack removedStack, final ItemStack newStack) {
 
@@ -105,8 +109,6 @@ public class MetaTileEntityCalculatorCellHatch extends MetaTileEntityMultiblockP
             controller.createVirtualCPU();
         }
         this.markDirty();
-
-
     }
 
     public long getSuppliedBytes() {
@@ -165,10 +167,14 @@ public class MetaTileEntityCalculatorCellHatch extends MetaTileEntityMultiblockP
                 .setTooltipText("输入硬盘"));
 
         builder.image(4, 28, 172, 128, GuiTextures.DISPLAY);
-        //builder.widget((new AdvancedTextWidget(8, 32, this::addDisplayText, 16777215)).setMaxWidthLimit(180));
+        builder.widget((new AdvancedTextWidget(8, 32, this::addDisplayText, 16777215)).setMaxWidthLimit(180));
 
         builder.bindPlayerInventory(entityPlayer.inventory, GuiTextures.SLOT, 8, 160);
         return builder.build(this.getHolder(), entityPlayer);
+    }
+
+    private void addDisplayText(List<ITextComponent> iTextComponents) {
+        iTextComponents.add(new TextComponentTranslation("提供字节数：" + getSuppliedBytes()));
     }
 
     @Override

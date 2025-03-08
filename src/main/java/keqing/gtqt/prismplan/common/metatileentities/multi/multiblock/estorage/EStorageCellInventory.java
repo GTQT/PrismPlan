@@ -65,16 +65,6 @@ public class EStorageCellInventory<T extends IAEStack<T>> extends AbstractCellIn
         }
     }
 
-    private boolean isStorageCell(final T input) {
-        if (input instanceof final IAEItemStack stack) {
-            final IStorageCell<?> type = getStorageCell(stack.getDefinition());
-
-            return type != null && !type.storableInStorageCell();
-        }
-
-        return false;
-    }
-
     private static IStorageCell<?> getStorageCell(final ItemStack input) {
         if (input != null) {
             final Item type = input.getItem();
@@ -93,6 +83,16 @@ public class EStorageCellInventory<T extends IAEStack<T>> extends AbstractCellIn
             return inv.getAvailableItems(inv.getChannel().createList()).isEmpty();
         }
         return true;
+    }
+
+    private boolean isStorageCell(final T input) {
+        if (input instanceof final IAEItemStack stack) {
+            final IStorageCell<?> type = getStorageCell(stack.getDefinition());
+
+            return type != null && !type.storableInStorageCell();
+        }
+
+        return false;
     }
 
     protected IItemList<T> getCellItems() {

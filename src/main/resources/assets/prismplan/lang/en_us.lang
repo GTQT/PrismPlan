@@ -169,6 +169,9 @@ top.estorage.drive.cell.unsupported=§c警告：驱动器不支持此矩阵等�
 top.estorage.drive.cell.bytes=§9字节使用：
 top.estorage.drive.cell.types=§9类型使用：
 
+top.ecalculator.calculator_core.bytes=§9提供字节：
+top.ecalculator.calculator_core.parallelism=§9提供修正并行：
+
 top.ecalculator.controller.storage=§9字节使用：
 top.ecalculator.controller.threads=§9线程状态：
 top.ecalculator.controller.parallelism=§9共享并行数：
