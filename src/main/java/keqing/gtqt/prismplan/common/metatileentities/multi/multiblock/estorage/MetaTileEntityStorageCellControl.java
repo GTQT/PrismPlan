@@ -34,11 +34,13 @@ import keqing.gtqt.prismplan.api.utils.PrimsPlanUtility;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.util.text.TextFormatting;
+import net.minecraft.world.World;
 
 import java.util.*;
 
@@ -417,5 +419,12 @@ public class MetaTileEntityStorageCellControl extends MultiblockWithDisplayBase 
         super.renderMetaTileEntity(renderState, translation, pipeline);
         OrientedOverlayRenderer overlayRenderer = Textures.HPCA_OVERLAY;
         overlayRenderer.renderOrientedState(renderState, translation, pipeline, getFrontFacing(), true, isStructureFormed());
+    }
+
+    @Override
+    public void addInformation(ItemStack stack, World player, List<String> tooltip, boolean advanced) {
+        super.addInformation(stack, player, tooltip, advanced);
+        tooltip.add(I18n.format("prismplan.extendable_storage_subsystem.info.0"));
+        tooltip.add(I18n.format("prismplan.extendable_storage_subsystem.info.1"));
     }
 }

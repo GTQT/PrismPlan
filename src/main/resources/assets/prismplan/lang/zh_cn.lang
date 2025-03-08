@@ -21,6 +21,12 @@ item.prismplan.estorage_cell_fluid_16m.name=高性能晶格流体存储矩阵（
 item.prismplan.estorage_cell_fluid_64m.name=高性能晶格流体存储矩阵（64M）
 item.prismplan.estorage_cell_fluid_256m.name=高性能晶格流体存储矩阵（256M）
 item.prismplan.estorage_cell_fluid_1024m.name=高性能晶格流体存储矩阵（1024M）
+
+item.prismplan.ecalculator_cell_4m.name=高性能闪存晶阵（4M）
+item.prismplan.ecalculator_cell_64m.name=高性能闪存晶阵（64M）
+item.prismplan.ecalculator_cell_1024m.name=高性能闪存晶阵（1024M）
+item.prismplan.ecalculator_cell_16384m.name=高性能闪存晶阵（16384M）
+item.prismplan.ecalculator_cell_262144m.name=高性能闪存晶阵（262144M）
 # 方块类
 tile.prismplan.storage_crafting_65536k.name=§a合成存储器§7（65536k）
 tile.prismplan.storage_crafting_262144k.name=§a合成存储器§7（262144k）
@@ -62,6 +68,40 @@ prismplan.machine.storage_energy_cell.4.name=储能单元 IV (64M)
 prismplan.machine.storage_energy_cell.5.name=储能单元 V (256M)
 
 #tooltips
+prismplan.extendable_storage_subsystem.info.0=整个§9存储子系统§7的§a核心§7。
+prismplan.extendable_storage_subsystem.info.1=最大长度：§a20
+
+prismplan.extendable_calculate_subsystem.info.0=整个§b计算子系统§7的§a核心§7。
+prismplan.extendable_calculate_subsystem.info.1=最大长度：§a20
+prismplan.extendable_calculate_subsystem.info.2=计算子系统引入了§b虚拟合成处理器§7的设定（简称 §bvCPU§7），通过 ME 通讯接口来访问。
+prismplan.extendable_calculate_subsystem.info.3=§b虚拟合成处理器（vCPU）§7：
+prismplan.extendable_calculate_subsystem.info.4=  主机每次只向 ME 网络提供一个 §bvCPU§7，其容量为子系统当前所有可用的字节数。
+prismplan.extendable_calculate_subsystem.info.5=  每当用户发配合成任务给 §bvCPU§7 时，主机会自动调节 §bvCPU§7 的字节数至任务所需的字节数，然后将其分配给§b线程核心§7。
+prismplan.extendable_calculate_subsystem.info.6=  分配完成后，如果系统当前可用字节数大于 §e10%%§7，则会自动分配新的 §bvCPU§7，否则§c停止分配§7，直到可用字节数大于 §e10%%§7。
+prismplan.extendable_calculate_subsystem.info.7=  只要系统中已分配的 §bvCPU§7 数不超过§e最大线程数§7，则可以一直分配新的 §bvCPU§7，直到上限。
+prismplan.extendable_calculate_subsystem.info.8=  §bvCPU§7 会在合成任务完成后，并且§e物品全部返还§7时§a立刻销毁§7。
+
+prismplan.ecalculator_parallel_proc.info.0=§5并行核心§7为计算子系统提供§5并行数§7。
+prismplan.ecalculator_parallel_proc.info.1=§5并行数§7可提高§a所有§b线程核心§7每次处理合成任务的§a处理数量§7。
+prismplan.ecalculator_parallel_proc.modifiers=§5并行数§7修正：
+prismplan.ecalculator_parallel_proc.modifier.add=  最大并行数：§a+%s
+
+prismplan.ecalculator_thread_core.info.0=§b线程核心§7是计算子系统的主要部分，为主机提供§5线程数§7。
+prismplan.ecalculator_thread_core.info.1=§b线程核心§7提供的§9线程§7为子系统提供最大§b虚拟合成处理器（vCPU）§7数量。
+prismplan.ecalculator_thread_core.info.2=拆除时会直接§a保存压缩后的 CPU 数据至掉落物§7。
+prismplan.ecalculator_thread_core.modifiers=§b线程数§7修正：
+prismplan.ecalculator_thread_core.modifier.add=  最大线程数：§a+%s
+
+prismplan.ecalculator_thread_core_hyper.info.0=§9超线程核心§7相比§b线程核心§7，能为主机提供§a更多§7的§5线程数§7。
+prismplan.ecalculator_thread_core_hyper.info.1=作为代价，每个§a合成任务§7需要的字节数会§c更多§7（§c+10%%§7）。
+prismplan.ecalculator_thread_core_hyper.info.2=主机会优先使用§b普通线程§7而不是§9超线程§7。
+prismplan.ecalculator_thread_core_hyper.modifier.add=  最大超线程数：§a+%s
+
+prismplan.ecalculator_me_channel.info.0=§9矩阵通讯接口§7是子系统与 ME 网络之间的§b协议兼容层§7。
+prismplan.ecalculator_me_channel.info.1=  §9通讯接口§7向 ME 网络提供§b虚拟合成处理器§7。
+prismplan.ecalculator_me_channel.info.2=  此子系统§a不消耗§7额外能源。
+prismplan.ecalculator_me_channel.info.3=通过连接 ME 线缆至§9通讯接口§7以和子系统建立连接。
+#estorage_cell
 prismplan.estorage_cell.insert.tip=蹲下时§a手持矩阵并右击§7驱动器以插入矩阵。
 prismplan.estorage_cell.extract.tip=蹲下时§a空手并右击§7驱动器以取出矩阵。
 
@@ -75,6 +115,25 @@ prismplan.estorage_cell_drive.player.inserted=§a已插入存储矩阵。
 prismplan.estorage_cell_drive.player.removed=§a已取出存储矩阵。
 prismplan.estorage_cell_drive.player.no_permission=§c访问被拒绝（原因：无 ME 网络权限）。
 
+#ecalculator_cell
+prismplan.ecalculator_cell.insert.tip=蹲下时手持矩阵并右击驱动器以插入晶阵。
+prismplan.ecalculator_cell.extract.tip=蹲下时空手并右击驱动器以取出晶阵。
+prismplan.ecalculator_cell.tip.0=§b闪存晶阵§7为§9计算子系统§7提供§a内存存储§7。
+prismplan.ecalculator_cell.tip.1=§b闪存晶阵§7是存储矩阵的高速存取特化版本。
+prismplan.ecalculator_cell.tip.2=相比§9存储矩阵§7，其内部规模要§a更加宏大§7，但作为代价，其存储容量也远§c不如§9存储矩阵§7。
+prismplan.ecalculator_cell.tip.3=§b字节数提供：§a%sB
+
+prismplan.ecalculator_cell.l1.tip=§c只有 §6C1§c 等级及以上的主机可以驱动此晶阵。
+prismplan.ecalculator_cell.l2.tip=§c只有 §6C2§c 等级及以上的主机可以驱动此晶阵。
+prismplan.ecalculator_cell.l3.tip=§c只有 §6C3§c 等级及以上的主机可以驱动此晶阵。
+prismplan.ecalculator_cell.l4.tip=§c只有 §6C4§c 等级及以上的主机可以驱动此晶阵。
+prismplan.ecalculator_cell.l5.tip=§c只有 §6C5§c 等级及以上的主机可以驱动此晶阵。
+
+prismplan.ecalculator_cell_drive.info.0=§b晶阵驱动器§7为计算子系统提供§b闪存晶阵§7的存储空间。
+prismplan.ecalculator_cell_drive.info.1=§b晶阵驱动器§7能够驱动的晶阵等级取决于主机的§5等级§7。
+prismplan.ecalculator_cell_drive.player.inserted=§a已插入闪存晶阵。
+prismplan.ecalculator_cell_drive.player.removed=§a已取出闪存晶阵。
+prismplan.ecalculator_cell_drive.player.no_permission=§c访问被拒绝（原因：无 ME 网络权限）。
 #top
 top.estorage.drive.status=§9驱动器状态：
 top.estorage.drive.status.offline=§c离线
@@ -84,6 +143,18 @@ top.estorage.drive.cell.unsupported=§c警告：驱动器不支持此矩阵等�
 top.estorage.drive.cell.bytes=§9字节使用：
 top.estorage.drive.cell.types=§9类型使用：
 
+top.ecalculator.controller.storage=§9字节使用：
+top.ecalculator.controller.threads=§9线程状态：
+top.ecalculator.controller.parallelism=§9共享并行数：
+top.ecalculator.controller.avg_parallelism=§9当前使用并行数：
+top.ecalculator.controller.avg_time_usage=§b总性能使用：
+top.ecalculator.thread_core.status=§9核心状态：
+top.ecalculator.thread_core.status.offline=§c离线
+top.ecalculator.thread_core.status.online=§a在线
+top.ecalculator.thread_core.threads=§9线程状态：
+top.ecalculator.thread_core.crafting=§9正在合成：
+top.ecalculator.thread_core.avg_parallelism=§9平均并行数：
+top.ecalculator.thread_core.avg_time_usage=§b平均性能使用：
 #gui
 gui.estorage_controller.cell_info.tip.0=硬盘种类：%s（ %s ）
 gui.estorage_controller.cell_info.tip.1=类型使用：%s / %s

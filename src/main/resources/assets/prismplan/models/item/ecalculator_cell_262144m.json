@@ -1,0 +1,6 @@
+{
+  "parent": "item/generated",
+  "textures": {
+    "layer0": "prismplan:items/cells/ecalculator_cell_262144m"
+  }
+}

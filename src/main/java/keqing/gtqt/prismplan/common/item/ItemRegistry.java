@@ -3,6 +3,7 @@ package keqing.gtqt.prismplan.common.item;
 
 import keqing.gtqt.prismplan.Tags;
 import keqing.gtqt.prismplan.common.item.ae2.cell.ToolPortableCellLarge;
+import keqing.gtqt.prismplan.common.item.ae2.ecalculator.ECalculatorCell;
 import keqing.gtqt.prismplan.common.item.ae2.estorage.EStorageCellFluid;
 import keqing.gtqt.prismplan.common.item.ae2.estorage.EStorageCellItem;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
@@ -48,16 +49,24 @@ public class ItemRegistry {
                 .setCreativeTab(PRISM_PLAN_TAB);
         event.getRegistry().register(LARGE_PORTABLE_CELL_32768);
 
+
         event.getRegistry().register(EStorageCellItem.LEVEL_A);
         event.getRegistry().register(EStorageCellItem.LEVEL_B);
         event.getRegistry().register(EStorageCellItem.LEVEL_C);
         event.getRegistry().register(EStorageCellItem.LEVEL_D);
         event.getRegistry().register(EStorageCellItem.LEVEL_E);
+
         event.getRegistry().register(EStorageCellFluid.LEVEL_A);
         event.getRegistry().register(EStorageCellFluid.LEVEL_B);
         event.getRegistry().register(EStorageCellFluid.LEVEL_C);
         event.getRegistry().register(EStorageCellFluid.LEVEL_D);
         event.getRegistry().register(EStorageCellFluid.LEVEL_E);
+
+        event.getRegistry().register(ECalculatorCell.L1);
+        event.getRegistry().register(ECalculatorCell.L2);
+        event.getRegistry().register(ECalculatorCell.L3);
+        event.getRegistry().register(ECalculatorCell.L4);
+        event.getRegistry().register(ECalculatorCell.L5);
     }
     @SubscribeEvent
     @SideOnly(Side.CLIENT)
@@ -65,16 +74,24 @@ public class ItemRegistry {
         registerModel(LARGE_PORTABLE_CELL_2048);
         registerModel(LARGE_PORTABLE_CELL_8192);
         registerModel(LARGE_PORTABLE_CELL_32768);
+
         registerModel(EStorageCellItem.LEVEL_A);
         registerModel(EStorageCellItem.LEVEL_B);
         registerModel(EStorageCellItem.LEVEL_C);
         registerModel(EStorageCellItem.LEVEL_D);
         registerModel(EStorageCellItem.LEVEL_E);
+
         registerModel(EStorageCellFluid.LEVEL_A);
         registerModel(EStorageCellFluid.LEVEL_B);
         registerModel(EStorageCellFluid.LEVEL_C);
         registerModel(EStorageCellFluid.LEVEL_D);
         registerModel(EStorageCellFluid.LEVEL_E);
+
+        registerModel(ECalculatorCell.L1);
+        registerModel(ECalculatorCell.L2);
+        registerModel(ECalculatorCell.L3);
+        registerModel(ECalculatorCell.L4);
+        registerModel(ECalculatorCell.L5);
     }
 
     @SideOnly(Side.CLIENT)

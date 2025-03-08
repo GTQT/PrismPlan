@@ -3,12 +3,24 @@ package keqing.gtqt.prismplan.api.utils;
 import keqing.gtqt.prismplan.Tags;
 import net.minecraft.util.ResourceLocation;
 
+import java.math.RoundingMode;
+import java.text.DecimalFormat;
 import java.text.NumberFormat;
 
 public class PrimsPlanUtility {
 
     public static ResourceLocation prismPlanID( String path) {
         return new ResourceLocation(Tags.MOD_ID, path);
+    }
+
+    private static final DecimalFormat DECIMAL_FORMAT = new DecimalFormat("#,###.##");
+
+    static {
+        DECIMAL_FORMAT.setRoundingMode(RoundingMode.HALF_UP);
+    }
+
+    public static String formatDecimal(double value) {
+        return DECIMAL_FORMAT.format(value);
     }
 
     public static String formatNumber(long value) {

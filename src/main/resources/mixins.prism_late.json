@@ -6,12 +6,13 @@
   "minVersion": "0.8.3",
   "compatibilityLevel": "JAVA_8",
   "mixins": [
-    "MixinCraftingCPUCluster",
-    "MixinCraftingGridCache",
     "MixinMetaTileEntityHolder",
     "ae2.MixinTileChestFilter",
     "ae2.MixinTileDriveFilter",
-    "ae2.AccessorCellRegistry"
+    "ae2.AccessorCellRegistry",
+    "ae2.MixinCraftingCPUCluster",
+    "ae2.MixinCraftingCPUStatus",
+    "ae2.MixinCraftingGridCache"
   ],
   "server": [],
   "client": [
