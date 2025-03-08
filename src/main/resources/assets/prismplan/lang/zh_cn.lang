@@ -51,8 +51,11 @@ prismplan.monitor.no_change=无变化
 #设备：
 # 存储控制相关
 prismplan.machine.storage_cell_control.name=存储单元控制器
+prismplan.machine.calculator_control.name=计算单元控制器
+
 prismplan.machine.network_proxy_hatch.name=网络代理仓口
 prismplan.machine.network_store_hatch.name=网络存储仓口
+prismplan.machine.network_calculator_hatch.name=网络计算仓口
 
 # 存储单元仓口（分等级）
 prismplan.machine.storage_cell_hatch.1.name=存储单元仓口 I
@@ -66,7 +69,30 @@ prismplan.machine.storage_energy_cell.2.name=储能单元 II (4M)
 prismplan.machine.storage_energy_cell.3.name=储能单元 III (16M)
 prismplan.machine.storage_energy_cell.4.name=储能单元 IV (64M)
 prismplan.machine.storage_energy_cell.5.name=储能单元 V (256M)
+#并行单元
+prismplan.machine.parallel_hatch.1.name=并行单元 I
+prismplan.machine.parallel_hatch.2.name=并行单元 II
+prismplan.machine.parallel_hatch.3.name=并行单元 III
+prismplan.machine.parallel_hatch.4.name=并行单元 IV
+prismplan.machine.parallel_hatch.5.name=并行单元 V
+#线程单元
+prismplan.machine.thread_hatch.1.name=线程单元 I
+prismplan.machine.thread_hatch.2.name=线程单元 II
+prismplan.machine.thread_hatch.3.name=线程单元 III
+prismplan.machine.thread_hatch.4.name=线程单元 IV
+prismplan.machine.thread_hatch.5.name=线程单元 V
 
+prismplan.machine.thread_hatch.hyper.1.name=超频线程单元 I
+prismplan.machine.thread_hatch.hyper.2.name=超频线程单元 II
+prismplan.machine.thread_hatch.hyper.3.name=超频线程单元 III
+prismplan.machine.thread_hatch.hyper.4.name=超频线程单元 IV
+prismplan.machine.thread_hatch.hyper.5.name=超频线程单元 V
+#闪存晶阵
+prismplan.machine.calculator_cell_hatch.1.name=晶格单元仓口 I
+prismplan.machine.calculator_cell_hatch.2.name=晶格单元仓口 II
+prismplan.machine.calculator_cell_hatch.3.name=晶格单元仓口 III
+prismplan.machine.calculator_cell_hatch.4.name=晶格单元仓口 IV
+prismplan.machine.calculator_cell_hatch.5.name=晶格单元仓口 V
 #tooltips
 prismplan.extendable_storage_subsystem.info.0=整个§9存储子系统§7的§a核心§7。
 prismplan.extendable_storage_subsystem.info.1=最大长度：§a20
@@ -116,18 +142,18 @@ prismplan.estorage_cell_drive.player.removed=§a已取出存储矩阵。
 prismplan.estorage_cell_drive.player.no_permission=§c访问被拒绝（原因：无 ME 网络权限）。
 
 #ecalculator_cell
-prismplan.ecalculator_cell.insert.tip=蹲下时手持矩阵并右击驱动器以插入晶阵。
-prismplan.ecalculator_cell.extract.tip=蹲下时空手并右击驱动器以取出晶阵。
+prismplan.ecalculator_cell.insert.tip=蹲下时手持矩阵并右击驱动器以插入闪存晶阵。
+prismplan.ecalculator_cell.extract.tip=蹲下时空手并右击驱动器以取出闪存晶阵。
 prismplan.ecalculator_cell.tip.0=§b闪存晶阵§7为§9计算子系统§7提供§a内存存储§7。
 prismplan.ecalculator_cell.tip.1=§b闪存晶阵§7是存储矩阵的高速存取特化版本。
 prismplan.ecalculator_cell.tip.2=相比§9存储矩阵§7，其内部规模要§a更加宏大§7，但作为代价，其存储容量也远§c不如§9存储矩阵§7。
 prismplan.ecalculator_cell.tip.3=§b字节数提供：§a%sB
 
-prismplan.ecalculator_cell.l1.tip=§c只有 §6C1§c 等级及以上的主机可以驱动此晶阵。
-prismplan.ecalculator_cell.l2.tip=§c只有 §6C2§c 等级及以上的主机可以驱动此晶阵。
-prismplan.ecalculator_cell.l3.tip=§c只有 §6C3§c 等级及以上的主机可以驱动此晶阵。
-prismplan.ecalculator_cell.l4.tip=§c只有 §6C4§c 等级及以上的主机可以驱动此晶阵。
-prismplan.ecalculator_cell.l5.tip=§c只有 §6C5§c 等级及以上的主机可以驱动此晶阵。
+prismplan.ecalculator_cell.l1.tip=§c只有 §6C1§c 等级及以上的晶格单元仓口可以驱动此晶阵。
+prismplan.ecalculator_cell.l2.tip=§c只有 §6C2§c 等级及以上的晶格单元仓口可以驱动此晶阵。
+prismplan.ecalculator_cell.l3.tip=§c只有 §6C3§c 等级及以上的晶格单元仓口可以驱动此晶阵。
+prismplan.ecalculator_cell.l4.tip=§c只有 §6C4§c 等级及以上的晶格单元仓口可以驱动此晶阵。
+prismplan.ecalculator_cell.l5.tip=§c只有 §6C5§c 等级及以上的晶格单元仓口可以驱动此晶阵。
 
 prismplan.ecalculator_cell_drive.info.0=§b晶阵驱动器§7为计算子系统提供§b闪存晶阵§7的存储空间。
 prismplan.ecalculator_cell_drive.info.1=§b晶阵驱动器§7能够驱动的晶阵等级取决于主机的§5等级§7。

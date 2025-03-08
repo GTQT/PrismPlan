@@ -9,11 +9,9 @@ import appeng.me.cluster.implementations.CraftingCPUCluster;
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
 import gregtech.api.metatileentity.MetaTileEntityHolder;
-import keqing.gtqt.prismplan.PrismPlan;
 import keqing.gtqt.prismplan.api.utils.TimeRecorder;
 import keqing.gtqt.prismplan.common.metatileentities.multi.multiblock.ecalculator.ECPUCluster;
 import keqing.gtqt.prismplan.common.metatileentities.multi.multiblock.ecalculator.MetaTileEntityNetWorkCalculatorHatch;
-import keqing.gtqt.prismplan.common.metatileentities.multi.multiblockpart.MetaTileEntityMultiblockCPUMEChannel;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
@@ -41,8 +39,6 @@ public abstract class MixinCraftingGridCache {
 
     @Inject(method = "updateCPUClusters()V", at = @At("RETURN"))
     private void injectUpdateCPUClusters(final CallbackInfo ci) {
-        PrismPlan.LOGGER.info("updateCPUClusters");
-
         for (final IGridNode ecNode : grid.getMachines(MetaTileEntityHolder.class)) {
 
             final MetaTileEntityHolder ec = (MetaTileEntityHolder) ecNode.getMachine();
