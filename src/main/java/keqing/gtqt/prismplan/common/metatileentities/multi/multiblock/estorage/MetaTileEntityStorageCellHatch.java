@@ -37,6 +37,7 @@ import keqing.gtqt.prismplan.common.item.ae2.estorage.EStorageCell;
 import keqing.gtqt.prismplan.common.item.ae2.estorage.EStorageCellFluid;
 import keqing.gtqt.prismplan.common.item.ae2.estorage.EStorageCellItem;
 import keqing.gtqt.prismplan.common.network.PktCellDriveStatusUpdate;
+import net.minecraft.client.resources.I18n;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
@@ -46,6 +47,7 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TextComponentTranslation;
+import net.minecraft.world.World;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.fml.common.network.NetworkRegistry;
 import net.minecraftforge.items.CapabilityItemHandler;
@@ -483,6 +485,13 @@ public class MetaTileEntityStorageCellHatch extends MetaTileEntityMultiblockPart
         if (this.shouldRenderOverlay()) {
             Textures.DATA_ACCESS_HATCH.renderSided(this.getFrontFacing(), renderState, translation, pipeline);
         }
+    }
+
+    @Override
+    public void addInformation(ItemStack stack, World player, List<String> tooltip, boolean advanced) {
+        super.addInformation(stack, player, tooltip, advanced);
+        tooltip.add(I18n.format("prismplan.estore_hatch.info.0"));
+        tooltip.add(I18n.format("prismplan.estore_hatch.info.1"));
     }
 
     private static class CellInvFilter implements IAEItemFilter {

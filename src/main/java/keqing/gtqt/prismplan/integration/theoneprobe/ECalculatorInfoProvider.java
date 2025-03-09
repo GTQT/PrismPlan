@@ -21,15 +21,12 @@ import java.awt.*;
 import java.util.List;
 import keqing.gtqt.prismplan.api.utils.TimeRecorder;
 
+import static keqing.gtqt.prismplan.api.utils.ColorUtils.*;
 import static keqing.gtqt.prismplan.api.utils.PrimsPlanUtility.formatNumber;
 
 public class ECalculatorInfoProvider implements IProbeInfoProvider {
 
     public static final ECalculatorInfoProvider INSTANCE = new ECalculatorInfoProvider();
-
-    public static final Color LOW_COLOR  = new Color(0xCC54FF9F);
-    public static final Color MID_COLOR  = new Color(0xCCFFFF00);
-    public static final Color FULL_COLOR = new Color(0xCCFF4500);
 
     private static final int CPU_USAGE_GREEN_THRESHOLD = 400;
     private static final int CPU_USAGE_YELLOW_THRESHOLD = 800;
@@ -255,24 +252,6 @@ public class ECalculatorInfoProvider implements IProbeInfoProvider {
 
         leftInfo.text("{*top.ecalculator.controller.avg_time_usage*}");
         rightInfo.text(cpuUsageColor + PrimsPlanUtility.formatDecimal(totalCPUUsagePerSecond) + "µs/t");
-    }
-
-    // Utility methods to darken and lighten colors
-
-    private static int darkenColor(int color, double factor) {
-        int a = (color >> 24) & 0xFF;
-        int r = (int) (((color >> 16) & 0xFF) * factor);
-        int g = (int) (((color >> 8) & 0xFF) * factor);
-        int b = (int) ((color & 0xFF) * factor);
-        return (a << 24) | (r << 16) | (g << 8) | b;
-    }
-
-    private static int lightenColor(int color, double factor) {
-        int a = (color >> 24) & 0xFF;
-        int r = Math.min(255, (int) (((color >> 16) & 0xFF) / factor));
-        int g = Math.min(255, (int) (((color >> 8) & 0xFF) / factor));
-        int b = Math.min(255, (int) ((color & 0xFF) / factor));
-        return (a << 24) | (r << 16) | (g << 8) | b;
     }
 
     private static IProbeInfo newVertical(final IProbeInfo probeInfo) {

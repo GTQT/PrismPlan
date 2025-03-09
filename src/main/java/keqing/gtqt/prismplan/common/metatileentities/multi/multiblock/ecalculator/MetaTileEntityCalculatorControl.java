@@ -30,6 +30,8 @@ import keqing.gtqt.prismplan.api.multiblock.PrismPlanMultiblockAbility;
 import keqing.gtqt.prismplan.api.utils.PrimsPlanUtility;
 import keqing.gtqt.prismplan.api.utils.PrismPlanLog;
 import keqing.gtqt.prismplan.api.utils.TimeRecorder;
+import keqing.gtqt.prismplan.client.textures.PrismPlanTextures;
+import keqing.gtqt.prismplan.common.block.PrismPlanBlocks;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.entity.player.EntityPlayer;
@@ -45,6 +47,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static gregtech.api.util.RelativeDirection.*;
+import static keqing.gtqt.prismplan.common.block.prismPlan.BlockMultiblockCasing.CasingType.*;
 
 public class MetaTileEntityCalculatorControl extends MultiblockWithDisplayBase {
 
@@ -196,7 +199,9 @@ public class MetaTileEntityCalculatorControl extends MultiblockWithDisplayBase {
 
     @Override
     protected void updateFormedValid() {
-
+        if (isStructureFormed() && this.getWorld().getTotalWorldTime() % 5 == 0) {
+            this.getNetWorkCalculatorHatch().postCPUClusterChangeEvent();
+        }
     }
 
     ///////////////////////////////////////////////////////////////////////////////////////////
@@ -235,24 +240,31 @@ public class MetaTileEntityCalculatorControl extends MultiblockWithDisplayBase {
         FactoryBlockPattern pattern = FactoryBlockPattern.start(FRONT, UP, RIGHT)
                 .aisle("XX", "XX", "XX")
                 .aisle("NX", "SX", "XX")
-                .aisle("TP", "XF", "TP").setRepeatable(1, 16)
-                .aisle("XX", "XX", "XX")
+                .aisle("TP", "UF", "TP").setRepeatable(1, 16)
+                .aisle("HH", "HH", "HH")
                 .where('S', this.selfPredicate())
                 .where('N', abilities(PrismPlanMultiblockAbility.NETWORK_CALCULATOR))
                 .where('T', abilities(PrismPlanMultiblockAbility.CALCULATOR_HATCH))
                 .where('P', abilities(PrismPlanMultiblockAbility.PARALLEL_HATCH))
                 .where('F', abilities(PrismPlanMultiblockAbility.THREAD_HATCH))
-                .where('X', states(this.getCasingState()));
+                .where('X', states(this.getCasingState()))
+                .where('U', states(this.getConnectState()))
+                .where('H', states(this.getHeatState()));
         return pattern.build();
     }
 
-    private IBlockState getCasingState() {
-        return MetaBlocks.METAL_CASING.getState(BlockMetalCasing.MetalCasingType.STEEL_SOLID);
+    protected IBlockState getCasingState() {
+        return PrismPlanBlocks.blockMultiblockCasing.getState(MULTI_CASING);
     }
-
+    protected IBlockState getHeatState() {
+        return PrismPlanBlocks.blockMultiblockCasing.getState(MULTI_HEAT_VENT);
+    }
+    protected IBlockState getConnectState() {
+        return PrismPlanBlocks.blockMultiblockCasing.getState(MULTI_CONNECT);
+    }
     @Override
     public ICubeRenderer getBaseTexture(IMultiblockPart iMultiblockPart) {
-        return Textures.SOLID_STEEL_CASING;
+        return PrismPlanTextures.MULTI_CASING;
     }
 
     @Override

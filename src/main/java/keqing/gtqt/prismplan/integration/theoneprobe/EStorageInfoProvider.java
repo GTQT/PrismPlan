@@ -7,10 +7,11 @@ import keqing.gtqt.prismplan.Tags;
 import keqing.gtqt.prismplan.api.capability.DriveStorageLevel;
 import keqing.gtqt.prismplan.api.capability.DriveStorageType;
 import keqing.gtqt.prismplan.api.capability.EStorageCellData;
+import keqing.gtqt.prismplan.api.utils.ColorUtils;
 import keqing.gtqt.prismplan.api.utils.PrimsPlanUtility;
-import keqing.gtqt.prismplan.common.metatileentities.multi.multiblock.estorage.MetaTileEntityStorageEnergyCell;
 import keqing.gtqt.prismplan.common.metatileentities.multi.multiblock.estorage.MetaTileEntityStorageCellControl;
 import keqing.gtqt.prismplan.common.metatileentities.multi.multiblock.estorage.MetaTileEntityStorageCellHatch;
+import keqing.gtqt.prismplan.common.metatileentities.multi.multiblock.estorage.MetaTileEntityStorageEnergyCell;
 import mcjty.theoneprobe.api.*;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
@@ -18,38 +19,17 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
 
+import java.awt.*;
+
+import static keqing.gtqt.prismplan.api.utils.ColorUtils.*;
+import static keqing.gtqt.prismplan.api.utils.PrimsPlanUtility.formatNumber;
+
 public class EStorageInfoProvider implements IProbeInfoProvider {
+
 
     public static final EStorageInfoProvider INSTANCE = new EStorageInfoProvider();
 
     private EStorageInfoProvider() {
-    }
-
-    @Override
-    public String getID() {
-        return Tags.MOD_ID + ':' + "estorage_info_provider";
-    }
-
-    @Override
-    public void addProbeInfo(final ProbeMode probeMode,
-                             final IProbeInfo probeInfo,
-                             final EntityPlayer player,
-                             final World world,
-                             final IBlockState blockState,
-                             final IProbeHitData hitData) {
-        TileEntity te = world.getTileEntity(hitData.getPos());
-        if (te instanceof IGregTechTileEntity igtte) {
-            MetaTileEntity mte = igtte.getMetaTileEntity();
-
-                if (mte instanceof final MetaTileEntityStorageEnergyCell cell) {
-                    processEnergyCellInfo(probeInfo, cell);
-                    return;
-                }
-                if (mte instanceof final MetaTileEntityStorageCellHatch drive) {
-                    processCellDriveInfo(probeInfo, drive);
-                }
-
-        }
     }
 
     private static void processCellDriveInfo(final IProbeInfo probeInfo, final MetaTileEntityStorageCellHatch drive) {
@@ -138,4 +118,127 @@ public class EStorageInfoProvider implements IProbeInfoProvider {
     private static IProbeInfo newBox(final IProbeInfo info) {
         return info.horizontal(info.defaultLayoutStyle().borderColor(0x801E90FF));
     }
+
+    @Override
+    public String getID() {
+        return Tags.MOD_ID + ':' + "estorage_info_provider";
+    }
+
+    @Override
+    public void addProbeInfo(final ProbeMode probeMode,
+                             final IProbeInfo probeInfo,
+                             final EntityPlayer player,
+                             final World world,
+                             final IBlockState blockState,
+                             final IProbeHitData hitData) {
+        TileEntity te = world.getTileEntity(hitData.getPos());
+        if (te instanceof IGregTechTileEntity igtte) {
+            MetaTileEntity mte = igtte.getMetaTileEntity();
+
+            if (mte instanceof final MetaTileEntityStorageEnergyCell cell) {
+                processEnergyCellInfo(probeInfo, cell);
+                return;
+            }
+            if (mte instanceof final MetaTileEntityStorageCellHatch drive) {
+                processCellDriveInfo(probeInfo, drive);
+            }
+            if (mte instanceof final MetaTileEntityStorageCellControl control) {
+                processCellControlInfo(probeInfo, control);
+            }
+        }
+    }
+
+    private void processCellControlInfo(IProbeInfo probeInfo, MetaTileEntityStorageCellControl control) {
+        if (!control.isStructureFormed()) {
+            return;
+        }
+
+        IProbeInfo box = newBox(probeInfo);
+        IProbeInfo leftInfo = newVertical(box);
+
+        long totalTypes = control.getMaxTypes()[0];
+        long usedTypes = control.getUsedTypes()[0];
+        float percent = (float) usedTypes / totalTypes;
+        int color = ColorUtils.getGradientColor(new Color[]{
+                LOW_COLOR, LOW_COLOR, LOW_COLOR, MID_COLOR, MID_COLOR, FULL_COLOR, FULL_COLOR
+        }, 0xCC, percent).getRGB();
+        String progressStr = String.format("%s / %s", formatNumber(usedTypes), formatNumber(totalTypes));
+
+        leftInfo.text("{*top.estorage.drive.cell.item*}");
+
+        leftInfo.horizontal(probeInfo.defaultLayoutStyle().alignment(ElementAlignment.ALIGN_CENTER))
+                .text(TextFormatting.AQUA + "{*top.estorage.drive.cell.types*}")
+                .progress((int) (percent * 150), 150, probeInfo.defaultProgressStyle()
+                        .prefix(progressStr)
+                        .filledColor(color)
+                        .alternateFilledColor(darkenColor(color, .8))
+                        .borderColor(lightenColor(color, .8))
+                        .backgroundColor(0xFF000000)
+                        .numberFormat(NumberFormat.NONE)
+                        .width(150)
+                );
+
+        long totalBytes = control.getMaxBytes()[0];
+        long usedTBytes = control.getUsedBytes()[0];
+        percent = (float) usedTBytes / totalBytes;
+        progressStr = String.format("%s / %s", formatNumber(usedTBytes), formatNumber(totalBytes));
+        color = ColorUtils.getGradientColor(new Color[]{
+                LOW_COLOR, LOW_COLOR, LOW_COLOR, MID_COLOR, MID_COLOR, FULL_COLOR, FULL_COLOR
+        }, 0xCC, percent).getRGB();
+        leftInfo.horizontal(probeInfo.defaultLayoutStyle().alignment(ElementAlignment.ALIGN_CENTER))
+                .text(TextFormatting.AQUA + "{*top.estorage.drive.cell.bytes*}")
+                .progress((int) (percent * 150), 150, probeInfo.defaultProgressStyle()
+                        .prefix(progressStr)
+                        .filledColor(color)
+                        .alternateFilledColor(darkenColor(color, .8))
+                        .borderColor(lightenColor(color, .8))
+                        .backgroundColor(0xFF000000)
+                        .numberFormat(NumberFormat.NONE)
+                        .width(150)
+                );
+
+        box = newBox(probeInfo);
+        leftInfo = newVertical(box);
+
+        totalTypes = control.getMaxTypes()[1];
+        usedTypes = control.getUsedTypes()[1];
+        percent = (float) usedTypes / totalTypes;
+        color = ColorUtils.getGradientColor(new Color[]{
+                LOW_COLOR, LOW_COLOR, LOW_COLOR, MID_COLOR, MID_COLOR, FULL_COLOR, FULL_COLOR
+        }, 0xCC, percent).getRGB();
+        progressStr = String.format("%s / %s", formatNumber(usedTypes), formatNumber(totalTypes));
+        leftInfo.text("{*top.estorage.drive.cell.fluid*}");
+        leftInfo.horizontal(probeInfo.defaultLayoutStyle().alignment(ElementAlignment.ALIGN_CENTER))
+                .text(TextFormatting.AQUA + "{*top.estorage.drive.cell.types*}")
+                .progress((int) (percent * 150), 150, probeInfo.defaultProgressStyle()
+                        .prefix(progressStr)
+                        .filledColor(color)
+                        .alternateFilledColor(darkenColor(color, .8))
+                        .borderColor(lightenColor(color, .8))
+                        .backgroundColor(0xFF000000)
+                        .numberFormat(NumberFormat.NONE)
+                        .width(150)
+                );
+
+        totalBytes = control.getMaxBytes()[1];
+        usedTBytes = control.getUsedBytes()[1];
+
+        percent = (float) usedTBytes / totalBytes;
+        progressStr = String.format("%s / %s", formatNumber(usedTBytes), formatNumber(totalBytes));
+        color = ColorUtils.getGradientColor(new Color[]{
+                LOW_COLOR, LOW_COLOR, LOW_COLOR, MID_COLOR, MID_COLOR, FULL_COLOR, FULL_COLOR
+        }, 0xCC, percent).getRGB();
+        leftInfo.horizontal(probeInfo.defaultLayoutStyle().alignment(ElementAlignment.ALIGN_CENTER))
+                .text(TextFormatting.AQUA + "{*top.estorage.drive.cell.bytes*}")
+                .progress((int) (percent * 150), 150, probeInfo.defaultProgressStyle()
+                        .prefix(progressStr)
+                        .filledColor(color)
+                        .alternateFilledColor(darkenColor(color, .8))
+                        .borderColor(lightenColor(color, .8))
+                        .backgroundColor(0xFF000000)
+                        .numberFormat(NumberFormat.NONE)
+                        .width(150)
+                );
+    }
+
 }

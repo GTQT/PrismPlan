@@ -20,11 +20,15 @@ import gregtech.common.metatileentities.multi.multiblockpart.MetaTileEntityMulti
 import keqing.gtqt.prismplan.api.capability.IEnergyHatch;
 import keqing.gtqt.prismplan.api.multiblock.PrismPlanMultiblockAbility;
 import keqing.gtqt.prismplan.api.utils.PrimsPlanUtility;
+import keqing.gtqt.prismplan.client.textures.PrismPlanTextures;
+import net.minecraft.client.resources.I18n;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TextComponentTranslation;
+import net.minecraft.world.World;
 import net.minecraftforge.items.IItemHandlerModifiable;
 
 import java.util.List;
@@ -160,7 +164,7 @@ public class MetaTileEntityStorageEnergyCell extends MetaTileEntityMultiblockPar
     public void renderMetaTileEntity(CCRenderState renderState, Matrix4 translation, IVertexOperation[] pipeline) {
         super.renderMetaTileEntity(renderState, translation, pipeline);
         if (this.shouldRenderOverlay()) {
-            Textures.ENERGY_IN_HI.renderSided(this.getFrontFacing(), renderState, translation, PipelineUtil.color(pipeline, GTValues.VC[this.getTier()]));
+            PrismPlanTextures.ENERGY_HATCH.renderSided(getFrontFacing(), renderState, translation, pipeline);
         }
     }
 
@@ -172,5 +176,13 @@ public class MetaTileEntityStorageEnergyCell extends MetaTileEntityMultiblockPar
     @Override
     public void registerAbilities(List<IEnergyHatch> abilityList) {
         abilityList.add(this);
+    }
+
+    @Override
+    public void addInformation(ItemStack stack, World player, List<String> tooltip, boolean advanced) {
+        super.addInformation(stack, player, tooltip, advanced);
+        tooltip.add(I18n.format("prismplan.estore_energy.info.0"));
+        tooltip.add(I18n.format("prismplan.estore_energy.info.1",maxEnergyStore));
+        tooltip.add(I18n.format("prismplan.estore_energy.info.2"));
     }
 }

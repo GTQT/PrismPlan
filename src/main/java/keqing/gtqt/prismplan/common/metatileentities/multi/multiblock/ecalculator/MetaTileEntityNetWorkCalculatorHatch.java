@@ -34,6 +34,7 @@ import gregtech.common.ConfigHolder;
 import gregtech.common.metatileentities.multi.multiblockpart.MetaTileEntityMultiblockPart;
 import keqing.gtqt.prismplan.api.capability.INetWorkCalculator;
 import keqing.gtqt.prismplan.api.multiblock.PrismPlanMultiblockAbility;
+import keqing.gtqt.prismplan.client.textures.PrismPlanTextures;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.entity.player.EntityPlayer;
@@ -356,8 +357,7 @@ public class MetaTileEntityNetWorkCalculatorHatch extends MetaTileEntityMultiblo
     @Override
     public void renderMetaTileEntity(CCRenderState renderState, Matrix4 translation, IVertexOperation[] pipeline) {
         super.renderMetaTileEntity(renderState, translation, pipeline);
-        OrientedOverlayRenderer overlayRenderer = Textures.FUSION_REACTOR_OVERLAY;
-        overlayRenderer.renderOrientedState(renderState, translation, pipeline, getFrontFacing(), this.getController() != null, isOnline);
+        PrismPlanTextures.NETWORK_HATCH.renderSided(getFrontFacing(), renderState, translation, pipeline);
     }
 
     @Override

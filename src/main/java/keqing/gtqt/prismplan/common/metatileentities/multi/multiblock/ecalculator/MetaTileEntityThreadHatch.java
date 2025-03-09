@@ -6,7 +6,6 @@ import appeng.me.cluster.implementations.CraftingCPUCluster;
 import codechicken.lib.render.CCRenderState;
 import codechicken.lib.render.pipeline.IVertexOperation;
 import codechicken.lib.vec.Matrix4;
-import gregtech.api.GTValues;
 import gregtech.api.gui.GuiTextures;
 import gregtech.api.gui.ModularUI;
 import gregtech.api.gui.widgets.AdvancedTextWidget;
@@ -14,13 +13,12 @@ import gregtech.api.metatileentity.MetaTileEntity;
 import gregtech.api.metatileentity.interfaces.IGregTechTileEntity;
 import gregtech.api.metatileentity.multiblock.IMultiblockAbilityPart;
 import gregtech.api.metatileentity.multiblock.MultiblockAbility;
-import gregtech.client.renderer.texture.Textures;
-import gregtech.client.utils.PipelineUtil;
 import gregtech.common.metatileentities.multi.multiblockpart.MetaTileEntityMultiblockPart;
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import keqing.gtqt.prismplan.api.capability.IThreadHatch;
 import keqing.gtqt.prismplan.api.capability.Sides;
 import keqing.gtqt.prismplan.api.multiblock.PrismPlanMultiblockAbility;
+import keqing.gtqt.prismplan.client.textures.PrismPlanTextures;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
@@ -45,11 +43,13 @@ public class MetaTileEntityThreadHatch extends MetaTileEntityMultiblockPart
     protected int threads = 0;
     protected int maxThreads = 0;
     protected int maxHyperThreads = 0;
+    int tier;
 
-    public MetaTileEntityThreadHatch(ResourceLocation metaTileEntityId, int maxThreads, int maxHyperThreads) {
-        super(metaTileEntityId, 1);
+    public MetaTileEntityThreadHatch(ResourceLocation metaTileEntityId, int tier, int maxThreads, int maxHyperThreads) {
+        super(metaTileEntityId, tier);
         this.maxThreads = maxThreads;
         this.maxHyperThreads = maxHyperThreads;
+        this.tier = tier;
     }
 
     public List<CraftingCPUCluster> getCpus() {
@@ -199,7 +199,7 @@ public class MetaTileEntityThreadHatch extends MetaTileEntityMultiblockPart
 
     @Override
     public MetaTileEntity createMetaTileEntity(IGregTechTileEntity tileEntity) {
-        return new MetaTileEntityThreadHatch(metaTileEntityId, maxThreads, maxHyperThreads);
+        return new MetaTileEntityThreadHatch(metaTileEntityId, tier, maxThreads, maxHyperThreads);
     }
 
     @Override
@@ -215,14 +215,17 @@ public class MetaTileEntityThreadHatch extends MetaTileEntityMultiblockPart
     public void renderMetaTileEntity(CCRenderState renderState, Matrix4 translation, IVertexOperation[] pipeline) {
         super.renderMetaTileEntity(renderState, translation, pipeline);
         if (this.shouldRenderOverlay()) {
-            Textures.FUSION_REACTOR_OVERLAY.renderSided(this.getFrontFacing(), renderState, translation, PipelineUtil.color(pipeline, GTValues.VC[this.getTier()]));
+            if (maxHyperThreads > 0)
+                PrismPlanTextures.HYPER_THREAD_OVERLAY.renderSided(getFrontFacing(), renderState, translation, pipeline);
+            else
+                PrismPlanTextures.THREAD_OVERLAY.renderSided(getFrontFacing(), renderState, translation, pipeline);
         }
     }
 
     @Override
     protected ModularUI createUI(EntityPlayer entityPlayer) {
         ModularUI.Builder builder = ModularUI.builder(GuiTextures.BACKGROUND, 180, 240);
-        builder.dynamicLabel(8, 12, () -> "线程单元", 0xFFFFFF);
+        builder.dynamicLabel(8, 12, () -> "线程单元 等级" + tier, 0xFFFFFF);
 
         builder.image(4, 28, 172, 128, GuiTextures.DISPLAY);
         builder.widget((new AdvancedTextWidget(8, 32, this::addDisplayText, 16777215)).setMaxWidthLimit(180));

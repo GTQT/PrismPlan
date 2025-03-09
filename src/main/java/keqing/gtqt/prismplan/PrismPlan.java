@@ -3,6 +3,8 @@ package keqing.gtqt.prismplan;
 import keqing.gtqt.prismplan.api.utils.PrismPlanLog;
 import keqing.gtqt.prismplan.client.ClientProxy;
 import keqing.gtqt.prismplan.common.CommonProxy;
+import keqing.gtqt.prismplan.common.block.PrismPlanBlocks;
+import keqing.gtqt.prismplan.common.item.PrismPlanMetaItems;
 import keqing.gtqt.prismplan.common.metatileentities.multi.PrismPlanMetaTileEntities;
 import keqing.gtqt.prismplan.common.network.PktCellDriveStatusUpdate;
 import keqing.gtqt.prismplan.common.register.AE2RegisterManager;
@@ -54,7 +56,10 @@ public class PrismPlan {
         registerManager = new AE2RegisterManager();
         registerManager.onPreInit(event);
 
+        Proxy.preLoad();
         Proxy.preInit();
+        PrismPlanBlocks.init();
+        PrismPlanMetaItems.initialization();
         PrismPlanMetaTileEntities.initialization();
     }
 

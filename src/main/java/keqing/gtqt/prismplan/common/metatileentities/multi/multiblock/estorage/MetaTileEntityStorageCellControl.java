@@ -31,6 +31,8 @@ import keqing.gtqt.prismplan.api.capability.IEnergyHatch;
 import keqing.gtqt.prismplan.api.capability.INetWorkStore;
 import keqing.gtqt.prismplan.api.multiblock.PrismPlanMultiblockAbility;
 import keqing.gtqt.prismplan.api.utils.PrimsPlanUtility;
+import keqing.gtqt.prismplan.client.textures.PrismPlanTextures;
+import keqing.gtqt.prismplan.common.block.PrismPlanBlocks;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.entity.player.EntityPlayer;
@@ -45,6 +47,8 @@ import net.minecraft.world.World;
 import java.util.*;
 
 import static gregtech.api.util.RelativeDirection.*;
+import static keqing.gtqt.prismplan.common.block.prismPlan.BlockMultiblockCasing.CasingType.MULTI_CASING;
+import static keqing.gtqt.prismplan.common.block.prismPlan.BlockMultiblockCasing.CasingType.MULTI_HEAT_VENT;
 
 public class MetaTileEntityStorageCellControl extends MultiblockWithDisplayBase {
 
@@ -276,23 +280,26 @@ public class MetaTileEntityStorageCellControl extends MultiblockWithDisplayBase 
                 .aisle("XX", "XX", "XX")
                 .aisle("NX", "SX", "XX")
                 .aisle("TJ", "TX", "TJ").setRepeatable(1, 16)
-                .aisle("XX", "XX", "XX")
+                .aisle("HH", "HH", "HH")
                 .where('S', this.selfPredicate())
                 .where('N', abilities(PrismPlanMultiblockAbility.NETWORK_STORE))
                 .where('J', states(this.getCasingState())
                         .or(abilities(PrismPlanMultiblockAbility.ENERGY_HATCH)))
                 .where('T', abilities(PrismPlanMultiblockAbility.CELL_HATCH))
-                .where('X', states(this.getCasingState()));
+                .where('X', states(this.getCasingState()))
+                .where('H', states(this.getHeatState()));
         return pattern.build();
     }
 
-    private IBlockState getCasingState() {
-        return MetaBlocks.METAL_CASING.getState(BlockMetalCasing.MetalCasingType.STEEL_SOLID);
+    protected IBlockState getCasingState() {
+        return PrismPlanBlocks.blockMultiblockCasing.getState(MULTI_CASING);
     }
-
+    protected IBlockState getHeatState() {
+        return PrismPlanBlocks.blockMultiblockCasing.getState(MULTI_HEAT_VENT);
+    }
     @Override
     public ICubeRenderer getBaseTexture(IMultiblockPart iMultiblockPart) {
-        return Textures.SOLID_STEEL_CASING;
+        return PrismPlanTextures.MULTI_CASING;
     }
 
     @Override

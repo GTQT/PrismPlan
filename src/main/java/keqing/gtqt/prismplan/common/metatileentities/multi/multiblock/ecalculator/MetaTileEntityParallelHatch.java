@@ -3,7 +3,6 @@ package keqing.gtqt.prismplan.common.metatileentities.multi.multiblock.ecalculat
 import codechicken.lib.render.CCRenderState;
 import codechicken.lib.render.pipeline.IVertexOperation;
 import codechicken.lib.vec.Matrix4;
-import gregtech.api.GTValues;
 import gregtech.api.gui.GuiTextures;
 import gregtech.api.gui.ModularUI;
 import gregtech.api.gui.widgets.AdvancedTextWidget;
@@ -12,7 +11,6 @@ import gregtech.api.metatileentity.interfaces.IGregTechTileEntity;
 import gregtech.api.metatileentity.multiblock.IMultiblockAbilityPart;
 import gregtech.api.metatileentity.multiblock.MultiblockAbility;
 import gregtech.client.renderer.texture.Textures;
-import gregtech.client.utils.PipelineUtil;
 import gregtech.common.metatileentities.multi.multiblockpart.MetaTileEntityMultiblockPart;
 import keqing.gtqt.prismplan.api.capability.IParallelHatch;
 import keqing.gtqt.prismplan.api.multiblock.PrismPlanMultiblockAbility;
@@ -30,10 +28,12 @@ public class MetaTileEntityParallelHatch extends MetaTileEntityMultiblockPart
         implements IMultiblockAbilityPart<IParallelHatch>, IParallelHatch {
 
     public int parallelism = 0;
+    int tier;
 
-    public MetaTileEntityParallelHatch(ResourceLocation metaTileEntityId, int parallelism) {
-        super(metaTileEntityId, 1);
+    public MetaTileEntityParallelHatch(ResourceLocation metaTileEntityId, int tier, int parallelism) {
+        super(metaTileEntityId, tier);
         this.parallelism = parallelism;
+        this.tier = tier;
     }
 
     public int getParallelism() {
@@ -42,7 +42,7 @@ public class MetaTileEntityParallelHatch extends MetaTileEntityMultiblockPart
 
     @Override
     public MetaTileEntity createMetaTileEntity(IGregTechTileEntity tileEntity) {
-        return new MetaTileEntityParallelHatch(metaTileEntityId, parallelism);
+        return new MetaTileEntityParallelHatch(metaTileEntityId, tier, parallelism);
     }
 
 
@@ -59,14 +59,18 @@ public class MetaTileEntityParallelHatch extends MetaTileEntityMultiblockPart
     public void renderMetaTileEntity(CCRenderState renderState, Matrix4 translation, IVertexOperation[] pipeline) {
         super.renderMetaTileEntity(renderState, translation, pipeline);
         if (this.shouldRenderOverlay()) {
-            Textures.HPCA_OVERLAY.renderSided(this.getFrontFacing(), renderState, translation, PipelineUtil.color(pipeline, GTValues.VC[this.getTier()]));
+            if (this.getController() != null && this.getController().isActive()) {
+                Textures.HPCA_ADVANCED_COMPUTATION_ACTIVE_OVERLAY.renderSided(getFrontFacing(), renderState, translation, pipeline);
+            } else {
+                Textures.HPCA_ADVANCED_DAMAGED_ACTIVE_OVERLAY.renderSided(getFrontFacing(), renderState, translation, pipeline);
+            }
         }
     }
 
     @Override
     protected ModularUI createUI(EntityPlayer entityPlayer) {
         ModularUI.Builder builder = ModularUI.builder(GuiTextures.BACKGROUND, 180, 240);
-        builder.dynamicLabel(8, 12, () -> "并行单元", 0xFFFFFF);
+        builder.dynamicLabel(8, 12, () -> "并行单元 等级" + tier, 0xFFFFFF);
 
         builder.image(4, 28, 172, 128, GuiTextures.DISPLAY);
         builder.widget((new AdvancedTextWidget(8, 32, this::addDisplayText, 16777215)).setMaxWidthLimit(180));

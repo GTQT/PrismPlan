@@ -40,9 +40,11 @@ import gregtech.common.metatileentities.multi.multiblockpart.MetaTileEntityMulti
 import keqing.gtqt.prismplan.api.capability.ICellHatch;
 import keqing.gtqt.prismplan.api.capability.INetWorkStore;
 import keqing.gtqt.prismplan.api.multiblock.PrismPlanMultiblockAbility;
+import keqing.gtqt.prismplan.client.textures.PrismPlanTextures;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.PacketBuffer;
 import net.minecraft.util.EnumFacing;
@@ -50,6 +52,7 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TextComponentTranslation;
+import net.minecraft.world.World;
 import net.minecraftforge.items.IItemHandlerModifiable;
 
 import javax.annotation.Nonnull;
@@ -355,9 +358,9 @@ public class MetaTileEntityNetWorkStoreHatch extends MetaTileEntityMultiblockPar
     @Override
     public void renderMetaTileEntity(CCRenderState renderState, Matrix4 translation, IVertexOperation[] pipeline) {
         super.renderMetaTileEntity(renderState, translation, pipeline);
-        OrientedOverlayRenderer overlayRenderer = Textures.FUSION_REACTOR_OVERLAY;
-        overlayRenderer.renderOrientedState(renderState, translation, pipeline, getFrontFacing(), this.getController() != null, isOnline);
+        PrismPlanTextures.NETWORK_HATCH.renderSided(getFrontFacing(), renderState, translation, pipeline);
     }
+
 
     @Override
     @SuppressWarnings("rawtypes")
@@ -472,6 +475,15 @@ public class MetaTileEntityNetWorkStoreHatch extends MetaTileEntityMultiblockPar
     @Override
     public AccessRestriction getPowerFlow() {
         return AccessRestriction.READ_WRITE;
+    }
+
+    @Override
+    public void addInformation(ItemStack stack, World player, List<String> tooltip, boolean advanced) {
+        super.addInformation(stack, player, tooltip, advanced);
+        tooltip.add(I18n.format("prismplan.estore_me_channel.info.0"));
+        tooltip.add(I18n.format("prismplan.estore_me_channel.info.1"));
+        tooltip.add(I18n.format("prismplan.estore_me_channel.info.2"));
+        tooltip.add(I18n.format("prismplan.estore_me_channel.info.3"));
     }
 
 }

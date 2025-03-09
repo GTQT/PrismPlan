@@ -9,6 +9,18 @@ import java.text.NumberFormat;
 
 public class PrimsPlanUtility {
 
+    public static final int TICK = 1;
+
+    public static final int SECOND = 20;
+
+    public static final int MINUTE = 60 * SECOND;
+
+    public static final int HOUR = 60 * MINUTE;
+
+    public static final int HALF_HOUR = HOUR / 2;
+
+    public static final int QUAT_HOUR = HOUR / 4;
+
     public static ResourceLocation prismPlanID( String path) {
         return new ResourceLocation(Tags.MOD_ID, path);
     }

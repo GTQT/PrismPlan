@@ -40,8 +40,6 @@ public class ECalculatorCell extends Item {
 
     @Override
     public void addInformation(@Nonnull final ItemStack stack, final World worldIn, final List<String> tooltip, @Nonnull final ITooltipFlag flagIn) {
-        tooltip.add(I18n.format("prismplan.ecalculator_cell.insert.tip"));
-        tooltip.add(I18n.format("prismplan.ecalculator_cell.extract.tip"));
         tooltip.add(I18n.format("prismplan.ecalculator_cell.tip.0"));
         tooltip.add(I18n.format("prismplan.ecalculator_cell.tip.1"));
         tooltip.add(I18n.format("prismplan.ecalculator_cell.tip.2"));
@@ -50,6 +48,8 @@ public class ECalculatorCell extends Item {
         tooltip.add(I18n.format("prismplan.ecalculator_cell.tip.3",
                 shiftPressed ? PrimsPlanUtility.formatNumber(cell.totalBytes) : PrimsPlanUtility.formatDecimal(cell.totalBytes))
         );
+        tooltip.add(I18n.format("prismplan.ecalculator_cell.insert.tip"));
+        tooltip.add(I18n.format("prismplan.ecalculator_cell.extract.tip"));
         if (cell == L1) {
             tooltip.add(I18n.format("prismplan.ecalculator_cell.l1.tip"));
         }

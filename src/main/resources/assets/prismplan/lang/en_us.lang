@@ -1,197 +1,233 @@
 # AE
-item.large_portable_cell_2048.name=中型便携元件（2048）
-item.large_portable_cell_8192.name=大型便携元件（8192）
-item.large_portable_cell_32768.name=特大型便携元件（32768）
-# 物品类
-item.prismplan.quantum_cell.name=§b量子存储元件
-item.prismplan.quantum_cell_fluid.name=§3量子§9流体存储元件
-item.prismplan.singularity_cell.name=§5奇点存储元件
-item.prismplan.singularity_cell_fluid.name=§5奇点§9流体存储元件
-item.prismplan.universe_cell.name=§d宇宙存储元件
-item.prismplan.universe_cell_fluid.name=§d宇宙§9流体存储元件
+item.large_portable_cell_2048.name=Medium Portable Cell (2048)
+item.large_portable_cell_8192.name=Large Portable Cell (8192)
+item.large_portable_cell_32768.name=Giant Portable Cell (32768)
+# Items
+metaitem.fluix_soc.name=Fluix SoC
+metaitem.fluix_cpu.name=Fluix CPU
+metaitem.parallel_circuit_board.name=Parallel Circuit Board
+metaitem.speculative_circuit_board.name=Speculative Circuit Board
+metaitem.deduction_circuit_board.name=Deduction Circuit Board
+metaitem.deduction_processor.name=Deduction Processor
+metaitem.fluix_logic_processor.name=Fluix Logic Unit
+metaitem.fluix_logic_assembly.name=Fluix Logic Cluster
+metaitem.fluix_logic_computer.name=Fluix Logic Computer
+metaitem.fluix_logic_mainframe.name=Fluix Logic Mainframe
 
-item.prismplan.estorage_cell_item_4m.name=高性能晶格存储矩阵（4M）
-item.prismplan.estorage_cell_item_16m.name=高性能晶格存储矩阵（16M）
-item.prismplan.estorage_cell_item_64m.name=高性能晶格存储矩阵（64M）
-item.prismplan.estorage_cell_item_256m.name=高性能晶格存储矩阵（256M）
-item.prismplan.estorage_cell_item_1024m.name=高性能晶格存储矩阵（1024M）
 
-item.prismplan.estorage_cell_fluid_4m.name=高性能晶格流体存储矩阵（4M）
-item.prismplan.estorage_cell_fluid_16m.name=高性能晶格流体存储矩阵（16M）
-item.prismplan.estorage_cell_fluid_64m.name=高性能晶格流体存储矩阵（64M）
-item.prismplan.estorage_cell_fluid_256m.name=高性能晶格流体存储矩阵（256M）
-item.prismplan.estorage_cell_fluid_1024m.name=高性能晶格流体存储矩阵（1024M）
+item.prismplan.quantum_cell.name=§bQuantum Storage Cell
+item.prismplan.quantum_cell_fluid.name=§3Quantum §9Fluid Storage Cell
+item.prismplan.singularity_cell.name=§5Singularity Storage Cell
+item.prismplan.singularity_cell_fluid.name=§5Singularity §9Fluid Storage Cell
+item.prismplan.universe_cell.name=§dUniverse Storage Cell
+item.prismplan.universe_cell_fluid.name=§dUniverse §9Fluid Storage Cell
 
-item.prismplan.ecalculator_cell_4m.name=高性能闪存晶阵（4M）
-item.prismplan.ecalculator_cell_64m.name=高性能闪存晶阵（64M）
-item.prismplan.ecalculator_cell_1024m.name=高性能闪存晶阵（1024M）
-item.prismplan.ecalculator_cell_16384m.name=高性能闪存晶阵（16384M）
-item.prismplan.ecalculator_cell_262144m.name=高性能闪存晶阵（262144M）
-# 方块类
-tile.prismplan.storage_crafting_65536k.name=§a合成存储器§7（65536k）
-tile.prismplan.storage_crafting_262144k.name=§a合成存储器§7（262144k）
-tile.prismplan.storage_crafting_1048576k.name=§a合成存储器§7（1048576k）
-tile.prismplan.coprocessor_256x.name=§c并行处理单元§6（256x）
-tile.prismplan.coprocessor_1024x.name=§c并行处理单元§6（1024x）
-tile.prismplan.coprocessor_4096x.name=§c并行处理单元§6（4096x）
+item.prismplan.estorage_cell_item_4m.name=High-Performance Lattice Storage Matrix (4M)
+item.prismplan.estorage_cell_item_16m.name=High-Performance Lattice Storage Matrix (16M)
+item.prismplan.estorage_cell_item_64m.name=High-Performance Lattice Storage Matrix (64M)
+item.prismplan.estorage_cell_item_256m.name=High-Performance Lattice Storage Matrix (256M)
+item.prismplan.estorage_cell_item_1024m.name=High-Performance Lattice Storage Matrix (1024M)
 
+item.prismplan.estorage_cell_fluid_4m.name=High-Performance Lattice Fluid Storage Matrix (4M)
+item.prismplan.estorage_cell_fluid_16m.name=High-Performance Lattice Fluid Storage Matrix (16M)
+item.prismplan.estorage_cell_fluid_64m.name=High-Performance Lattice Fluid Storage Matrix (64M)
+item.prismplan.estorage_cell_fluid_256m.name=High-Performance Lattice Fluid Storage Matrix (256M)
+item.prismplan.estorage_cell_fluid_1024m.name=High-Performance Lattice Fluid Storage Matrix (1024M)
+
+item.prismplan.ecalculator_cell_4m.name=High-Performance Flash Crystal Array (4M)
+item.prismplan.ecalculator_cell_64m.name=High-Performance Flash Crystal Array (64M)
+item.prismplan.ecalculator_cell_1024m.name=High-Performance Flash Crystal Array (1024M)
+item.prismplan.ecalculator_cell_16384m.name=High-Performance Flash Crystal Array (16384M)
+item.prismplan.ecalculator_cell_262144m.name=High-Performance Flash Crystal Array (262144M)
+
+# Blocks
+tile.prismplan.storage_crafting_65536k.name=§aCrafting Storage§7 (65536k)
+tile.prismplan.storage_crafting_262144k.name=§aCrafting Storage§7 (262144k)
+tile.prismplan.storage_crafting_1048576k.name=§aCrafting Storage§7 (1048576k)
+tile.prismplan.coprocessor_256x.name=§cParallel Processing Unit§6 (256x)
+tile.prismplan.coprocessor_1024x.name=§cParallel Processing Unit§6 (1024x)
+tile.prismplan.coprocessor_4096x.name=§cParallel Processing Unit§6 (4096x)
+
+tile.multiblock_casing.multi_casing.name=High-performance Computing Shells
+tile.multiblock_casing.multi_heat_vent.name=Computing Heat Dissipation Element
+tile.multiblock_casing.multi_connect.name=Computing Communication Bus
 #
-prismplan.monitor.current_amount=当前存储：%s
-prismplan.monitor.consumption_rate=消耗速率：%s
-prismplan.monitor.estimated_time=预计耗空：%s
-prismplan.monitor.no_data=无数据
-prismplan.monitor.infinite=无限
-prismplan.monitor.soon=即将耗尽
-prismplan.unit.hour=小时
-prismplan.unit.minute=分钟
-prismplan.monitor.growth_amount=小时增长：%s
-prismplan.monitor.growth_rate=小时增长率：%s
-prismplan.monitor.no_change=无变化
+prismplan.monitor.current_amount=Current Storage: %s
+prismplan.monitor.consumption_rate=Consumption Rate: %s
+prismplan.monitor.estimated_time=Estimated Depletion: %s
+prismplan.monitor.no_data=No Data
+prismplan.monitor.infinite=Infinite
+prismplan.monitor.soon=Depleting Soon
+prismplan.unit.hour=hour
+prismplan.unit.minute=minute
+prismplan.monitor.growth_amount=Hourly Growth: %s
+prismplan.monitor.growth_rate=Hourly Growth Rate: %s
+prismplan.monitor.no_change=No Change
 
-#设备：
-# 存储控制相关
-prismplan.machine.storage_cell_control.name=存储单元控制器
-prismplan.machine.calculator_control.name=计算单元控制器
+# Machines
+prismplan.machine.storage_cell_control.name=Storage Cell Controller
+prismplan.machine.calculator_control.name=Calculator Controller
 
-prismplan.machine.network_proxy_hatch.name=网络代理仓口
-prismplan.machine.network_store_hatch.name=网络存储仓口
-prismplan.machine.network_calculator_hatch.name=网络计算仓口
+prismplan.machine.network_proxy_hatch.name=Network Proxy Hatch
+prismplan.machine.network_store_hatch.name=Network Storage Hatch
+prismplan.machine.network_calculator_hatch.name=Network Calculator Hatch
 
-# 存储单元仓口（分等级）
-prismplan.machine.storage_cell_hatch.1.name=存储单元仓口 I
-prismplan.machine.storage_cell_hatch.2.name=存储单元仓口 II
-prismplan.machine.storage_cell_hatch.3.name=存储单元仓口 III
-prismplan.machine.storage_cell_hatch.4.name=存储单元仓口 IV
-prismplan.machine.storage_cell_hatch.5.name=存储单元仓口 V
-# 储能单元（分等级）
-prismplan.machine.storage_energy_cell.1.name=储能单元 I (1M)
-prismplan.machine.storage_energy_cell.2.name=储能单元 II (4M)
-prismplan.machine.storage_energy_cell.3.name=储能单元 III (16M)
-prismplan.machine.storage_energy_cell.4.name=储能单元 IV (64M)
-prismplan.machine.storage_energy_cell.5.name=储能单元 V (256M)
-#并行单元
-prismplan.machine.parallel_hatch.1.name=并行单元 I
-prismplan.machine.parallel_hatch.2.name=并行单元 II
-prismplan.machine.parallel_hatch.3.name=并行单元 III
-prismplan.machine.parallel_hatch.4.name=并行单元 IV
-prismplan.machine.parallel_hatch.5.name=并行单元 V
-#线程单元
-prismplan.machine.thread_hatch.1.name=线程单元 I
-prismplan.machine.thread_hatch.2.name=线程单元 II
-prismplan.machine.thread_hatch.3.name=线程单元 III
-prismplan.machine.thread_hatch.4.name=线程单元 IV
-prismplan.machine.thread_hatch.5.name=线程单元 V
+prismplan.machine.me_interface.name=ME Interface
+prismplan.machine.me_watcher.name=ME Resource Monitor
 
-prismplan.machine.thread_hatch.hyper.1.name=超频线程单元 I
-prismplan.machine.thread_hatch.hyper.2.name=超频线程单元 II
-prismplan.machine.thread_hatch.hyper.3.name=超频线程单元 III
-prismplan.machine.thread_hatch.hyper.4.name=超频线程单元 IV
-prismplan.machine.thread_hatch.hyper.5.name=超频线程单元 V
-#闪存晶阵
-prismplan.machine.calculator_cell_hatch.1.name=晶格单元仓口 I
-prismplan.machine.calculator_cell_hatch.2.name=晶格单元仓口 II
-prismplan.machine.calculator_cell_hatch.3.name=晶格单元仓口 III
-prismplan.machine.calculator_cell_hatch.4.name=晶格单元仓口 IV
-prismplan.machine.calculator_cell_hatch.5.name=晶格单元仓口 V
-#tooltips
-prismplan.extendable_storage_subsystem.info.0=整个§9存储子系统§7的§a核心§7。
-prismplan.extendable_storage_subsystem.info.1=最大长度：§a20
+prismplan.machine.storage_cell_hatch.1.name=Storage Cell Hatch I
+prismplan.machine.storage_cell_hatch.2.name=Storage Cell Hatch II
+prismplan.machine.storage_cell_hatch.3.name=Storage Cell Hatch III
+prismplan.machine.storage_cell_hatch.4.name=Storage Cell Hatch IV
+prismplan.machine.storage_cell_hatch.5.name=Storage Cell Hatch V
 
-prismplan.extendable_calculate_subsystem.info.0=整个§b计算子系统§7的§a核心§7。
-prismplan.extendable_calculate_subsystem.info.1=最大长度：§a20
-prismplan.extendable_calculate_subsystem.info.2=计算子系统引入了§b虚拟合成处理器§7的设定（简称 §bvCPU§7），通过 ME 通讯接口来访问。
-prismplan.extendable_calculate_subsystem.info.3=§b虚拟合成处理器（vCPU）§7：
-prismplan.extendable_calculate_subsystem.info.4=  主机每次只向 ME 网络提供一个 §bvCPU§7，其容量为子系统当前所有可用的字节数。
-prismplan.extendable_calculate_subsystem.info.5=  每当用户发配合成任务给 §bvCPU§7 时，主机会自动调节 §bvCPU§7 的字节数至任务所需的字节数，然后将其分配给§b线程核心§7。
-prismplan.extendable_calculate_subsystem.info.6=  分配完成后，如果系统当前可用字节数大于 §e10%%§7，则会自动分配新的 §bvCPU§7，否则§c停止分配§7，直到可用字节数大于 §e10%%§7。
-prismplan.extendable_calculate_subsystem.info.7=  只要系统中已分配的 §bvCPU§7 数不超过§e最大线程数§7，则可以一直分配新的 §bvCPU§7，直到上限。
-prismplan.extendable_calculate_subsystem.info.8=  §bvCPU§7 会在合成任务完成后，并且§e物品全部返还§7时§a立刻销毁§7。
+prismplan.machine.storage_energy_cell.1.name=Energy Storage Cell I (1M)
+prismplan.machine.storage_energy_cell.2.name=Energy Storage Cell II (4M)
+prismplan.machine.storage_energy_cell.3.name=Energy Storage Cell III (16M)
+prismplan.machine.storage_energy_cell.4.name=Energy Storage Cell IV (64M)
+prismplan.machine.storage_energy_cell.5.name=Energy Storage Cell V (256M)
 
-prismplan.ecalculator_parallel_proc.info.0=§5并行核心§7为计算子系统提供§5并行数§7。
-prismplan.ecalculator_parallel_proc.info.1=§5并行数§7可提高§a所有§b线程核心§7每次处理合成任务的§a处理数量§7。
-prismplan.ecalculator_parallel_proc.modifiers=§5并行数§7修正：
-prismplan.ecalculator_parallel_proc.modifier.add=  最大并行数：§a+%s
+prismplan.machine.parallel_hatch.1.name=Parallel Unit I
+prismplan.machine.parallel_hatch.2.name=Parallel Unit II
+prismplan.machine.parallel_hatch.3.name=Parallel Unit III
+prismplan.machine.parallel_hatch.4.name=Parallel Unit IV
+prismplan.machine.parallel_hatch.5.name=Parallel Unit V
 
-prismplan.ecalculator_thread_core.info.0=§b线程核心§7是计算子系统的主要部分，为主机提供§5线程数§7。
-prismplan.ecalculator_thread_core.info.1=§b线程核心§7提供的§9线程§7为子系统提供最大§b虚拟合成处理器（vCPU）§7数量。
-prismplan.ecalculator_thread_core.info.2=拆除时会直接§a保存压缩后的 CPU 数据至掉落物§7。
-prismplan.ecalculator_thread_core.modifiers=§b线程数§7修正：
-prismplan.ecalculator_thread_core.modifier.add=  最大线程数：§a+%s
+prismplan.machine.thread_hatch.1.name=Thread Unit I
+prismplan.machine.thread_hatch.2.name=Thread Unit II
+prismplan.machine.thread_hatch.3.name=Thread Unit III
+prismplan.machine.thread_hatch.4.name=Thread Unit IV
+prismplan.machine.thread_hatch.5.name=Thread Unit V
 
-prismplan.ecalculator_thread_core_hyper.info.0=§9超线程核心§7相比§b线程核心§7，能为主机提供§a更多§7的§5线程数§7。
-prismplan.ecalculator_thread_core_hyper.info.1=作为代价，每个§a合成任务§7需要的字节数会§c更多§7（§c+10%%§7）。
-prismplan.ecalculator_thread_core_hyper.info.2=主机会优先使用§b普通线程§7而不是§9超线程§7。
-prismplan.ecalculator_thread_core_hyper.modifier.add=  最大超线程数：§a+%s
+prismplan.machine.thread_hatch.hyper.1.name=Hyper Thread Unit I
+prismplan.machine.thread_hatch.hyper.2.name=Hyper Thread Unit II
+prismplan.machine.thread_hatch.hyper.3.name=Hyper Thread Unit III
+prismplan.machine.thread_hatch.hyper.4.name=Hyper Thread Unit IV
+prismplan.machine.thread_hatch.hyper.5.name=Hyper Thread Unit V
 
-prismplan.ecalculator_me_channel.info.0=§9矩阵通讯接口§7是子系统与 ME 网络之间的§b协议兼容层§7。
-prismplan.ecalculator_me_channel.info.1=  §9通讯接口§7向 ME 网络提供§b虚拟合成处理器§7。
-prismplan.ecalculator_me_channel.info.2=  此子系统§a不消耗§7额外能源。
-prismplan.ecalculator_me_channel.info.3=通过连接 ME 线缆至§9通讯接口§7以和子系统建立连接。
-#estorage_cell
-prismplan.estorage_cell.insert.tip=蹲下时§a手持矩阵并右击§7驱动器以插入矩阵。
-prismplan.estorage_cell.extract.tip=蹲下时§a空手并右击§7驱动器以取出矩阵。
+prismplan.machine.calculator_cell_hatch.1.name=Crystal Cell Hatch I
+prismplan.machine.calculator_cell_hatch.2.name=Crystal Cell Hatch II
+prismplan.machine.calculator_cell_hatch.3.name=Crystal Cell Hatch III
+prismplan.machine.calculator_cell_hatch.4.name=Crystal Cell Hatch IV
+prismplan.machine.calculator_cell_hatch.5.name=Crystal Cell Hatch V
 
-prismplan.estorage_cell.l1.tip=§c只有 §6Tier 1§c 等级及以上的存储单元仓口可以驱动此矩阵。
-prismplan.estorage_cell.l2.tip=§c只有 §6Tier 2§c 等级及以上的存储单元仓口可以驱动此矩阵。
-prismplan.estorage_cell.l3.tip=§c只有 §6Tier 3§c 等级及以上的存储单元仓口可以驱动此矩阵。
-prismplan.estorage_cell.l4.tip=§c只有 §6Tier 4§c 等级及以上的存储单元仓口可以驱动此矩阵。
-prismplan.estorage_cell.l5.tip=§c只有 §6Tier 5§c 等级及以上的存储单元仓口可以驱动此矩阵。
+# Tooltips
+prismplan.extendable_storage_subsystem.info.0=The §acore§7 of the §9Storage Subsystem§7.
+prismplan.extendable_storage_subsystem.info.1=Max Length: §a16
 
-prismplan.estorage_cell_drive.player.inserted=§a已插入存储矩阵。
-prismplan.estorage_cell_drive.player.removed=§a已取出存储矩阵。
-prismplan.estorage_cell_drive.player.no_permission=§c访问被拒绝（原因：无 ME 网络权限）。
+prismplan.extendable_calculate_subsystem.info.0=The §acore§7 of the §bCalculation Subsystem§7.
+prismplan.extendable_calculate_subsystem.info.1=Max Length: §a16
+prismplan.extendable_calculate_subsystem.info.2=Introduces §bVirtual Crafting Processors (vCPU)§7 via ME interfaces.
+prismplan.extendable_calculate_subsystem.info.3=§bVirtual Crafting Processor (vCPU)§7:
+prismplan.extendable_calculate_subsystem.info.4=  Host provides one §bvCPU§7 with available bytes to ME network.
+prismplan.extendable_calculate_subsystem.info.5=  Adjusts vCPU bytes to task requirements and assigns to §bThread Core§7.
+prismplan.extendable_calculate_subsystem.info.6=  New vCPUs allocated when available bytes > §e10%%§7, else §cstopped§7.
+prismplan.extendable_calculate_subsystem.info.7=  Maximum vCPUs limited by §eMax Threads§7.
+prismplan.extendable_calculate_subsystem.info.8=  §bvCPU§7 §adestroyed§7 when task completes and items returned.
 
-#ecalculator_cell
-prismplan.ecalculator_cell.insert.tip=蹲下时手持矩阵并右击驱动器以插入闪存晶阵。
-prismplan.ecalculator_cell.extract.tip=蹲下时空手并右击驱动器以取出闪存晶阵。
-prismplan.ecalculator_cell.tip.0=§b闪存晶阵§7为§9计算子系统§7提供§a内存存储§7。
-prismplan.ecalculator_cell.tip.1=§b闪存晶阵§7是存储矩阵的高速存取特化版本。
-prismplan.ecalculator_cell.tip.2=相比§9存储矩阵§7，其内部规模要§a更加宏大§7，但作为代价，其存储容量也远§c不如§9存储矩阵§7。
-prismplan.ecalculator_cell.tip.3=§b字节数提供：§a%sB
+prismplan.ecalculator_parallel_proc.info.0=§5Parallel Core§7 provides §5parallelism§7.
+prismplan.ecalculator_parallel_proc.info.1=Improves §aprocessing quantity§7 per craft.
+prismplan.ecalculator_parallel_proc.modifiers=§5Parallelism§7 Modifiers:
+prismplan.ecalculator_parallel_proc.modifier.add=  Max Parallelism: §a+%s
 
-prismplan.ecalculator_cell.l1.tip=§c只有 §6C1§c 等级及以上的晶格单元仓口可以驱动此晶阵。
-prismplan.ecalculator_cell.l2.tip=§c只有 §6C2§c 等级及以上的晶格单元仓口可以驱动此晶阵。
-prismplan.ecalculator_cell.l3.tip=§c只有 §6C3§c 等级及以上的晶格单元仓口可以驱动此晶阵。
-prismplan.ecalculator_cell.l4.tip=§c只有 §6C4§c 等级及以上的晶格单元仓口可以驱动此晶阵。
-prismplan.ecalculator_cell.l5.tip=§c只有 §6C5§c 等级及以上的晶格单元仓口可以驱动此晶阵。
+prismplan.ecalculator_thread_core.info.0=§bThread Core§7 provides §5threads§7.
+prismplan.ecalculator_thread_core.info.1=Determines maximum §bvCPUs§7 quantity.
+prismplan.ecalculator_thread_core.info.2=§aSaves compressed CPU data§7 when broken.
+prismplan.ecalculator_thread_core.modifiers=§bThreads§7 Modifiers:
+prismplan.ecalculator_thread_core.modifier.add=  Max Threads: §a+%s
 
-prismplan.ecalculator_cell_drive.info.0=§b晶阵驱动器§7为计算子系统提供§b闪存晶阵§7的存储空间。
-prismplan.ecalculator_cell_drive.info.1=§b晶阵驱动器§7能够驱动的晶阵等级取决于主机的§5等级§7。
-prismplan.ecalculator_cell_drive.player.inserted=§a已插入闪存晶阵。
-prismplan.ecalculator_cell_drive.player.removed=§a已取出闪存晶阵。
-prismplan.ecalculator_cell_drive.player.no_permission=§c访问被拒绝（原因：无 ME 网络权限）。
+prismplan.ecalculator_thread_core_hyper.info.0=§9Hyper Thread Core§7 provides §amore§7 threads.
+prismplan.ecalculator_thread_core_hyper.info.1=§c+10%%§7 bytes required per craft.
+prismplan.ecalculator_thread_core_hyper.info.2=Prioritizes §bnormal threads§7.
+prismplan.ecalculator_thread_core_hyper.modifier.add=  Max Hyper Threads: §a+%s
+
+# Network Components
+prismplan.ecalculator_me_channel.info.0=§9Network Calculator Hatch§7 acts as §bprotocol compatibility layer§7 between subsystem and ME network.
+prismplan.ecalculator_me_channel.info.1=  Provides §bVirtual Crafting Processors§7 to ME network
+prismplan.ecalculator_me_channel.info.2=  §aNo additional energy§7 consumption
+prismplan.ecalculator_me_channel.info.3=Connect ME cables to §9communication interface§7 for linkage
+
+prismplan.estore_me_channel.info.0=§9Network Storage Hatch§7 serves as §bprotocol bridge§7 for storage subsystem
+prismplan.estore_me_channel.info.1=  Exposes §bvirtual drives§7 to ME network
+prismplan.estore_me_channel.info.2=  §aConsumes extra energy§7 during operation
+prismplan.estore_me_channel.info.3=Link via ME cables to §9interface port§7
+
+# Storage Components
+prismplan.estore_hatch.info.0=§5Storage Cell Hatch§7 provides §5storage cells§7 access
+prismplan.estore_hatch.info.1=  Requires §5High-Performance Lattice Matrix§7 matching hatch tier
+
+prismplan.estore_energy.info.0=§5Energy Buffer§7 for storage subsystem
+prismplan.estore_energy.info.1=  §bBuffer capacity: §a%s AE
+prismplan.estore_energy.info.2=  Energy storage starts after the network is connected to an external power supply.
+# Storage Cell Operations
+prismplan.estorage_cell.insert.tip=§aCrouch + Right-click§7 with matrix to insert
+prismplan.estorage_cell.extract.tip=§aCrouch + Empty hand§7 to extract
+
+prismplan.estorage_cell.l1.tip=§cRequires §6Tier 1+§c Storage Cell Hatch
+prismplan.estorage_cell.l2.tip=§cRequires §6Tier 2+§c Storage Cell Hatch
+prismplan.estorage_cell.l3.tip=§cRequires §6Tier 3+§c Storage Cell Hatch
+prismplan.estorage_cell.l4.tip=§cRequires §6Tier 4+§c Storage Cell Hatch
+prismplan.estorage_cell.l5.tip=§cRequires §6Tier 5§c Storage Cell Hatch
+
+prismplan.estorage_cell_drive.player.inserted=§aMatrix inserted
+prismplan.estorage_cell_drive.player.removed=§aMatrix removed
+prismplan.estorage_cell_drive.player.no_permission=§cAccess denied (No ME network permission)
+
+# Calculator Components
+prismplan.ecalculator_cell.insert.tip=Crouch + Right-click with crystal array to insert
+prismplan.ecalculator_cell.extract.tip=Crouch + Empty hand to extract
+
+prismplan.ecalculator_cell.tip.0=§bFlash Crystal Array§7 provides §amemory storage§7
+prismplan.ecalculator_cell.tip.1=High-speed specialized version of storage matrix
+prismplan.ecalculator_cell.tip.2=§aLarger architecture§7 but §clower capacity§7 vs storage matrix
+prismplan.ecalculator_cell.tip.3=§bBytes provided: §a%sB
+
+prismplan.ecalculator_cell.l1.tip=§cRequires §6C1+§c Crystal Cell Hatch
+prismplan.ecalculator_cell.l2.tip=§cRequires §6C2+§c Crystal Cell Hatch
+prismplan.ecalculator_cell.l3.tip=§cRequires §6C3+§c Crystal Cell Hatch
+prismplan.ecalculator_cell.l4.tip=§cRequires §6C4+§c Crystal Cell Hatch
+prismplan.ecalculator_cell.l5.tip=§cRequires §6C5§c Crystal Cell Hatch
+
+prismplan.ecalculator_cell_drive.info.0=§bCrystal Drive§7 manages flash arrays
+prismplan.ecalculator_cell_drive.info.1=Supported array tier depends on host §5level§7
+prismplan.ecalculator_cell_drive.player.inserted=§aArray inserted
+prismplan.ecalculator_cell_drive.player.removed=§aArray removed
+prismplan.ecalculator_cell_drive.player.no_permission=§cAccess denied (No ME network permission)
 #top
-top.estorage.drive.status=§9驱动器状态：
-top.estorage.drive.status.offline=§c离线
-top.estorage.drive.status.online=§a在线
-top.estorage.drive.cell=§9驱动器矩阵：
-top.estorage.drive.cell.unsupported=§c警告：驱动器不支持此矩阵等级，需要升级主机。
-top.estorage.drive.cell.bytes=§9字节使用：
-top.estorage.drive.cell.types=§9类型使用：
+top.estorage.drive.status=§9Drive Status:
+top.estorage.drive.status.offline=§cOffline
+top.estorage.drive.status.online=§aOnline
+top.estorage.drive.cell=§9Drive Matrix:
+top.estorage.drive.cell.unsupported=§cWarning: Unsupported matrix tier, upgrade host required.
+top.estorage.drive.cell.bytes=§9Bytes Usage:
+top.estorage.drive.cell.types=§9Types Usage:
+top.estorage.drive.cell.item=Item Types:
+top.estorage.drive.cell.fluid=Fluid Types:
+top.ecalculator.calculator_core.bytes=§9Available Bytes:
+top.ecalculator.calculator_core.parallelism=§9Parallelism Modifier:
 
-top.ecalculator.calculator_core.bytes=§9提供字节：
-top.ecalculator.calculator_core.parallelism=§9提供修正并行：
+top.ecalculator.controller.storage=§9Bytes Usage:
+top.ecalculator.controller.threads=§9Thread Status:
+top.ecalculator.controller.parallelism=§9Shared Parallelism:
+top.ecalculator.controller.avg_parallelism=§9Current Parallelism:
+top.ecalculator.controller.avg_time_usage=§bTotal Performance Usage:
+top.ecalculator.thread_core.status=§9Core Status:
+top.ecalculator.thread_core.status.offline=§cOffline
+top.ecalculator.thread_core.status.online=§aOnline
+top.ecalculator.thread_core.threads=§9Thread Status:
+top.ecalculator.thread_core.crafting=§9Crafting:
+top.ecalculator.thread_core.avg_parallelism=§9Average Parallelism:
+top.ecalculator.thread_core.avg_time_usage=§bAverage Performance Usage:
 
-top.ecalculator.controller.storage=§9字节使用：
-top.ecalculator.controller.threads=§9线程状态：
-top.ecalculator.controller.parallelism=§9共享并行数：
-top.ecalculator.controller.avg_parallelism=§9当前使用并行数：
-top.ecalculator.controller.avg_time_usage=§b总性能使用：
-top.ecalculator.thread_core.status=§9核心状态：
-top.ecalculator.thread_core.status.offline=§c离线
-top.ecalculator.thread_core.status.online=§a在线
-top.ecalculator.thread_core.threads=§9线程状态：
-top.ecalculator.thread_core.crafting=§9正在合成：
-top.ecalculator.thread_core.avg_parallelism=§9平均并行数：
-top.ecalculator.thread_core.avg_time_usage=§b平均性能使用：
 #gui
-gui.estorage_controller.cell_info.tip.0=硬盘种类：%s（ %s ）
-gui.estorage_controller.cell_info.tip.1=类型使用：%s / %s
-gui.estorage_controller.cell_info.tip.2=字节使用：%s / %s
+gui.estorage_controller.cell_info.tip.0=Drive Type: %s (%s)
+gui.estorage_controller.cell_info.tip.1=Types Used: %s / %s
+gui.estorage_controller.cell_info.tip.2=Bytes Used: %s / %s
 
-gui.estorage_controller.cell_info.item=物品存储矩阵
-gui.estorage_controller.cell_info.fluid=流体存储矩阵
-gui.estorage_controller.cell_info.energy=能源设备监控
-gui.estorage_controller.graph.energy_usage=总耗能：%sAE/t
-gui.estorage_controller.graph.energy_stored=能量存储：%sAE / %sAE
+gui.estorage_controller.cell_info.item=Item Storage Matrix
+gui.estorage_controller.cell_info.fluid=Fluid Storage Matrix
+gui.estorage_controller.cell_info.energy=Energy Monitor
+
+gui.estorage_controller.graph.energy_usage=Total Consumption: %sAE/t
+gui.estorage_controller.graph.energy_stored=Energy Stored: %sAE / %sAE
 

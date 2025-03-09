@@ -1,0 +1,10 @@
+{
+    "ctm": {
+        "ctm_version": 1,
+        "type": "CTM",
+        "layer": "CUTOUT",
+        "textures": [
+            "prismplan:blocks/multiblock_casing/multi_heat_vent-ctm"
+        ]
+    }
+}
