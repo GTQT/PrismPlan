@@ -114,7 +114,7 @@ prismplan.machine.calculator_cell_hatch.5.name=晶格单元仓口 V
 prismplan.extendable_storage_subsystem.info.0=整个§9存储子系统§7的§a核心§7。
 prismplan.extendable_storage_subsystem.info.1=最大长度：§a16
 
-prismplan.extendable_calculate_subsystem.info.0=整个§zuidu§7的§a核心§7。
+prismplan.extendable_calculate_subsystem.info.0=整个§b计算子系统§7的§a核心§7。
 prismplan.extendable_calculate_subsystem.info.1=最大长度：§a16
 prismplan.extendable_calculate_subsystem.info.2=计算子系统引入了§b虚拟合成处理器§7的设定（简称 §bvCPU§7），通过 ME 通讯接口来访问。
 prismplan.extendable_calculate_subsystem.info.3=§b虚拟合成处理器（vCPU）§7：
