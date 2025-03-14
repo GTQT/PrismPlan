@@ -24,8 +24,8 @@ import org.apache.logging.log4j.Logger;
         dependencies = "required:forge@[14.23.5.2847,);" +
                 "required-after:codechickenlib@[3.2.3,);" +
                 "required-after:modularui@[2.4.3,);" +
-                "required-after:gregtech@[2.8.10-beta,);" +
-                "after:appliedenergistics2@[v0.56.6,);" +
+                "required-after:gregtech@[2.8.0-beta,);" +
+                "after:appliedenergistics2@[v0.56.4,);" +
                 "after:jei@[4.25.1,);")
 public class PrismPlan {
 

@@ -21,7 +21,7 @@ public class MaterialHelper {
     public static MetaItem.MetaValueItem [] batteryList={ENERGY_LAPOTRONIC_ORB,ENERGY_LAPOTRONIC_ORB_CLUSTER,ENERGY_MODULE,ENERGY_CLUSTER,ULTIMATE_BATTERY};
 
     public static Material[]Plate={TungstenSteel,RhodiumPlatedPalladium,NaquadahAlloy,Darmstadtium,Neutronium};
-    public static Material[]Pipe={NiobiumTitanium,Iridium,Naquadah,Europium,Duranium};
+    public static Material[]Pipe={NiobiumTitanium,Iridium,Naquadah,Europium,EnrichedNaquadahTriniumEuropiumDuranide};
 
     public static EStorageCellFluid[] fluidCellList={EStorageCellFluid.LEVEL_A,EStorageCellFluid.LEVEL_B,EStorageCellFluid.LEVEL_C,EStorageCellFluid.LEVEL_D,EStorageCellFluid.LEVEL_E};
     public static EStorageCellItem[] itemCellList={EStorageCellItem.LEVEL_A,EStorageCellItem.LEVEL_B,EStorageCellItem.LEVEL_C,EStorageCellItem.LEVEL_D,EStorageCellItem.LEVEL_E};

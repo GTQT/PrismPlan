@@ -13,7 +13,7 @@ import org.apache.logging.log4j.Logger;
 
 @JEIPlugin
 public class JeiModule extends IntegrationSubmodule implements IModPlugin {
-    public static final Logger logger = LogManager.getLogger("GregTech Lite JEI Integration");
+    public static final Logger logger = LogManager.getLogger("Prism Plan JEI Integration");
 
     private static final ObjectOpenHashSet<ItemStack> ingredientItemBlacklist = new ObjectOpenHashSet<>();
     private static final ObjectOpenHashSet<IItemDefinition> ingredientAE2ItemBlacklist = new ObjectOpenHashSet<>();

@@ -1,5 +1,7 @@
 package keqing.gtqt.prismplan.loaders.recipes;
 
+import static keqing.gtqt.prismplan.PrismPlanConfig.RecipesSwitch;
+
 public class PrismPlanRecipes {
     private PrismPlanRecipes() {
 
@@ -9,11 +11,11 @@ public class PrismPlanRecipes {
     }
 
     public static void init() {
-        CellRecipes.init();
-        StorageCraftingRecipes.init();
-        CircuitChain.init();
-        MiscRecipes.init();
-        MachineRecipes.init();
+        if(RecipesSwitch.CellRecipes)CellRecipes.init();
+        if(RecipesSwitch.StorageCraftingRecipes)StorageCraftingRecipes.init();
+        if(RecipesSwitch.CircuitChain)CircuitChain.init();
+        if(RecipesSwitch.MiscRecipes)MiscRecipes.init();
+        if(RecipesSwitch.MachineRecipes)MachineRecipes.init();
     }
 
 }
