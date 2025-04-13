@@ -11,6 +11,7 @@ import gregtech.api.gui.ModularUI;
 import gregtech.api.gui.widgets.AdvancedTextWidget;
 import gregtech.api.metatileentity.MetaTileEntity;
 import gregtech.api.metatileentity.interfaces.IGregTechTileEntity;
+import gregtech.api.metatileentity.multiblock.AbilityInstances;
 import gregtech.api.metatileentity.multiblock.IMultiblockAbilityPart;
 import gregtech.api.metatileentity.multiblock.MultiblockAbility;
 import gregtech.common.metatileentities.multi.multiblockpart.MetaTileEntityMultiblockPart;
@@ -208,8 +209,8 @@ public class MetaTileEntityThreadHatch extends MetaTileEntityMultiblockPart
     }
 
     @Override
-    public void registerAbilities(List<IThreadHatch> abilityList) {
-        abilityList.add(this);
+    public void registerAbilities(AbilityInstances abilityInstances) {
+        abilityInstances.add(this);
     }
 
     public void renderMetaTileEntity(CCRenderState renderState, Matrix4 translation, IVertexOperation[] pipeline) {

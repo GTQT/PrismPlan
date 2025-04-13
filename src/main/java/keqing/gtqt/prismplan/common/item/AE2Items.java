@@ -18,14 +18,13 @@ import java.util.stream.Stream;
 
 public class AE2Items implements IRegisterDefinition<IItemDefinition> {
 
-    private final Object2ObjectOpenHashMap<String, IItemDefinition> itemIdList = new Object2ObjectOpenHashMap<>();
-
     public static IItemDefinition storageCellQuantum;
     public static IItemDefinition storageCellFluidQuantum;
     public static IItemDefinition storageCellSingularity;
     public static IItemDefinition storageCellFluidSingularity;
     public static IItemDefinition storageCellUniverse;
     public static IItemDefinition storageCellFluidUniverse;
+    private final Object2ObjectOpenHashMap<String, IItemDefinition> itemIdList = new Object2ObjectOpenHashMap<>();
 
     public AE2Items(AE2Registry registry) {
         // Quantum Item Storage Cell

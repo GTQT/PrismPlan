@@ -5,8 +5,8 @@ import java.awt.*;
 
 public class ColorUtils {
 
-    public static final Color LOW_COLOR  = new Color(0xCC54FF9F);
-    public static final Color MID_COLOR  = new Color(0xCCFFFF00);
+    public static final Color LOW_COLOR = new Color(0xCC54FF9F);
+    public static final Color MID_COLOR = new Color(0xCCFFFF00);
     public static final Color FULL_COLOR = new Color(0xCCFF4500);
 
 
@@ -25,6 +25,7 @@ public class ColorUtils {
         int b = Math.min(255, (int) ((color & 0xFF) / factor));
         return (a << 24) | (r << 16) | (g << 8) | b;
     }
+
     public static Color getGradientColor(final Color[] colors,
                                          final int alpha,
                                          final float percentage) {

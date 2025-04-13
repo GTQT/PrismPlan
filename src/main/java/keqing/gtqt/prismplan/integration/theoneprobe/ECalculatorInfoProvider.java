@@ -8,6 +8,7 @@ import keqing.gtqt.prismplan.Tags;
 import keqing.gtqt.prismplan.api.capability.IThreadHatch;
 import keqing.gtqt.prismplan.api.utils.ColorUtils;
 import keqing.gtqt.prismplan.api.utils.PrimsPlanUtility;
+import keqing.gtqt.prismplan.api.utils.TimeRecorder;
 import keqing.gtqt.prismplan.common.metatileentities.multi.multiblock.ecalculator.*;
 import mcjty.theoneprobe.api.*;
 import net.minecraft.block.state.IBlockState;
@@ -19,7 +20,6 @@ import net.minecraft.world.World;
 
 import java.awt.*;
 import java.util.List;
-import keqing.gtqt.prismplan.api.utils.TimeRecorder;
 
 import static keqing.gtqt.prismplan.api.utils.ColorUtils.*;
 import static keqing.gtqt.prismplan.api.utils.PrimsPlanUtility.formatNumber;
@@ -39,71 +39,11 @@ public class ECalculatorInfoProvider implements IProbeInfoProvider {
     private ECalculatorInfoProvider() {
     }
 
-    @Override
-    public String getID() {
-        return Tags.MOD_ID + ':' + "ecalculator_info_provider";
-    }
-
-    @Override
-    public void addProbeInfo(final ProbeMode mode, final IProbeInfo probeInfo, final EntityPlayer player, final World world, final IBlockState blockState, final IProbeHitData data) {
-        final TileEntity te = world.getTileEntity(data.getPos());
-
-        if (te instanceof IGregTechTileEntity igtte) {
-            MetaTileEntity mte = igtte.getMetaTileEntity();
-
-            if (mte instanceof final MetaTileEntityCalculatorControl controller) {
-                processControllerInfo(probeInfo, controller);
-                return;
-            }
-            if (mte instanceof final MetaTileEntityThreadHatch hatch) {
-                processThreadCoreInfo(probeInfo, hatch);
-            }
-            if (mte instanceof final MetaTileEntityCalculatorCellHatch hatch) {
-                processCellHatchInfo(probeInfo, hatch);
-            }
-            if (mte instanceof final MetaTileEntityParallelHatch hatch) {
-                processParallelHatchInfo(probeInfo, hatch);
-            }
-        }
-    }
-
-    private void processParallelHatchInfo(IProbeInfo probeInfo, MetaTileEntityParallelHatch hatch) {
-        final boolean online = hatch.getController() != null;
-        IProbeInfo box = newBox(probeInfo);
-        box.text("{*top.ecalculator.thread_core.status*}" +
-                (online ? "{*top.ecalculator.thread_core.status.online*}" : "{*top.ecalculator.thread_core.status.offline*}")
-        );
-        if (!online) {
-            return;
-        }
-
-        final long parallelism = hatch.getParallelism();
-        box = newBox(probeInfo).vertical();
-        box.text("{*top.ecalculator.calculator_core.parallelism*}" + formatNumber(parallelism)
-        );
-    }
-
-    private void processCellHatchInfo(IProbeInfo probeInfo, MetaTileEntityCalculatorCellHatch hatch) {
-        final boolean online = hatch.getController() != null;
-        IProbeInfo box = newBox(probeInfo);
-        box.text("{*top.ecalculator.thread_core.status*}" +
-                (online ? "{*top.ecalculator.thread_core.status.online*}" : "{*top.ecalculator.thread_core.status.offline*}")
-        );
-        if (!online) {
-            return;
-        }
-
-        final long bytes = hatch.getSuppliedBytes();
-        box = newBox(probeInfo).vertical();
-        box.text("{*top.ecalculator.calculator_core.bytes*}" + formatNumber(bytes)
-        );
-    }
-
     private static void processThreadCoreInfo(final IProbeInfo probeInfo, final MetaTileEntityThreadHatch threadCore) {
         final boolean online = threadCore.getController() != null;
         IProbeInfo box = newBox(probeInfo);
-        box.text("{*top.ecalculator.thread_core.status*}" + 
-                 (online ? "{*top.ecalculator.thread_core.status.online*}" : "{*top.ecalculator.thread_core.status.offline*}")
+        box.text("{*top.ecalculator.thread_core.status*}" +
+                (online ? "{*top.ecalculator.thread_core.status.online*}" : "{*top.ecalculator.thread_core.status.offline*}")
         );
         if (!online) {
             return;
@@ -260,6 +200,66 @@ public class ECalculatorInfoProvider implements IProbeInfoProvider {
 
     private static IProbeInfo newBox(final IProbeInfo info) {
         return info.horizontal(info.defaultLayoutStyle().borderColor(0x801E90FF));
+    }
+
+    @Override
+    public String getID() {
+        return Tags.MOD_ID + ':' + "ecalculator_info_provider";
+    }
+
+    @Override
+    public void addProbeInfo(final ProbeMode mode, final IProbeInfo probeInfo, final EntityPlayer player, final World world, final IBlockState blockState, final IProbeHitData data) {
+        final TileEntity te = world.getTileEntity(data.getPos());
+
+        if (te instanceof IGregTechTileEntity igtte) {
+            MetaTileEntity mte = igtte.getMetaTileEntity();
+
+            if (mte instanceof final MetaTileEntityCalculatorControl controller) {
+                processControllerInfo(probeInfo, controller);
+                return;
+            }
+            if (mte instanceof final MetaTileEntityThreadHatch hatch) {
+                processThreadCoreInfo(probeInfo, hatch);
+            }
+            if (mte instanceof final MetaTileEntityCalculatorCellHatch hatch) {
+                processCellHatchInfo(probeInfo, hatch);
+            }
+            if (mte instanceof final MetaTileEntityParallelHatch hatch) {
+                processParallelHatchInfo(probeInfo, hatch);
+            }
+        }
+    }
+
+    private void processParallelHatchInfo(IProbeInfo probeInfo, MetaTileEntityParallelHatch hatch) {
+        final boolean online = hatch.getController() != null;
+        IProbeInfo box = newBox(probeInfo);
+        box.text("{*top.ecalculator.thread_core.status*}" +
+                (online ? "{*top.ecalculator.thread_core.status.online*}" : "{*top.ecalculator.thread_core.status.offline*}")
+        );
+        if (!online) {
+            return;
+        }
+
+        final long parallelism = hatch.getParallelism();
+        box = newBox(probeInfo).vertical();
+        box.text("{*top.ecalculator.calculator_core.parallelism*}" + formatNumber(parallelism)
+        );
+    }
+
+    private void processCellHatchInfo(IProbeInfo probeInfo, MetaTileEntityCalculatorCellHatch hatch) {
+        final boolean online = hatch.getController() != null;
+        IProbeInfo box = newBox(probeInfo);
+        box.text("{*top.ecalculator.thread_core.status*}" +
+                (online ? "{*top.ecalculator.thread_core.status.online*}" : "{*top.ecalculator.thread_core.status.offline*}")
+        );
+        if (!online) {
+            return;
+        }
+
+        final long bytes = hatch.getSuppliedBytes();
+        box = newBox(probeInfo).vertical();
+        box.text("{*top.ecalculator.calculator_core.bytes*}" + formatNumber(bytes)
+        );
     }
 
 }

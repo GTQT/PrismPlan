@@ -20,15 +20,14 @@ public class PrimsPlanUtility {
     public static final int HALF_HOUR = HOUR / 2;
 
     public static final int QUAT_HOUR = HOUR / 4;
-
-    public static ResourceLocation prismPlanID( String path) {
-        return new ResourceLocation(Tags.MOD_ID, path);
-    }
-
     private static final DecimalFormat DECIMAL_FORMAT = new DecimalFormat("#,###.##");
 
     static {
         DECIMAL_FORMAT.setRoundingMode(RoundingMode.HALF_UP);
+    }
+
+    public static ResourceLocation prismPlanID(String path) {
+        return new ResourceLocation(Tags.MOD_ID, path);
     }
 
     public static String formatDecimal(double value) {
@@ -52,9 +51,11 @@ public class PrimsPlanUtility {
             return formatDouble((double) value / 1_000_000_000_000_000_000L, 2) + "E";
         }
     }
+
     public static String formatFloat(float value, int decimalFraction) {
         return formatDouble(value, decimalFraction);
     }
+
     public static String formatDouble(double value, int decimalFraction) {
         NumberFormat nf = NumberFormat.getNumberInstance();
         nf.setMaximumFractionDigits(decimalFraction);

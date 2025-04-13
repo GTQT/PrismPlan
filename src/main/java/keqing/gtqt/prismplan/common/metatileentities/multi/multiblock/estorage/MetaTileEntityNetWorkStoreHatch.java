@@ -31,10 +31,9 @@ import gregtech.api.gui.widgets.AdvancedTextWidget;
 import gregtech.api.gui.widgets.SlotWidget;
 import gregtech.api.metatileentity.MetaTileEntity;
 import gregtech.api.metatileentity.interfaces.IGregTechTileEntity;
+import gregtech.api.metatileentity.multiblock.AbilityInstances;
 import gregtech.api.metatileentity.multiblock.IMultiblockAbilityPart;
 import gregtech.api.metatileentity.multiblock.MultiblockAbility;
-import gregtech.client.renderer.texture.Textures;
-import gregtech.client.renderer.texture.cube.OrientedOverlayRenderer;
 import gregtech.common.ConfigHolder;
 import gregtech.common.metatileentities.multi.multiblockpart.MetaTileEntityMultiblockPart;
 import keqing.gtqt.prismplan.api.capability.ICellHatch;
@@ -334,9 +333,10 @@ public class MetaTileEntityNetWorkStoreHatch extends MetaTileEntityMultiblockPar
     }
 
     @Override
-    public void registerAbilities(List<INetWorkStore> abilityList) {
-        abilityList.add(this);
+    public void registerAbilities(AbilityInstances abilityInstances) {
+        abilityInstances.add(this);
     }
+
 
     @Nonnull
     @Override

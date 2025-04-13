@@ -1,8 +1,6 @@
 package keqing.gtqt.prismplan.api.utils;
 
 
-import io.netty.util.internal.ThrowableUtil;
-
 import javax.swing.*;
 
 public class ActionExecutor implements Runnable, Comparable<ActionExecutor> {
@@ -25,7 +23,7 @@ public class ActionExecutor implements Runnable, Comparable<ActionExecutor> {
     public void run() {
         long start = System.nanoTime() / 1000L;
 
-        this.usedTime = (int)(System.nanoTime() / 1000L - start);
+        this.usedTime = (int) (System.nanoTime() / 1000L - start);
         this.isCompleted = true;
     }
 

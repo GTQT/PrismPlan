@@ -9,10 +9,7 @@ public class PrismPlanConfig {
     public static MachineSwitch MachineSwitch = new MachineSwitch();
     public static RecipesSwitch RecipesSwitch = new RecipesSwitch();
     public static class MachineSwitch {
-        @Config.Comment("注册设备的初始ID值，将向后占用200位")
-        @Config.RequiresMcRestart
-        @Config.Name("Start ID ")
-        public int startId = 29800;
+
     }
 
     public static class RecipesSwitch {

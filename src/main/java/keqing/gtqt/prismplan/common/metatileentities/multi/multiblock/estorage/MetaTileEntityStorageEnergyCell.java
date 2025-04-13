@@ -4,7 +4,6 @@ import appeng.api.config.Actionable;
 import codechicken.lib.render.CCRenderState;
 import codechicken.lib.render.pipeline.IVertexOperation;
 import codechicken.lib.vec.Matrix4;
-import gregtech.api.GTValues;
 import gregtech.api.capability.impl.NotifiableItemStackHandler;
 import gregtech.api.gui.GuiTextures;
 import gregtech.api.gui.ModularUI;
@@ -12,10 +11,9 @@ import gregtech.api.gui.widgets.AdvancedTextWidget;
 import gregtech.api.gui.widgets.SlotWidget;
 import gregtech.api.metatileentity.MetaTileEntity;
 import gregtech.api.metatileentity.interfaces.IGregTechTileEntity;
+import gregtech.api.metatileentity.multiblock.AbilityInstances;
 import gregtech.api.metatileentity.multiblock.IMultiblockAbilityPart;
 import gregtech.api.metatileentity.multiblock.MultiblockAbility;
-import gregtech.client.renderer.texture.Textures;
-import gregtech.client.utils.PipelineUtil;
 import gregtech.common.metatileentities.multi.multiblockpart.MetaTileEntityMultiblockPart;
 import keqing.gtqt.prismplan.api.capability.IEnergyHatch;
 import keqing.gtqt.prismplan.api.multiblock.PrismPlanMultiblockAbility;
@@ -174,15 +172,15 @@ public class MetaTileEntityStorageEnergyCell extends MetaTileEntityMultiblockPar
     }
 
     @Override
-    public void registerAbilities(List<IEnergyHatch> abilityList) {
-        abilityList.add(this);
+    public void registerAbilities(AbilityInstances abilityInstances) {
+        abilityInstances.add(this);
     }
 
     @Override
     public void addInformation(ItemStack stack, World player, List<String> tooltip, boolean advanced) {
         super.addInformation(stack, player, tooltip, advanced);
         tooltip.add(I18n.format("prismplan.estore_energy.info.0"));
-        tooltip.add(I18n.format("prismplan.estore_energy.info.1",maxEnergyStore));
+        tooltip.add(I18n.format("prismplan.estore_energy.info.1", maxEnergyStore));
         tooltip.add(I18n.format("prismplan.estore_energy.info.2"));
     }
 }

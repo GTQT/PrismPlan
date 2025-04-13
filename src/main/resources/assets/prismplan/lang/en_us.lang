@@ -231,3 +231,7 @@ gui.estorage_controller.cell_info.energy=Energy Monitor
 gui.estorage_controller.graph.energy_usage=Total Consumption: %sAE/t
 gui.estorage_controller.graph.energy_stored=Energy Stored: %sAE / %sAE
 
+#item group
+itemGroup.prism_plan=Prism Plan
+
+

@@ -24,6 +24,7 @@ import gregtech.api.gui.widgets.AdvancedTextWidget;
 import gregtech.api.gui.widgets.SlotWidget;
 import gregtech.api.metatileentity.MetaTileEntity;
 import gregtech.api.metatileentity.interfaces.IGregTechTileEntity;
+import gregtech.api.metatileentity.multiblock.AbilityInstances;
 import gregtech.api.metatileentity.multiblock.IMultiblockAbilityPart;
 import gregtech.api.metatileentity.multiblock.MultiblockAbility;
 import gregtech.api.metatileentity.multiblock.MultiblockControllerBase;
@@ -390,8 +391,8 @@ public class MetaTileEntityStorageCellHatch extends MetaTileEntityMultiblockPart
     }
 
     @Override
-    public void registerAbilities(List<ICellHatch> abilityList) {
-        abilityList.add(this);
+    public void registerAbilities(AbilityInstances abilityInstances) {
+        abilityInstances.add(this);
     }
 
     @Override

@@ -7,7 +7,6 @@ import gregtech.api.util.Mods;
 
 import static gregtech.api.GTValues.*;
 import static gregtech.api.recipes.RecipeMaps.ASSEMBLER_RECIPES;
-import static keqing.gtqt.prismplan.api.utils.AE2ItemReferences.*;
 import static keqing.gtqt.prismplan.api.utils.PrimsPlanUtility.SECOND;
 import static keqing.gtqt.prismplan.common.block.AE2Blocks.*;
 import static keqing.gtqt.prismplan.common.item.PrismPlanMetaItems.PARALLEL_CIRCUIT_BOARD;
@@ -50,7 +49,7 @@ public class StorageCraftingRecipes {
 
         ASSEMBLER_RECIPES.recipeBuilder()
                 .circuitMeta(1)
-                .input(OrePrefix.circuit, MarkerMaterials.Tier.EV,4)
+                .input(OrePrefix.circuit, MarkerMaterials.Tier.EV, 4)
                 .input(SPECULATIVE_CIRCUIT_BOARD)
                 .inputs(Mods.AppliedEnergistics2.getItem("crafting_unit"))
                 .inputs(NAE2.definitions().materials().cellFluidPart16384K().maybeStack(4).orElse(null))
@@ -61,7 +60,7 @@ public class StorageCraftingRecipes {
 
         ASSEMBLER_RECIPES.recipeBuilder()
                 .circuitMeta(2)
-                .input(OrePrefix.circuit, MarkerMaterials.Tier.IV,4)
+                .input(OrePrefix.circuit, MarkerMaterials.Tier.IV, 4)
                 .input(SPECULATIVE_CIRCUIT_BOARD)
                 .inputs(Mods.AppliedEnergistics2.getItem("crafting_unit"))
                 .inputs(NAE2.definitions().materials().cellFluidPart16384K().maybeStack(16).orElse(null))
@@ -72,7 +71,7 @@ public class StorageCraftingRecipes {
 
         ASSEMBLER_RECIPES.recipeBuilder()
                 .circuitMeta(3)
-                .input(OrePrefix.circuit, MarkerMaterials.Tier.LuV,4)
+                .input(OrePrefix.circuit, MarkerMaterials.Tier.LuV, 4)
                 .input(SPECULATIVE_CIRCUIT_BOARD)
                 .inputs(Mods.AppliedEnergistics2.getItem("crafting_unit"))
                 .inputs(NAE2.definitions().materials().cellFluidPart16384K().maybeStack(64).orElse(null))

@@ -6,7 +6,8 @@ public class PrismPlanLog {
 
     public static Logger logger;
 
-    public PrismPlanLog() {}
+    public PrismPlanLog() {
+    }
 
     public static void init(Logger modLogger) {
         logger = modLogger;

@@ -2,7 +2,6 @@ package keqing.gtqt.prismplan.loaders.recipes;
 
 import co.neeve.nae2.NAE2;
 import gregtech.api.unification.material.MarkerMaterials;
-import gregtech.api.unification.ore.OrePrefix;
 import gregtech.api.util.Mods;
 
 import static gregtech.api.GTValues.*;
@@ -16,13 +15,12 @@ import static gregtech.common.metatileentities.MetaTileEntities.QUANTUM_TANK;
 import static keqing.gtqt.prismplan.api.utils.AE2ItemReferences.QUANTUM_FLUID_STORAGE_CELL;
 import static keqing.gtqt.prismplan.api.utils.AE2ItemReferences.QUANTUM_STORAGE_CELL;
 import static keqing.gtqt.prismplan.api.utils.PrimsPlanUtility.SECOND;
-import static keqing.gtqt.prismplan.common.item.AE2Items.storageCellQuantum;
 import static keqing.gtqt.prismplan.common.item.ItemRegistry.*;
 
 public class CellRecipes {
     public static void init() {
         ASSEMBLER_RECIPES.recipeBuilder()
-                .input(circuit, MarkerMaterials.Tier.HV,4)
+                .input(circuit, MarkerMaterials.Tier.HV, 4)
                 .inputs(Mods.AppliedEnergistics2.getItem("chest"))
                 .inputs(Mods.AppliedEnergistics2.getItem("material", 36, 1))
                 .input(BATTERY_HV_SODIUM)
@@ -33,7 +31,7 @@ public class CellRecipes {
                 .buildAndRegister();
 
         ASSEMBLER_RECIPES.recipeBuilder()
-                .input(circuit, MarkerMaterials.Tier.EV,4)
+                .input(circuit, MarkerMaterials.Tier.EV, 4)
                 .inputs(Mods.AppliedEnergistics2.getItem("chest"))
                 .inputs(Mods.AppliedEnergistics2.getItem("material", 37, 1))
                 .input(BATTERY_EV_VANADIUM)
@@ -44,7 +42,7 @@ public class CellRecipes {
                 .buildAndRegister();
 
         ASSEMBLER_RECIPES.recipeBuilder()
-                .input(circuit, MarkerMaterials.Tier.IV,4)
+                .input(circuit, MarkerMaterials.Tier.IV, 4)
                 .inputs(Mods.AppliedEnergistics2.getItem("chest"))
                 .inputs(Mods.AppliedEnergistics2.getItem("material", 38, 1))
                 .input(BATTERY_IV_VANADIUM)

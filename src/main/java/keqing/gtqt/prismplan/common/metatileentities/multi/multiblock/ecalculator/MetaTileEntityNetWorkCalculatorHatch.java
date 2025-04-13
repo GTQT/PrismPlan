@@ -26,10 +26,9 @@ import gregtech.api.gui.widgets.AdvancedTextWidget;
 import gregtech.api.gui.widgets.SlotWidget;
 import gregtech.api.metatileentity.MetaTileEntity;
 import gregtech.api.metatileentity.interfaces.IGregTechTileEntity;
+import gregtech.api.metatileentity.multiblock.AbilityInstances;
 import gregtech.api.metatileentity.multiblock.IMultiblockAbilityPart;
 import gregtech.api.metatileentity.multiblock.MultiblockAbility;
-import gregtech.client.renderer.texture.Textures;
-import gregtech.client.renderer.texture.cube.OrientedOverlayRenderer;
 import gregtech.common.ConfigHolder;
 import gregtech.common.metatileentities.multi.multiblockpart.MetaTileEntityMultiblockPart;
 import keqing.gtqt.prismplan.api.capability.INetWorkCalculator;
@@ -62,6 +61,7 @@ public class MetaTileEntityNetWorkCalculatorHatch extends MetaTileEntityMultiblo
         IMultiblockAbilityPart<INetWorkCalculator>, INetWorkCalculator, IGridProxyable {
 
     protected final IActionSource source = new MachineSource(this);
+    private final boolean isAttached = false;
     //未知作用 后期可能放置身份卡
     protected IItemHandlerModifiable targetItem;
     protected boolean isOnline;
@@ -72,7 +72,6 @@ public class MetaTileEntityNetWorkCalculatorHatch extends MetaTileEntityMultiblo
     //其他
     private int meUpdateTick = 0;
     private boolean wasActive = false;
-    private final boolean isAttached = false;
 
     public MetaTileEntityNetWorkCalculatorHatch(ResourceLocation metaTileEntityId) {
         super(metaTileEntityId, 6);
@@ -319,8 +318,8 @@ public class MetaTileEntityNetWorkCalculatorHatch extends MetaTileEntityMultiblo
     }
 
     @Override
-    public void registerAbilities(List<INetWorkCalculator> abilityList) {
-        abilityList.add(this);
+    public void registerAbilities(AbilityInstances abilityInstances) {
+        abilityInstances.add(this);
     }
 
     @Nonnull

@@ -1,13 +1,11 @@
 package keqing.gtqt.prismplan.loaders.recipes;
 
-import gregtech.api.metatileentity.multiblock.CleanroomType;
 import gregtech.api.util.Mods;
 
 import static gregtech.api.GTValues.*;
 import static gregtech.api.recipes.RecipeMaps.*;
 import static gregtech.api.unification.material.Materials.*;
-import static gregtech.api.unification.ore.OrePrefix.*;
-import static keqing.gtqt.prismplan.common.item.PrismPlanMetaItems.DEDUCTION_CIRCUIT_BOARD;
+import static gregtech.api.unification.ore.OrePrefix.dust;
 
 public class MiscRecipes {
     public static void init() {
@@ -48,21 +46,21 @@ public class MiscRecipes {
         //粉碎
         MACERATOR_RECIPES.recipeBuilder()
                 .input("crystalCertusQuartz")
-                .output(dust,CertusQuartz)
+                .output(dust, CertusQuartz)
                 .EUt(VA[LV])
                 .duration(200)
                 .buildAndRegister();
 
         MACERATOR_RECIPES.recipeBuilder()
                 .input("crystalPureCertusQuartz")
-                .output(dust,CertusQuartz)
+                .output(dust, CertusQuartz)
                 .EUt(VA[LV])
                 .duration(200)
                 .buildAndRegister();
 
         //Fluix
         MIXER_RECIPES.recipeBuilder()
-                .input(dust,Redstone)
+                .input(dust, Redstone)
                 .input("dustNetherQuartz")
                 .input("dustCertusQuartz")
                 .fluidInputs(DistilledWater.getFluid(1000))

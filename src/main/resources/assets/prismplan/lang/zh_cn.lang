@@ -225,3 +225,5 @@ gui.estorage_controller.cell_info.energy=能源设备监控
 gui.estorage_controller.graph.energy_usage=总耗能：%sAE/t
 gui.estorage_controller.graph.energy_stored=能量存储：%sAE / %sAE
 
+#item group
+itemGroup.prism_plan=棱镜计划

@@ -26,6 +26,7 @@ import gregtech.api.gui.widgets.AdvancedTextWidget;
 import gregtech.api.gui.widgets.SlotWidget;
 import gregtech.api.metatileentity.MetaTileEntity;
 import gregtech.api.metatileentity.interfaces.IGregTechTileEntity;
+import gregtech.api.metatileentity.multiblock.AbilityInstances;
 import gregtech.api.metatileentity.multiblock.IMultiblockAbilityPart;
 import gregtech.api.metatileentity.multiblock.MultiblockAbility;
 import gregtech.client.renderer.texture.Textures;
@@ -302,10 +303,9 @@ public class MetaTileEntityNetWorkProxyHatch extends MetaTileEntityMultiblockPar
     }
 
     @Override
-    public void registerAbilities(List<INetWorkProxy> abilityList) {
-        abilityList.add(this);
+    public void registerAbilities(AbilityInstances abilityInstances) {
+        abilityInstances.add(this);
     }
-
     @Nonnull
     @Override
     public IGridNode getActionableNode() {

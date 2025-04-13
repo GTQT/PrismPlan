@@ -23,8 +23,6 @@ import gregtech.api.util.TextComponentUtil;
 import gregtech.client.renderer.ICubeRenderer;
 import gregtech.client.renderer.texture.Textures;
 import gregtech.client.renderer.texture.cube.OrientedOverlayRenderer;
-import gregtech.common.blocks.BlockMetalCasing;
-import gregtech.common.blocks.MetaBlocks;
 import keqing.gtqt.prismplan.api.capability.*;
 import keqing.gtqt.prismplan.api.multiblock.PrismPlanMultiblockAbility;
 import keqing.gtqt.prismplan.api.utils.PrimsPlanUtility;
@@ -256,12 +254,15 @@ public class MetaTileEntityCalculatorControl extends MultiblockWithDisplayBase {
     protected IBlockState getCasingState() {
         return PrismPlanBlocks.blockMultiblockCasing.getState(MULTI_CASING);
     }
+
     protected IBlockState getHeatState() {
         return PrismPlanBlocks.blockMultiblockCasing.getState(MULTI_HEAT_VENT);
     }
+
     protected IBlockState getConnectState() {
         return PrismPlanBlocks.blockMultiblockCasing.getState(MULTI_CONNECT);
     }
+
     @Override
     public ICubeRenderer getBaseTexture(IMultiblockPart iMultiblockPart) {
         return PrismPlanTextures.MULTI_CASING;

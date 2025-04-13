@@ -21,13 +21,14 @@ public class AE2ModelOverrideComponent implements IPreInitComponent {
     private static final ModelResourceLocation MODEL_MISSING = new ModelResourceLocation("builtin/missing", "missing");
     private final Map<String, BiFunction<ModelResourceLocation, IBakedModel, IBakedModel>> customizer = new HashMap<>();
 
-    public AE2ModelOverrideComponent() {}
+    public AE2ModelOverrideComponent() {
+    }
 
     /**
      * Add Override Model to {@code resourcePath}.
      *
-     * @param resourcePath  Override Model Path.
-     * @param customizer    Customizer.
+     * @param resourcePath Override Model Path.
+     * @param customizer   Customizer.
      */
     public void addOverride(String resourcePath, BiFunction<ModelResourceLocation, IBakedModel, IBakedModel> customizer) {
         this.customizer.put(resourcePath, customizer);

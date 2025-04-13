@@ -11,11 +11,11 @@ public class PrismPlanRecipes {
     }
 
     public static void init() {
-        if(RecipesSwitch.CellRecipes)CellRecipes.init();
-        if(RecipesSwitch.StorageCraftingRecipes)StorageCraftingRecipes.init();
-        if(RecipesSwitch.CircuitChain)CircuitChain.init();
-        if(RecipesSwitch.MiscRecipes)MiscRecipes.init();
-        if(RecipesSwitch.MachineRecipes)MachineRecipes.init();
+        if (RecipesSwitch.CellRecipes) CellRecipes.init();
+        if (RecipesSwitch.StorageCraftingRecipes) StorageCraftingRecipes.init();
+        if (RecipesSwitch.CircuitChain) CircuitChain.init();
+        if (RecipesSwitch.MiscRecipes) MiscRecipes.init();
+        if (RecipesSwitch.MachineRecipes) MachineRecipes.init();
     }
 
 }

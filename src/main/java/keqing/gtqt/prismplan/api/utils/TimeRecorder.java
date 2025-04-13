@@ -19,7 +19,7 @@ public class TimeRecorder {
 
     public void incrementUsedTime(int add) {
         this.usedTimeCache += add;
-        Integer first = (Integer)this.usedTimeList.getFirst();
+        Integer first = this.usedTimeList.getFirst();
         if (first != null) {
             this.usedTimeList.removeFirst();
             this.usedTimeList.addFirst(first + add);
@@ -33,7 +33,7 @@ public class TimeRecorder {
         this.usedTimeCache += time;
         this.usedTimeList.addFirst(time);
         if (this.usedTimeList.size() > 100) {
-            this.usedTimeCache -= (Integer)this.usedTimeList.pollLast();
+            this.usedTimeCache -= this.usedTimeList.pollLast();
         }
 
     }
@@ -42,14 +42,14 @@ public class TimeRecorder {
         this.searchUsedTimeCache += time;
         this.searchUsedTimeList.addFirst(time);
         if (this.searchUsedTimeList.size() > 20) {
-            this.searchUsedTimeCache -= (Integer)this.searchUsedTimeList.pollLast();
+            this.searchUsedTimeCache -= this.searchUsedTimeList.pollLast();
         }
 
     }
 
     public void incrementRecipeResearchUsedTime(int add) {
         this.searchUsedTimeCache += add;
-        Integer first = (Integer)this.searchUsedTimeList.getFirst();
+        Integer first = this.searchUsedTimeList.getFirst();
         if (first != null) {
             this.searchUsedTimeList.removeFirst();
             this.searchUsedTimeList.addFirst(first + add);

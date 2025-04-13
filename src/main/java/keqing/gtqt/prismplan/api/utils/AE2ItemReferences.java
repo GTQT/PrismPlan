@@ -1,7 +1,5 @@
 package keqing.gtqt.prismplan.api.utils;
 
-import keqing.gtqt.prismplan.common.block.AE2Blocks;
-import keqing.gtqt.prismplan.common.item.AE2Items;
 import net.minecraft.item.ItemStack;
 
 import static keqing.gtqt.prismplan.common.block.AE2Blocks.*;

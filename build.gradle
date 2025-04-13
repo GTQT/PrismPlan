@@ -154,10 +154,6 @@ dependencies {
     implementation rfg.deobf("curse.maven:mixin-booter-419286:4835295")
     // Code Chicken Lib 3.2.3.358
     implementation rfg.deobf("curse.maven:codechicken-lib-1-8-242818:2779848")
-    // Modular UI 2.4.3
-    implementation rfg.deobf("curse.maven:modularui-624243:5153413")
-    // GregTech 2.8.10-beta
-    implementation rfg.deobf("curse.maven:gregtech-ce-unofficial-557242:5519022")
     // AE2 Unofficial Extended Life 0.56.6
     implementation rfg.deobf("curse.maven:ae2-extended-life-570458:5411078")
     // AE2 Fluid Crafting Rework 2.6.3r
@@ -168,11 +164,12 @@ dependencies {
     implementation rfg.deobf("curse.maven:had-enough-items-557549:5471944")
     // The One Probe 1.4.28
     implementation rfg.deobf("curse.maven:top-245211:2667280")
-
     // Connected Textures Mod 1.0.2.31
     compileOnly rfg.deobf("curse.maven:ctm-267602:2915363")
-    // Groovy Script 1.2.0-hotfix-1
-    compileOnly rfg.deobf("curse.maven:groovyscript-687577:5789690")
+
+    api("com.cleanroommc:groovyscript:1.2.0-hotfix1") { transitive = false }
+    api("com.cleanroommc:modularui:2.5.0-rc4") { transitive = false }
+    implementation rfg.deobf(files("libs/gregtech-1.12.2-2.9.0-MeowmelMuku.jar"))
 }
 
 apply from: 'gradle/scripts/dependencies.gradle'

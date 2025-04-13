@@ -11,7 +11,8 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 @SideOnly(Side.CLIENT)
 public class AE2ClientUtility {
 
-    private AE2ClientUtility() {}
+    private AE2ClientUtility() {
+    }
 
     public static Minecraft mc() {
         return Minecraft.getMinecraft();

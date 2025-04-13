@@ -1,9 +1,8 @@
 package keqing.gtqt.prismplan.common.item.prismplan;
 
-import gregtech.api.GregTechAPI;
 import gregtech.api.items.metaitem.StandardMetaItem;
-import keqing.gtqt.prismplan.PrismPlan;
 import keqing.gtqt.prismplan.common.item.PrismPlanMetaItems;
+
 import static keqing.gtqt.prismplan.common.CommonProxy.PRISM_PLAN_TAB;
 
 public class PrismPlanMetaItem extends StandardMetaItem {

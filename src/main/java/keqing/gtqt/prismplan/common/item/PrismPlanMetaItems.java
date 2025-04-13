@@ -17,6 +17,7 @@ public class PrismPlanMetaItems {
     public static MetaItem<?>.MetaValueItem FLUIX_LOGIC_ASSEMBLY;
     public static MetaItem<?>.MetaValueItem FLUIX_LOGIC_COMPUTER;
     public static MetaItem<?>.MetaValueItem FLUIX_LOGIC_MAINFRAME;
+
     public static void initialization() {
         PrismPlan_META_ITEM = new PrismPlanMetaItem();
     }

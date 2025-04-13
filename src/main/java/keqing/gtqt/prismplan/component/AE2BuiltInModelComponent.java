@@ -17,12 +17,14 @@ public class AE2BuiltInModelComponent implements IPreInitComponent {
     private final Map<String, IModel> builtInModels = new HashMap<>();
     private boolean hasInitialized = false;
 
-    public AE2BuiltInModelComponent() {}
+    public AE2BuiltInModelComponent() {
+    }
 
     /**
      * Add a new Model (at {@code path}).
-     * @param path   Model File path.
-     * @param model  Model.
+     *
+     * @param path  Model File path.
+     * @param model Model.
      */
     public void addModel(String path, IModel model) {
         //  If model is not initialized, then run.

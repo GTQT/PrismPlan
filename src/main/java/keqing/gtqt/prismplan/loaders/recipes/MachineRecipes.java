@@ -26,7 +26,7 @@ public class MachineRecipes {
         for (int i = 0; i < 5; i++) {
             CIRCUIT_ASSEMBLER_RECIPES.recipeBuilder()
                     .input(circuitList[i], 4)
-                    .inputs(NAE2.definitions().materials().cellPart16384K().maybeStack((int) Math.pow(2,i+2)).orElse(null))
+                    .inputs(NAE2.definitions().materials().cellPart16384K().maybeStack((int) Math.pow(2, i + 2)).orElse(null))
                     .input(circuit, MarkerMaterial.create(GTValues.VN[i + 5].toLowerCase()), 8)
                     .input(screw, Plate[i], 4)
                     .input(wireFine, Pipe[i], 32)
@@ -36,7 +36,7 @@ public class MachineRecipes {
 
             CIRCUIT_ASSEMBLER_RECIPES.recipeBuilder()
                     .input(circuitList[i], 4)
-                    .inputs(NAE2.definitions().materials().cellFluidPart16384K().maybeStack((int) Math.pow(2,i+2)).orElse(null))
+                    .inputs(NAE2.definitions().materials().cellFluidPart16384K().maybeStack((int) Math.pow(2, i + 2)).orElse(null))
                     .input(circuit, MarkerMaterial.create(GTValues.VN[i + 5].toLowerCase()), 8)
                     .input(screw, Plate[i], 4)
                     .input(wireFine, Pipe[i], 32)
@@ -46,9 +46,9 @@ public class MachineRecipes {
 
             CIRCUIT_ASSEMBLER_RECIPES.recipeBuilder()
                     .input(circuitList[i], 16)
-                    .inputs(NAE2.definitions().materials().cellPart16384K().maybeStack((int) Math.pow(2,i+2)).orElse(null))
+                    .inputs(NAE2.definitions().materials().cellPart16384K().maybeStack((int) Math.pow(2, i + 2)).orElse(null))
                     .input(circuit, MarkerMaterial.create(GTValues.VN[i + 5].toLowerCase()), 16)
-                    .input(emitterList[i],2)
+                    .input(emitterList[i], 2)
                     .input(wireFine, Pipe[i], 16)
                     .output(calculatorCellList[i])
                     .duration(200)
