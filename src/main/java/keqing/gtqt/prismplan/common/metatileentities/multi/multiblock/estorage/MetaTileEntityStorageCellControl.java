@@ -397,6 +397,11 @@ public class MetaTileEntityStorageCellControl extends MultiblockWithDisplayBase 
     }
 
     @Override
+    public boolean usesMui2() {
+        return false;
+    }
+
+    @Override
     protected ModularUI createUI(EntityPlayer entityPlayer) {
         ModularUI.Builder builder = ModularUI.builder(GuiTextures.BACKGROUND, 300, 240);
         builder.dynamicLabel(8, 4, () -> I18n.format(getMetaFullName()), 0xFFFFFF);
