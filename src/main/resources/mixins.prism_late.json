@@ -12,11 +12,11 @@
     "ae2.MixinCraftingCPUCluster",
     "ae2.MixinCraftingCPUStatus",
     "ae2.MixinCraftingGridCache",
-    "gregtech.MixinMetaTileEntityHolder"
+    "gregtech.MixinMetaTileEntityHolder",
+    "ae2.AccessorAbstractCellInventory"
   ],
   "server": [],
   "client": [
-    "ae2.AccessorAbstractCellInventory",
     "nae2.MixinJEICellCategory"
   ]
 }
