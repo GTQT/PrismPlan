@@ -1,5 +1,6 @@
 package keqing.gtqt.prismplan;
 
+import gregtech.api.recipes.ModHandler;
 import keqing.gtqt.prismplan.api.utils.PrismPlanLog;
 import keqing.gtqt.prismplan.client.ClientProxy;
 import keqing.gtqt.prismplan.common.CommonProxy;
@@ -8,9 +9,11 @@ import keqing.gtqt.prismplan.common.item.PrismPlanMetaItems;
 import keqing.gtqt.prismplan.common.metatileentities.multi.PrismPlanMetaTileEntities;
 import keqing.gtqt.prismplan.common.network.PktCellDriveStatusUpdate;
 import keqing.gtqt.prismplan.common.register.AE2RegisterManager;
+import net.minecraft.item.crafting.FurnaceRecipes;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.SidedProxy;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
+import net.minecraftforge.fml.common.event.FMLLoadCompleteEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.common.network.NetworkRegistry;
@@ -18,6 +21,9 @@ import net.minecraftforge.fml.common.network.simpleimpl.SimpleNetworkWrapper;
 import net.minecraftforge.fml.relauncher.Side;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+
+import static io.github.phantamanta44.threng.item.ItemMaterial.Type.STEEL_PROCESS_INGOT;
+import static keqing.gtqt.prismplan.PrismPlanConfig.RecipesSwitch;
 
 @Mod(modid = Tags.MOD_ID, name = Tags.MOD_NAME, version = Tags.VERSION,
         acceptedMinecraftVersions = "[1.12.2]",
@@ -72,5 +78,10 @@ public class PrismPlan {
     @Mod.EventHandler
     public void postInit(FMLPostInitializationEvent event) {
         registerManager.onPostInit(event);
+    }
+
+    @Mod.EventHandler
+    public void loadComplete(FMLLoadCompleteEvent event) {
+        FurnaceRecipes.instance().getSmeltingList().keySet().removeIf((currentStack) ->currentStack==STEEL_PROCESS_INGOT.newStack(1));
     }
 }

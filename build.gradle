@@ -167,6 +167,9 @@ dependencies {
     // Connected Textures Mod 1.0.2.31
     compileOnly rfg.deobf("curse.maven:ctm-267602:2915363")
 
+    implementation rfg.deobf("curse.maven:libnine-322344:3509087")
+    implementation rfg.deobf("curse.maven:lazy-ae2-322347:3254160")
+
     api("com.cleanroommc:groovyscript:1.2.0-hotfix1") { transitive = false }
     api("com.cleanroommc:modularui:2.5.0-rc4") { transitive = false }
     implementation rfg.deobf(files("libs/gregtech-1.12.2-2.9.0-MeowmelMuku.jar"))

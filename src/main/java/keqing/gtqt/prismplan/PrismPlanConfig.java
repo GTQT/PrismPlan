@@ -19,5 +19,6 @@ public class PrismPlanConfig {
         public boolean MachineRecipes = true;
         public boolean StorageCraftingRecipes = true;
         public boolean CircuitChain = true;
+        public boolean ThrengRecipes = true;
     }
 }

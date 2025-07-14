@@ -6,14 +6,15 @@
   "minVersion": "0.8.3",
   "compatibilityLevel": "JAVA_8",
   "mixins": [
-    "ae2.MixinTileChestFilter",
-    "ae2.MixinTileDriveFilter",
+    "ae2.AccessorAbstractCellInventory",
     "ae2.AccessorCellRegistry",
     "ae2.MixinCraftingCPUCluster",
     "ae2.MixinCraftingCPUStatus",
     "ae2.MixinCraftingGridCache",
+    "ae2.MixinTileChestFilter",
+    "ae2.MixinTileDriveFilter",
     "gregtech.MixinMetaTileEntityHolder",
-    "ae2.AccessorAbstractCellInventory"
+    "threng.MixinThrEngRecipes"
   ],
   "server": [],
   "client": [

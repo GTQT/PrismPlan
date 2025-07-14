@@ -18,6 +18,7 @@ import static keqing.gtqt.prismplan.common.block.prismPlan.BlockMultiblockCasing
 import static keqing.gtqt.prismplan.common.item.PrismPlanMetaItems.FLUIX_CPU;
 import static keqing.gtqt.prismplan.common.item.PrismPlanMetaItems.FLUIX_LOGIC_PROCESSOR;
 import static keqing.gtqt.prismplan.common.metatileentities.multi.PrismPlanMetaTileEntities.*;
+import static keqing.gtqt.prismplan.loaders.recipes.naeRecipes.index.meStorageCell;
 
 public class MachineRecipes {
     public static void init() {
@@ -30,6 +31,7 @@ public class MachineRecipes {
                     .input(circuit, MarkerMaterial.create(GTValues.VN[i + 5].toLowerCase()), 8)
                     .input(screw, Plate[i], 4)
                     .input(wireFine, Pipe[i], 32)
+                    .inputs(meStorageCell)
                     .output(itemCellList[i])
                     .duration(200)
                     .EUt(VA[IV + i]).buildAndRegister();
@@ -40,6 +42,7 @@ public class MachineRecipes {
                     .input(circuit, MarkerMaterial.create(GTValues.VN[i + 5].toLowerCase()), 8)
                     .input(screw, Plate[i], 4)
                     .input(wireFine, Pipe[i], 32)
+                    .inputs(meStorageCell)
                     .output(fluidCellList[i])
                     .duration(200)
                     .EUt(VA[IV + i]).buildAndRegister();
@@ -50,6 +53,7 @@ public class MachineRecipes {
                     .input(circuit, MarkerMaterial.create(GTValues.VN[i + 5].toLowerCase()), 16)
                     .input(emitterList[i], 2)
                     .input(wireFine, Pipe[i], 16)
+                    .inputs(meStorageCell)
                     .output(calculatorCellList[i])
                     .duration(200)
                     .EUt(VA[IV + i]).buildAndRegister();
