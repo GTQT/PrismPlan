@@ -79,9 +79,4 @@ public class PrismPlan {
     public void postInit(FMLPostInitializationEvent event) {
         registerManager.onPostInit(event);
     }
-
-    @Mod.EventHandler
-    public void loadComplete(FMLLoadCompleteEvent event) {
-        FurnaceRecipes.instance().getSmeltingList().keySet().removeIf((currentStack) ->currentStack==STEEL_PROCESS_INGOT.newStack(1));
-    }
 }
