@@ -117,8 +117,8 @@ public class CircuitChain {
                 .input(RANDOM_ACCESS_MEMORY, 32)
                 .input(wireFine, IndiumTinBariumTitaniumCuprate, 24)
                 .input(foil, Polybenzimidazole, 32)
-                .input(plate, Europium, 4)
                 .fluidInputs(SolderingAlloy.getFluid(1152))
+                .fluidInputs(Europium.getFluid(L * 4))
                 .output(FLUIX_LOGIC_COMPUTER)
                 .stationResearch(b -> b
                         .researchStack(FLUIX_LOGIC_ASSEMBLY.getStackForm())
@@ -137,9 +137,9 @@ public class CircuitChain {
                 .input(foil, Polybenzimidazole, 64)
                 .input(RANDOM_ACCESS_MEMORY, 32)
                 .input(wireGtDouble, EnrichedNaquadahTriniumEuropiumDuranide, 16)
-                .input(plate, Indium, 8)
                 .fluidInputs(SolderingAlloy.getFluid(L * 20))
                 .fluidInputs(Polybenzimidazole.getFluid(L * 8))
+                .fluidInputs(Indium.getFluid(L * 8))
                 .output(FLUIX_LOGIC_MAINFRAME)
                 .stationResearch(b -> b
                         .researchStack(FLUIX_LOGIC_COMPUTER.getStackForm())
