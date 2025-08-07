@@ -6,6 +6,7 @@ import static gregtech.api.GTValues.*;
 import static gregtech.api.recipes.RecipeMaps.*;
 import static gregtech.api.unification.material.Materials.*;
 import static gregtech.api.unification.ore.OrePrefix.dust;
+import static gregtech.api.unification.ore.OrePrefix.plate;
 
 public class MiscRecipes {
     public static void init() {
@@ -60,13 +61,14 @@ public class MiscRecipes {
 
         //Fluix
         MIXER_RECIPES.recipeBuilder()
-                .input(dust, Redstone)
-                .input("dustNetherQuartz")
-                .input("dustCertusQuartz")
+                .input("dustCertusQuartz", 2)
+                .input(dust, Electrum, 1)
+                .input(dust, Redstone, 1)
                 .fluidInputs(DistilledWater.getFluid(1000))
-                .outputs(Mods.AppliedEnergistics2.getItem("material", 7, 2))
+                .circuitMeta(2)
+                .outputs(Mods.AppliedEnergistics2.getItem("material", 7, 4))
                 .EUt(VA[MV])
-                .duration(200)
+                .duration(400)
                 .buildAndRegister();
     }
 }
