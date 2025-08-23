@@ -11,7 +11,10 @@ import static gregtech.api.unification.material.Materials.*;
 import static gregtech.api.unification.ore.OrePrefix.*;
 import static gregtech.common.blocks.MetaBlocks.OPTICAL_PIPES;
 import static gregtech.common.items.MetaItems.FIELD_GENERATOR_EV;
+import static gregtech.common.metatileentities.MetaTileEntities.HULL;
 import static io.github.phantamanta44.threng.block.BlockBigAssembler.Type.*;
+import static io.github.phantamanta44.threng.block.BlockMachine.Type.FAST_CRAFTER;
+import static io.github.phantamanta44.threng.block.BlockMachine.Type.LEVEL_MAINTAINER;
 import static io.github.phantamanta44.threng.item.ItemMaterial.Type.*;
 import static keqing.gtqt.prismplan.common.item.PrismPlanMetaItems.FLUIX_CPU;
 import static keqing.gtqt.prismplan.common.item.PrismPlanMetaItems.FLUIX_LOGIC_PROCESSOR;
@@ -19,6 +22,38 @@ import static keqing.gtqt.prismplan.loaders.recipes.naeRecipes.index.*;
 
 public class threngTile {
     public static void init() {
+        //指令缓存器
+        ModHandler.removeRecipeByName("threng:level_maintainer");
+        RecipeMaps.ASSEMBLER_RECIPES.recipeBuilder()
+                .input(HULL[IV])
+                .input(circuit, MarkerMaterials.Tier.IV, 4)
+                .inputs(MACHINE_CORE.newStack(1))
+                .inputs(GTUtility.copy(2, meInterface))
+                .inputs(GTUtility.copy(4, engineeringProcessor))
+                .inputs((SPEC_PROCESSOR.newStack(1)))
+                .fluidInputs(Polytetrafluoroethylene.getFluid(L * 4))
+                .circuitMeta(1)
+                .outputs(LEVEL_MAINTAINER.newStack(1))
+                .duration(200)
+                .EUt(VA[IV])
+                .buildAndRegister();
+
+        //优先装配单元
+        ModHandler.removeRecipeByName("threng:pau");
+        RecipeMaps.ASSEMBLER_RECIPES.recipeBuilder()
+                .input(HULL[IV])
+                .input(circuit, MarkerMaterials.Tier.IV, 4)
+                .inputs(MACHINE_CORE.newStack(1))
+                .inputs(GTUtility.copy(2, meInterface))
+                .inputs(GTUtility.copy(4, parallelProcessingUnit))
+                .inputs((SPEC_PROCESSOR.newStack(1)))
+                .fluidInputs(Polytetrafluoroethylene.getFluid(L * 4))
+                .circuitMeta(1)
+                .outputs(FAST_CRAFTER.newStack(1))
+                .duration(200)
+                .EUt(VA[IV])
+                .buildAndRegister();
+
         //大分子框架
         ModHandler.removeRecipeByName("threng:ma_frame");
         RecipeMaps.ASSEMBLER_RECIPES.recipeBuilder()
