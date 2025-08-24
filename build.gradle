@@ -172,7 +172,7 @@ dependencies {
 
     api("com.cleanroommc:groovyscript:1.2.0-hotfix1") { transitive = false }
     api("com.cleanroommc:modularui:2.5.0-rc4") { transitive = false }
-    implementation rfg.deobf(files("libs/gregtech-1.12.2-2.9.0-MeowmelMuku.jar"))
+    implementation rfg.deobf(files("libs/gregtech-MeowmelMuku-1.12.2-2.9.0-184.jar"))
 }
 
 apply from: 'gradle/scripts/dependencies.gradle'
