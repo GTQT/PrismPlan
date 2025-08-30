@@ -150,7 +150,7 @@ public class NaeCellRecipes {
                 .inputs(engineeringProcessor)
                 .input(MetaItems.ELITE_CIRCUIT_BOARD)
                 .circuitMeta(2)
-                .outputs(NAE2.definitions().materials().cellFluidPart256K().maybeStack(1).orElse(null))
+                .outputs(NAE2.definitions().materials().cellFluidPart1024K().maybeStack(1).orElse(null))
                 .EUt(VA[IV])
                 .duration(200)
                 .buildAndRegister();

@@ -65,7 +65,7 @@ public class MiscRecipes {
                 .input(dust, Electrum, 1)
                 .input(dust, Redstone, 1)
                 .fluidInputs(DistilledWater.getFluid(1000))
-                .circuitMeta(4)
+                .circuitMeta(5)
                 .outputs(Mods.AppliedEnergistics2.getItem("material", 7, 4))
                 .EUt(VA[MV])
                 .duration(400)
