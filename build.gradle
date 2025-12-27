@@ -155,13 +155,11 @@ dependencies {
     // Code Chicken Lib 3.2.3.358
     implementation rfg.deobf("curse.maven:codechicken-lib-1-8-242818:2779848")
     // AE2 Unofficial Extended Life 0.56.6
-    implementation rfg.deobf("curse.maven:ae2-extended-life-570458:5411078")
-    // AE2 Fluid Crafting Rework 2.6.3r
-    implementation rfg.deobf("curse.maven:ae2-fluid-crafting-rework-623955:5504001")
-    // Neeve's AE2 Additions 1.6.4
-    implementation rfg.deobf("curse.maven:nae2-884359:5380800")
+    implementation rfg.deobf("curse.maven:ae2-extended-life-570458:6302098")
+    // AE2 Fluid Crafting Rework 2.6.6
+    implementation rfg.deobf("curse.maven:ae2fluidcraft-rework-unofficial-1404390:7336029")
     // Had Enough Items 4.25.5
-    implementation rfg.deobf("curse.maven:had-enough-items-557549:5471944")
+    implementation rfg.deobf("curse.maven:had-enough-items-557549:7340288")
     // The One Probe 1.4.28
     implementation rfg.deobf("curse.maven:top-245211:2667280")
     // Connected Textures Mod 1.0.2.31
@@ -170,9 +168,13 @@ dependencies {
     implementation rfg.deobf("curse.maven:libnine-322344:3509087")
     implementation rfg.deobf("curse.maven:lazy-ae2-322347:3254160")
 
+    implementation rfg.deobf("curse.maven:random-complement-1198138:7366173")
+
     api("com.cleanroommc:groovyscript:1.2.0-hotfix1") { transitive = false }
-    api("com.cleanroommc:modularui:2.5.0-rc4") { transitive = false }
-    implementation rfg.deobf(files("libs/gregtech-MeowmelMuku-1.12.2-2.9.0-184.jar"))
+    api("com.cleanroommc:modularui:3.0.5") { transitive = false }
+
+    implementation rfg.deobf(files("libs/gregtech-MeowmelMuku-1.12.2-2.9.0-190.jar"))
+    implementation rfg.deobf(files("libs/nae2-1.9.0.jar"))
 }
 
 apply from: 'gradle/scripts/dependencies.gradle'

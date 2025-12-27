@@ -7,9 +7,6 @@ import appeng.me.helpers.AENetworkProxy;
 
 public interface INetWorkProxy {
     AENetworkProxy getProxy();
+
     IActionSource getSource();
-    IGridNode getGridNode(final AEPartLocation dir);
-    boolean couldSyncME();
-    boolean couldUse();
-    boolean canBeUse();
 }

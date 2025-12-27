@@ -9,6 +9,7 @@ import appeng.api.storage.*;
 import gregtech.api.metatileentity.MetaTileEntity;
 import gregtech.api.metatileentity.MetaTileEntityHolder;
 import keqing.gtqt.prismplan.common.metatileentities.multi.multiblock.estorage.MetaTileEntityNetWorkStoreHatch;
+import keqing.gtqt.prismplan.common.metatileentities.multi.multiblockpart.MetaTileEntityMEEnergyHatch;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.Unique;
@@ -51,29 +52,44 @@ public abstract class MixinMetaTileEntityHolder implements ICellContainer, IAEPo
         if (this.metaTileEntity instanceof MetaTileEntityNetWorkStoreHatch) {
             return ((MetaTileEntityNetWorkStoreHatch)this.metaTileEntity).injectAEPower(amt, mode);
         }
+        if (this.metaTileEntity instanceof MetaTileEntityMEEnergyHatch) {
+            return ((MetaTileEntityMEEnergyHatch)this.metaTileEntity).injectAEPower(amt, mode);
+        }
         return 0;
     }
+
     @Unique
     @Override
     public double extractAEPower(final double amt, @Nonnull final Actionable mode, @Nonnull final PowerMultiplier multiplier) {
         if (this.metaTileEntity instanceof MetaTileEntityNetWorkStoreHatch) {
             return ((MetaTileEntityNetWorkStoreHatch)this.metaTileEntity).extractAEPower(amt, mode,multiplier);
         }
+        if (this.metaTileEntity instanceof MetaTileEntityMEEnergyHatch) {
+            return ((MetaTileEntityMEEnergyHatch)this.metaTileEntity).extractAEPower(amt, mode,multiplier);
+        }
         return 0;
     }
+
     @Unique
     @Override
     public double getAEMaxPower() {
         if (this.metaTileEntity instanceof MetaTileEntityNetWorkStoreHatch) {
             return ((MetaTileEntityNetWorkStoreHatch)this.metaTileEntity).getAEMaxPower();
         }
+        if (this.metaTileEntity instanceof MetaTileEntityMEEnergyHatch) {
+            return ((MetaTileEntityMEEnergyHatch)this.metaTileEntity).getAEMaxPower();
+        }
         return 0;
     }
+
     @Unique
     @Override
     public double getAECurrentPower() {
         if (this.metaTileEntity instanceof MetaTileEntityNetWorkStoreHatch) {
             return ((MetaTileEntityNetWorkStoreHatch)this.metaTileEntity).getAECurrentPower();
+        }
+        if (this.metaTileEntity instanceof MetaTileEntityMEEnergyHatch) {
+            return ((MetaTileEntityMEEnergyHatch)this.metaTileEntity).getAECurrentPower();
         }
         return 0;
     }
@@ -83,6 +99,9 @@ public abstract class MixinMetaTileEntityHolder implements ICellContainer, IAEPo
         if (this.metaTileEntity instanceof MetaTileEntityNetWorkStoreHatch) {
             return ((MetaTileEntityNetWorkStoreHatch)this.metaTileEntity).isAEPublicPowerStorage();
         }
+        if (this.metaTileEntity instanceof MetaTileEntityMEEnergyHatch) {
+            return ((MetaTileEntityMEEnergyHatch)this.metaTileEntity).isAEPublicPowerStorage();
+        }
         return false;
     }
 
@@ -91,6 +110,9 @@ public abstract class MixinMetaTileEntityHolder implements ICellContainer, IAEPo
     public AccessRestriction getPowerFlow() {
         if (this.metaTileEntity instanceof MetaTileEntityNetWorkStoreHatch) {
             return ((MetaTileEntityNetWorkStoreHatch)this.metaTileEntity).getPowerFlow();
+        }
+        if (this.metaTileEntity instanceof MetaTileEntityMEEnergyHatch) {
+            return ((MetaTileEntityMEEnergyHatch)this.metaTileEntity).getPowerFlow();
         }
         return AccessRestriction.NO_ACCESS;
     }

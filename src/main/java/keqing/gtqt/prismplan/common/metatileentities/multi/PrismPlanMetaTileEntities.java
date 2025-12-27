@@ -1,14 +1,20 @@
 package keqing.gtqt.prismplan.common.metatileentities.multi;
 
+import gregtech.api.GTValues;
+import gregtech.api.GregTechAPI;
+import gregtech.common.metatileentities.multi.multiblockpart.MetaTileEntityEnergyHatch;
+import gregtech.common.metatileentities.multi.multiblockpart.MetaTileEntitySubstationEnergyHatch;
 import keqing.gtqt.prismplan.api.utils.PrismPlanLog;
 import keqing.gtqt.prismplan.common.metatileentities.multi.multiblock.ecalculator.*;
 import keqing.gtqt.prismplan.common.metatileentities.multi.multiblock.estorage.MetaTileEntityNetWorkStoreHatch;
 import keqing.gtqt.prismplan.common.metatileentities.multi.multiblock.estorage.MetaTileEntityStorageCellControl;
 import keqing.gtqt.prismplan.common.metatileentities.multi.multiblock.estorage.MetaTileEntityStorageCellHatch;
 import keqing.gtqt.prismplan.common.metatileentities.multi.multiblock.estorage.MetaTileEntityStorageEnergyCell;
+import keqing.gtqt.prismplan.common.metatileentities.multi.multiblockpart.MetaTileEntityMEEnergyHatch;
 import keqing.gtqt.prismplan.common.metatileentities.multi.multiblockpart.MetaTileEntityNetWorkProxyHatch;
 import keqing.gtqt.prismplan.common.metatileentities.single.MetaTileEntityWatcher;
 
+import static gregtech.api.util.GTUtility.gregtechId;
 import static gregtech.common.metatileentities.MetaTileEntities.registerMetaTileEntity;
 import static keqing.gtqt.prismplan.api.utils.PrimsPlanUtility.prismPlanID;
 
@@ -30,6 +36,16 @@ public class PrismPlanMetaTileEntities {
     public static MetaTileEntityCalculatorCellHatch[] CALCULATOR_CELL_HATCH = new MetaTileEntityCalculatorCellHatch[5];
     public static MetaTileEntityThreadHatch[] THREAD_HATCH = new MetaTileEntityThreadHatch[10];
     public static MetaTileEntityParallelHatch[] PARALLEL_HATCH = new MetaTileEntityParallelHatch[5];
+
+    public static final MetaTileEntityMEEnergyHatch[] ME_ENERGY_INPUT_HATCH = new MetaTileEntityMEEnergyHatch[GTValues.V.length];
+    public static final MetaTileEntityMEEnergyHatch[] ME_ENERGY_INPUT_HATCH_4A = new MetaTileEntityMEEnergyHatch[GTValues.V.length];
+    public static final MetaTileEntityMEEnergyHatch[] ME_ENERGY_INPUT_HATCH_16A = new MetaTileEntityMEEnergyHatch[GTValues.V.length];
+    public static final MetaTileEntityMEEnergyHatch[] ME_ENERGY_INPUT_HATCH_64A = new MetaTileEntityMEEnergyHatch[GTValues.V.length];
+    public static final MetaTileEntityMEEnergyHatch[] ME_ENERGY_OUTPUT_HATCH = new MetaTileEntityMEEnergyHatch[GTValues.V.length];
+    public static final MetaTileEntityMEEnergyHatch[] ME_ENERGY_OUTPUT_HATCH_4A = new MetaTileEntityMEEnergyHatch[GTValues.V.length];
+    public static final MetaTileEntityMEEnergyHatch[] ME_ENERGY_OUTPUT_HATCH_16A = new MetaTileEntityMEEnergyHatch[GTValues.V.length];
+    public static final MetaTileEntityMEEnergyHatch[] ME_ENERGY_OUTPUT_HATCH_64A = new MetaTileEntityMEEnergyHatch[GTValues.V.length];
+
 
 
     public static void initialization() {
@@ -78,5 +94,28 @@ public class PrismPlanMetaTileEntities {
         THREAD_HATCH[7] = registerMetaTileEntity(72, new MetaTileEntityThreadHatch(prismPlanID("thread_hatch.hyper.3"), 3, 0, 8));
         THREAD_HATCH[8] = registerMetaTileEntity(73, new MetaTileEntityThreadHatch(prismPlanID("thread_hatch.hyper.4"), 4, 0, 16));
         THREAD_HATCH[9] = registerMetaTileEntity(74, new MetaTileEntityThreadHatch(prismPlanID("thread_hatch.hyper.5"), 5, 1, 32));
+
+
+        int endPos = GregTechAPI.isHighTier() ? ME_ENERGY_INPUT_HATCH.length - 1 :
+                Math.min(ME_ENERGY_INPUT_HATCH.length - 1, GTValues.UV + 2);
+        for (int i = 0; i < endPos; i++) {
+            String voltageName = GTValues.VN[i].toLowerCase();
+            ME_ENERGY_INPUT_HATCH[i] = registerMetaTileEntity(100 + i,
+                    new MetaTileEntityMEEnergyHatch(prismPlanID("me_energy_hatch.input." + voltageName), i, 2, false));
+            ME_ENERGY_OUTPUT_HATCH[i] = registerMetaTileEntity(115 + i,
+                    new MetaTileEntityMEEnergyHatch(prismPlanID("me_energy_hatch.output." + voltageName), i, 2, true));
+            ME_ENERGY_INPUT_HATCH_4A[i] = registerMetaTileEntity(130 + i,
+                    new MetaTileEntityMEEnergyHatch(prismPlanID("me_energy_hatch.input_4a." + voltageName), i, 4, false));
+            ME_ENERGY_OUTPUT_HATCH_4A[i] = registerMetaTileEntity(145 + i,
+                    new MetaTileEntityMEEnergyHatch(prismPlanID("me_energy_hatch.output_4a." + voltageName), i, 4, true));
+            ME_ENERGY_INPUT_HATCH_16A[i] = registerMetaTileEntity(160 + i,
+                    new MetaTileEntityMEEnergyHatch(prismPlanID("me_energy_hatch.input_16a." + voltageName), i, 16, false));
+            ME_ENERGY_OUTPUT_HATCH_16A[i] = registerMetaTileEntity(175 + i,
+                    new MetaTileEntityMEEnergyHatch(prismPlanID("me_energy_hatch.output_16a." + voltageName), i, 16, true));
+            ME_ENERGY_INPUT_HATCH_64A[i] = registerMetaTileEntity(190 + i,
+                    new MetaTileEntityMEEnergyHatch(prismPlanID("me_energy_hatch.input_64a." + voltageName), i, 64, false));
+            ME_ENERGY_OUTPUT_HATCH_64A[i] = registerMetaTileEntity(205 + i,
+                    new MetaTileEntityMEEnergyHatch(prismPlanID("me_energy_hatch.output_64a." + voltageName), i, 64, true));
+        }
     }
 }
