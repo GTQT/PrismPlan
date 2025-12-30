@@ -161,8 +161,8 @@ public class MetaTileEntityCalculatorControl extends MultiblockWithDisplayBase {
             return;
         }
 
-        WorldCoord pos = new WorldCoord(getPos());
-        this.virtualCPU = new CraftingCPUCluster(pos, pos);
+        //WorldCoord pos = new WorldCoord(getPos());
+        this.virtualCPU = new CraftingCPUCluster(getPos(), getPos());
         ECPUCluster eCluster = ECPUCluster.from(this.virtualCPU);
         eCluster.prismplan_ec$setVirtualCPUOwner(this);
         eCluster.prismplan_ec$setAvailableStorage(availableBytes);

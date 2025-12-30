@@ -158,8 +158,8 @@ public class MetaTileEntityThreadHatch extends MetaTileEntityMultiblockPart
         for (int i = 0; i < clustersTag.tagCount(); i++) {
             NBTTagCompound clusterTag = clustersTag.getCompoundTagAt(i);
 
-            WorldCoord coord = new WorldCoord(getPos());
-            CraftingCPUCluster cluster = new CraftingCPUCluster(coord, coord);
+            //WorldCoord coord = new WorldCoord(getPos());
+            CraftingCPUCluster cluster = new CraftingCPUCluster(getPos(), getPos());
             ECPUCluster eCluster = ECPUCluster.from(cluster);
 
             eCluster.prismplan_ec$setThreadCore(this);
