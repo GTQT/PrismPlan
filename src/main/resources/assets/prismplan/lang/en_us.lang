@@ -72,9 +72,6 @@ prismplan.machine.network_proxy_hatch.name=Network Proxy Hatch
 prismplan.machine.network_store_hatch.name=Network Storage Hatch
 prismplan.machine.network_calculator_hatch.name=Network Calculator Hatch
 
-prismplan.machine.me_interface.name=ME Interface
-prismplan.machine.me_watcher.name=ME Resource Monitor
-
 prismplan.machine.storage_cell_hatch.1.name=Storage Cell Hatch I
 prismplan.machine.storage_cell_hatch.2.name=Storage Cell Hatch II
 prismplan.machine.storage_cell_hatch.3.name=Storage Cell Hatch III

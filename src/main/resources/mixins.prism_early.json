@@ -1,5 +1,5 @@
 {
-  "package": "keqing.gtqt.prismplan.mixin",
+  "package": "meowmel.prismplan.mixin",
   "required": true,
   "refmap": "${mixin_refmap}",
   "target": "@env(DEFAULT)",

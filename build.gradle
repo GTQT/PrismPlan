@@ -154,10 +154,7 @@ dependencies {
     implementation rfg.deobf("curse.maven:mixin-booter-419286:4835295")
     // Code Chicken Lib 3.2.3.358
     implementation rfg.deobf("curse.maven:codechicken-lib-1-8-242818:2779848")
-    // AE2 Unofficial Extended Life 0.56.6
-    implementation rfg.deobf(files("libs/appliedenergistics2-v1.0.5.jar"))
-    // AE2 Fluid Crafting Rework 2.6.6
-    implementation rfg.deobf("curse.maven:ae2fluidcraft-rework-unofficial-1404390:7336029")
+
     // Had Enough Items 4.25.5
     implementation rfg.deobf("curse.maven:had-enough-items-557549:7340288")
     // The One Probe 1.4.28
@@ -171,9 +168,11 @@ dependencies {
     implementation rfg.deobf("curse.maven:random-complement-1198138:7366173")
 
     api("com.cleanroommc:groovyscript:1.2.0-hotfix1") { transitive = false }
-    api("com.cleanroommc:modularui:3.0.5") { transitive = false }
+    api("com.cleanroommc:modularui:3.0.7") { transitive = false }
 
-    implementation rfg.deobf(files("libs/gregtech-MeowmelMuku-1.12.2-2.9.0-190.jar"))
+    implementation rfg.deobf(files("libs/appliedenergistics2-v1.0.5-gtqt.jar"))
+    implementation rfg.deobf(files("libs/ae2fc-2.7.10-unofficial.jar"))
+    implementation rfg.deobf(files("libs/gregtech-gtqt-1.12.2-2.9.0-190.jar"))
     implementation rfg.deobf(files("libs/nae2-1.9.0.jar"))
 }
 

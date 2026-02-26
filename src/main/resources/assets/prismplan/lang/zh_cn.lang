@@ -70,10 +70,6 @@ prismplan.machine.calculator_control.name=计算单元控制器
 prismplan.machine.network_proxy_hatch.name=网络代理仓口
 prismplan.machine.network_store_hatch.name=网络存储仓口
 prismplan.machine.network_calculator_hatch.name=网络计算仓口
-
-prismplan.machine.me_interface.name=ME接口
-prismplan.machine.me_watcher.name=ME资源监控器
-
 # 存储单元仓口（分等级）
 prismplan.machine.storage_cell_hatch.1.name=存储单元仓口 I
 prismplan.machine.storage_cell_hatch.2.name=存储单元仓口 II
